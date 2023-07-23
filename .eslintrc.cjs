@@ -12,22 +12,14 @@ module.exports = {
         'plugin:@typescript-eslint/recommended',
         'plugin:react/recommended',
         'plugin:react-hooks/recommended',
-        "plugin:prettier/recommended",
     ],
     ignorePatterns: ['dist', 'node_modules'],
     parser: '@typescript-eslint/parser',
     plugins: ['react-refresh', 'prettier'],
     rules: {
         'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-        "prettier/prettier": [
-            "error",
-            {
-              "singleQuote": true,
-              "parser": "typescript"
-            }
-          ],
-        "arrow-body-style": "off",
-        "prefer-arrow-callback": "off",
+        'arrow-body-style': 'off',
+        'prefer-arrow-callback': 'off',
         'react/react-in-jsx-scope': 'off',
         'react/prop-types': 'off',
         '@typescript-eslint/explicit-function-return-type': 'off',

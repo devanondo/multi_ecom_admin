@@ -1,10 +1,12 @@
-import { Button } from 'antd';
+import { Outlet } from 'react-router-dom';
+import Layout from './components/Layout/Layout';
 
 function App() {
     return (
         <>
-            <h1>Welcome to CrypEcom</h1>
-            <Button type="primary">Primary Button</Button>
+            <Layout>
+                <Outlet />
+            </Layout>
         </>
     );
 }
