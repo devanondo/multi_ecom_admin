@@ -18,7 +18,7 @@ const routes: RouteObject[] = [
                 element: <Dashboard />,
             },
             {
-                path: '/products',
+                path: '/product',
                 children: [
                     {
                         index: true,
