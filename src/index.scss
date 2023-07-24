@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tektur:wght@400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif !important;
+}
+
+.sub__title {
+    font-size: 1.0625rem;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.2;
+    font-family: 'Roboto', sans-serif;
+
+    &__gray {
+        color: #828f99;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.2;
+        font-family: 'Roboto', sans-serif;
+
+        &__bold {
+            color: #6c757d;
+            font-size: 0.92rem;
+            font-weight: 500;
+        }
+    }
+}
+.paragraph {
+    font-family: 'Roboto', sans-serif;
+
+    &__gray__small {
+        color: #6c757d;
+        font-size: 0.8125rem;
+    }
+}
+
+a {
+    color: inherit !important;
+    text-decoration: none;
+}
+
+/* font-family: 'Tektur', cursive; */

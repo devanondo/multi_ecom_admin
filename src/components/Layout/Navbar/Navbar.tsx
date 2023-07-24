@@ -1,19 +1,32 @@
-import { UserOutlined } from '@ant-design/icons';
+import { UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Dropdown, Space, message } from 'antd';
+import { Avatar, Dropdown, Space, Typography, message } from 'antd';
 import { FC } from 'react';
+import './Navbar.scss';
+import { Link } from 'react-router-dom';
 
 const Navbar: FC = () => {
-    const handleMenuClick: MenuProps['onClick'] = (e) => {
+    const handleMenuClick: MenuProps['onClick'] = () => {
         message.info('Click on menu item.');
-        console.log('click', e);
     };
+
+    const { Paragraph } = Typography;
 
     const items: MenuProps['items'] = [
         {
-            label: '1st menu item',
+            label: <Link to="/profile">Profile</Link>,
             key: '1',
             icon: <UserOutlined />,
+        },
+        {
+            label: <Link to="/profile">Setting</Link>,
+            key: '2',
+            icon: <SettingOutlined />,
+        },
+        {
+            label: <Link to="/profile">Logout</Link>,
+            key: '3',
+            icon: <LogoutOutlined />,
         },
     ];
 
@@ -23,11 +36,17 @@ const Navbar: FC = () => {
     };
 
     return (
-        <Space className="space-align-block">
-            <Dropdown.Button menu={menuProps} placement="bottomRight" icon={<UserOutlined />}>
-                Dropdown
-            </Dropdown.Button>
-        </Space>
+        <Dropdown menu={menuProps} trigger={['click']}>
+            <Space>
+                <Avatar shape="square" size="large" icon={<UserOutlined />} />
+                <div>
+                    <Typography.Title level={5} style={{ margin: 0 }}>
+                        John Smith
+                    </Typography.Title>
+                    <Paragraph style={{ margin: 0, color: '#6c757d' }}>john@email.com</Paragraph>
+                </div>
+            </Space>
+        </Dropdown>
     );
 };
 
