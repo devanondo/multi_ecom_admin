@@ -6,6 +6,8 @@ import ProductList from '../pages/Products/ProductList';
 import CreateProduct from '../pages/Products/CreateProduct';
 import ProductDetails from '../pages/Products/ProductDetails';
 import EditProduct from '../pages/Products/EditProduct';
+import Login from '../pages/Auth/Login';
+import Register from '../pages/Auth/Register';
 
 const routes: RouteObject[] = [
     {
@@ -18,7 +20,7 @@ const routes: RouteObject[] = [
                 element: <Dashboard />,
             },
             {
-                path: '/product',
+                path: 'product',
                 children: [
                     {
                         index: true,
@@ -39,6 +41,14 @@ const routes: RouteObject[] = [
                 ],
             },
         ],
+    },
+    {
+        path: '/login',
+        element: <Login />,
+    },
+    {
+        path: '/sign-up',
+        element: <Register />,
     },
 ];
 

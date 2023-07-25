@@ -1,0 +1,10 @@
+.info__card {
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
+    .card__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
