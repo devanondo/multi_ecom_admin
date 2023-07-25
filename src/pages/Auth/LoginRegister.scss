@@ -12,5 +12,15 @@
         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
         border-radius: 5px;
         padding: 20px;
+
+        a {
+            color: #3c8df7 !important;
+        }
+
+        &.register__form {
+            label {
+                height: 20px !important;
+            }
+        }
     }
 }
