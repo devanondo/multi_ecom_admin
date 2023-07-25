@@ -1,10 +1,9 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import Cookies from 'js-cookie';
 import type { BaseQueryFn } from '@reduxjs/toolkit/query';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import type { AxiosError, AxiosRequestConfig } from 'axios';
 import axios from 'axios';
-import type { AxiosRequestConfig, AxiosError } from 'axios';
+import Cookies from 'js-cookie';
 
-// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
 const axiosBaseQuery =
     (
         { baseUrl, headers }: { baseUrl: string; headers: Record<string, string> } = { baseUrl: '', headers: {} },
@@ -35,7 +34,7 @@ const axiosBaseQuery =
 
 export const api = createApi({
     reducerPath: 'api',
-    baseQuery: fetchBaseQuery({
+    baseQuery: axiosBaseQuery({
         baseUrl: import.meta.env.VITE_BASE_URL,
         headers: {
             authorization: Cookies.get('a4weopkd1287u65') || '',
