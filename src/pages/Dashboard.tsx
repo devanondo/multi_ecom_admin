@@ -31,22 +31,24 @@ const Dashboard = () => {
                 </Button>
             </Header>
 
-            <div className="info__cards">
-                <Row gutter={[24, 24]}>
-                    <Col xs={24} lg={12} xl={8}>
-                        <InfoCard title="Total sales" amount={154284} percent_value={21.48} />
-                    </Col>
-                    <Col xs={24} lg={12} xl={8}>
-                        <InfoCard title="Average order value" amount={154284} percent_value={21.48} />
-                    </Col>
-                    <Col xs={24} lg={12} xl={8}>
-                        <InfoCard title="Total orders" amount={154284} percent_value={21.48} />
-                    </Col>
-                </Row>
-            </div>
+            <div className="content__wrapper">
+                <div className="info__cards">
+                    <Row gutter={[24, 24]}>
+                        <Col xs={24} lg={12} xl={8}>
+                            <InfoCard title="Total sales" amount={154284} percent_value={21.48} />
+                        </Col>
+                        <Col xs={24} lg={12} xl={8}>
+                            <InfoCard title="Average order value" amount={154284} percent_value={21.48} />
+                        </Col>
+                        <Col xs={24} lg={12} xl={8}>
+                            <InfoCard title="Total orders" amount={154284} percent_value={21.48} />
+                        </Col>
+                    </Row>
+                </div>
 
-            <div className="orders__table">
-                <CollapsTable />
+                <div className="orders__table">
+                    <CollapsTable />
+                </div>
             </div>
         </div>
     );

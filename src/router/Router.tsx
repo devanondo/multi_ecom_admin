@@ -14,6 +14,7 @@ import AdminList from '../pages/User/AdminList';
 import VendorList from '../pages/User/VendorList';
 import CustomerList from '../pages/User/CustomerList';
 import SellerList from '../pages/Seller/SellerList';
+import SellerDetails from '../pages/Seller/SellerDetails';
 
 const routes: RouteObject[] = [
     {
@@ -78,6 +79,10 @@ const routes: RouteObject[] = [
                     {
                         index: true,
                         element: <SellerList />,
+                    },
+                    {
+                        path: ':id',
+                        element: <SellerDetails />,
                     },
                 ],
             },

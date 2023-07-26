@@ -27,6 +27,8 @@ const Sidebar = () => {
             getItem('Create Category', 'category/create'),
             getItem('Shop List', 'shop'),
         ]),
+        getItem('Seller', '/seller', <PieChartOutlined />),
+
         getItem('Users', 'user', <TeamOutlined />, [
             getItem('User List', 'user'),
             getItem('Create', 'user/create'),
