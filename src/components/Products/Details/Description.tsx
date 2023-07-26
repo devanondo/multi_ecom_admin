@@ -20,9 +20,11 @@ const Description = () => {
         <div style={{ marginTop: '20px' }} className="description">
             <Typography.Title level={5}>Description :</Typography.Title>
             <Text>
-                Tommy Hilfiger men striped pink sweatshirt. Crafted with cotton. Material composition is 100% organic
-                cotton. This is one of the world’s leading designer lifestyle brands and is internationally recognized
-                for celebrating the essence of classic American cool style, featuring preppy with a twist designs.
+                Tommy Hilfiger men striped pink sweatshirt. Crafted with cotton. Material
+                composition is 100% organic cotton. This is one of the world’s leading
+                designer lifestyle brands and is internationally recognized for
+                celebrating the essence of classic American cool style, featuring preppy
+                with a twist designs.
             </Text>
 
             {/* Features */}

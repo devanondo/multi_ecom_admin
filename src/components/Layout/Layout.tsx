@@ -64,7 +64,9 @@ const LayoutPage: FC<ILayout> = ({ children }) => {
                     {children}
                 </Content>
 
-                <Footer style={{ textAlign: 'center' }}>ecocryp ecommerce ©2023 Created by ecocryp</Footer>
+                <Footer style={{ textAlign: 'center' }}>
+                    ecocryp ecommerce ©2023 Created by ecocryp
+                </Footer>
             </Layout>
         </Layout>
     );

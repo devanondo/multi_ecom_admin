@@ -50,7 +50,10 @@ const SellerCard: FC<ISellerCard> = ({
                             In Stock
                         </Typography.Text>
                     </div>
-                    <Divider type="vertical" style={{ height: 40, background: 'lightgray' }} />
+                    <Divider
+                        type="vertical"
+                        style={{ height: 40, background: 'lightgray' }}
+                    />
                     <div>
                         <Typography.Title style={{ marginBottom: 0 }} level={4}>
                             4512
@@ -61,7 +64,12 @@ const SellerCard: FC<ISellerCard> = ({
                     </div>
                 </Flex>
 
-                <Button type="text" style={{ border: '1px solid lightgray', marginTop: 20 }} size="large" block>
+                <Button
+                    type="text"
+                    style={{ border: '1px solid lightgray', marginTop: 20 }}
+                    size="large"
+                    block
+                >
                     View Details
                 </Button>
             </Flex>

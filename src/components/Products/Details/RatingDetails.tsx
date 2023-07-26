@@ -44,7 +44,11 @@ const RatingDetails = () => {
                 <Text type="secondary" strong>
                     2 Star
                 </Text>
-                <Progress style={{ width: 'calc(100% - 50px)', margin: 0 }} percent={10} size="small" />
+                <Progress
+                    style={{ width: 'calc(100% - 50px)', margin: 0 }}
+                    percent={10}
+                    size="small"
+                />
             </Flex>
             <Flex align="center " style={{ marginBottom: 10 }} justify="space-between">
                 <Text type="secondary" strong>

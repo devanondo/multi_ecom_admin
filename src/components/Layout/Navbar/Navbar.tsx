@@ -43,7 +43,9 @@ const Navbar: FC = () => {
                     <Typography.Title level={5} style={{ margin: 0 }}>
                         John Smith
                     </Typography.Title>
-                    <Paragraph style={{ margin: 0, color: '#6c757d' }}>john@email.com</Paragraph>
+                    <Paragraph style={{ margin: 0, color: '#6c757d' }}>
+                        john@email.com
+                    </Paragraph>
                 </div>
             </Space>
         </Dropdown>

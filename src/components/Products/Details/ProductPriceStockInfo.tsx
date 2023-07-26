@@ -1,4 +1,9 @@
-import { CheckCircleTwoTone, DashboardTwoTone, DatabaseTwoTone, DollarTwoTone } from '@ant-design/icons';
+import {
+    CheckCircleTwoTone,
+    DashboardTwoTone,
+    DatabaseTwoTone,
+    DollarTwoTone,
+} from '@ant-design/icons';
 import { Card, Col, Row, Typography } from 'antd';
 import Flex from '../../Shared/Flex/Flex';
 
@@ -10,7 +15,10 @@ const ProductPriceStockInfo = () => {
             <Col xs={24} lg={12} xl={8} xxl={6}>
                 <Card size="small" style={{ padding: 0 }}>
                     <Flex align="center" gap={20}>
-                        <DollarTwoTone style={{ fontSize: '25px' }} twoToneColor={'#0AB39C'} />
+                        <DollarTwoTone
+                            style={{ fontSize: '25px' }}
+                            twoToneColor={'#0AB39C'}
+                        />
 
                         <div>
                             <Text type="secondary">Price :</Text>
@@ -24,7 +32,10 @@ const ProductPriceStockInfo = () => {
             <Col xs={24} lg={12} xl={8} xxl={6}>
                 <Card size="small" style={{ padding: 0 }}>
                     <Flex align="center" gap={20}>
-                        <CheckCircleTwoTone style={{ fontSize: '25px' }} twoToneColor={'#0AB39C'} />
+                        <CheckCircleTwoTone
+                            style={{ fontSize: '25px' }}
+                            twoToneColor={'#0AB39C'}
+                        />
 
                         <div>
                             <Text type="secondary">Orders :</Text>
@@ -38,7 +49,10 @@ const ProductPriceStockInfo = () => {
             <Col xs={24} lg={12} xl={8} xxl={6}>
                 <Card size="small" style={{ padding: 0 }}>
                     <Flex align="center" gap={20}>
-                        <DatabaseTwoTone style={{ fontSize: '25px' }} twoToneColor={'#0AB39C'} />
+                        <DatabaseTwoTone
+                            style={{ fontSize: '25px' }}
+                            twoToneColor={'#0AB39C'}
+                        />
 
                         <div>
                             <Text type="secondary">Stocks :</Text>
@@ -52,7 +66,10 @@ const ProductPriceStockInfo = () => {
             <Col xs={24} lg={12} xl={8} xxl={6}>
                 <Card size="small" style={{ padding: 0 }}>
                     <Flex align="center" gap={20}>
-                        <DashboardTwoTone style={{ fontSize: '25px' }} twoToneColor={'#0AB39C'} />
+                        <DashboardTwoTone
+                            style={{ fontSize: '25px' }}
+                            twoToneColor={'#0AB39C'}
+                        />
 
                         <div>
                             <Text type="secondary">Revenue :</Text>

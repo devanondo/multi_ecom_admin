@@ -5,7 +5,13 @@ import React from 'react';
 import './LoginRegister.scss';
 import { SizeType } from 'antd/es/config-provider/SizeContext';
 const { Option } = Select;
-import { LockOutlined, UserOutlined, MailOutlined, GoogleOutlined, FacebookOutlined } from '@ant-design/icons';
+import {
+    LockOutlined,
+    UserOutlined,
+    MailOutlined,
+    GoogleOutlined,
+    FacebookOutlined,
+} from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
 const Register: React.FC = () => {
@@ -49,9 +55,18 @@ const Register: React.FC = () => {
                         name="first_name"
                         label="First name"
                         tooltip="What do you want others to call you?"
-                        rules={[{ required: true, message: 'Please input your first name!', whitespace: true }]}
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your first name!',
+                                whitespace: true,
+                            },
+                        ]}
                     >
-                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="First name" />
+                        <Input
+                            prefix={<UserOutlined className="site-form-item-icon" />}
+                            placeholder="First name"
+                        />
                     </Form.Item>
 
                     <Form.Item
@@ -59,9 +74,18 @@ const Register: React.FC = () => {
                         name="last_name"
                         label="Last name"
                         tooltip="What do you want others to call you?"
-                        rules={[{ required: true, message: 'Please input your last name!', whitespace: true }]}
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your last name!',
+                                whitespace: true,
+                            },
+                        ]}
                     >
-                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Last name" />
+                        <Input
+                            prefix={<UserOutlined className="site-form-item-icon" />}
+                            placeholder="Last name"
+                        />
                     </Form.Item>
                 </Space>
 
@@ -77,7 +101,10 @@ const Register: React.FC = () => {
                         },
                     ]}
                 >
-                    <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email" />
+                    <Input
+                        prefix={<MailOutlined className="site-form-item-icon" />}
+                        placeholder="Email"
+                    />
                 </Form.Item>
 
                 <Form.Item
@@ -85,7 +112,9 @@ const Register: React.FC = () => {
                     name="phone"
                     label="Phone Number"
                     tooltip="Enter your Phone Number"
-                    rules={[{ required: true, message: 'Please input your phone number!' }]}
+                    rules={[
+                        { required: true, message: 'Please input your phone number!' },
+                    ]}
                 >
                     <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
                 </Form.Item>
@@ -125,7 +154,11 @@ const Register: React.FC = () => {
                                     if (!value || getFieldValue('password') === value) {
                                         return Promise.resolve();
                                     }
-                                    return Promise.reject(new Error('The new password that you entered do not match!'));
+                                    return Promise.reject(
+                                        new Error(
+                                            'The new password that you entered do not match!',
+                                        ),
+                                    );
                                 },
                             }),
                         ]}
@@ -158,7 +191,11 @@ const Register: React.FC = () => {
                     rules={[
                         {
                             validator: (_, value) =>
-                                value ? Promise.resolve() : Promise.reject(new Error('Should accept agreement')),
+                                value
+                                    ? Promise.resolve()
+                                    : Promise.reject(
+                                          new Error('Should accept agreement'),
+                                      ),
                         },
                     ]}
                 >
