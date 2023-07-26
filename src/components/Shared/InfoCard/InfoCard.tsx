@@ -1,4 +1,9 @@
-import { ArrowUpOutlined, MoreOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import {
+    ArrowUpOutlined,
+    MoreOutlined,
+    SettingOutlined,
+    UserOutlined,
+} from '@ant-design/icons';
 import { Dropdown, MenuProps, Space, Statistic, message } from 'antd';
 import { Link } from 'react-router-dom';
 import './InfoCard.scss';
@@ -45,8 +50,16 @@ const InfoCard: FC<IInforCard> = ({ title, amount, percent_value }) => {
                 </Dropdown>
             </div>
 
-            <Space style={{ width: '100%', marginTop: 20, justifyContent: 'space-between' }} wrap>
-                <Statistic prefix="৳" title="Account Balance (BDT)" value={amount} precision={2} />
+            <Space
+                style={{ width: '100%', marginTop: 20, justifyContent: 'space-between' }}
+                wrap
+            >
+                <Statistic
+                    prefix="৳"
+                    title="Account Balance (BDT)"
+                    value={amount}
+                    precision={2}
+                />
 
                 <Space>
                     <Statistic

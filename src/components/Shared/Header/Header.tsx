@@ -4,7 +4,7 @@ import { ReactNode, FC } from 'react';
 
 interface IHeader {
     title: string;
-    children: ReactNode;
+    children?: ReactNode;
 }
 
 const Header: FC<IHeader> = ({ title, children }) => {

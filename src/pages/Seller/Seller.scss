@@ -1,0 +1,23 @@
+.seller__details__page {
+    .seller__details__info {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+
+        .seller__info {
+            flex: 1;
+        }
+        .seller__details {
+            flex: 2.5;
+        }
+    }
+
+    .info__table {
+        margin-top: 20px;
+        td {
+            text-align: left;
+            padding: 4px 0;
+            padding-right: 20px;
+        }
+    }
+}

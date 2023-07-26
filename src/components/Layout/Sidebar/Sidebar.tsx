@@ -1,4 +1,10 @@
-import { DesktopOutlined, FileOutlined, PieChartOutlined, ShoppingCartOutlined, TeamOutlined } from '@ant-design/icons';
+import {
+    DesktopOutlined,
+    FileOutlined,
+    PieChartOutlined,
+    ShoppingCartOutlined,
+    TeamOutlined,
+} from '@ant-design/icons';
 import { Menu, type MenuProps } from 'antd';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -8,7 +14,12 @@ const Sidebar = () => {
 
     const navigate = useNavigate();
 
-    function getItem(label: React.ReactNode, key: React.Key, icon?: React.ReactNode, children?: MenuItem[]): MenuItem {
+    function getItem(
+        label: React.ReactNode,
+        key: React.Key,
+        icon?: React.ReactNode,
+        children?: MenuItem[],
+    ): MenuItem {
         return {
             key,
             icon,
@@ -22,16 +33,23 @@ const Sidebar = () => {
         getItem('Catalog', '/products', <DesktopOutlined />, [
             getItem('Product List', '/product'),
             getItem('Create Product', 'product/create'),
+            getItem('Product Details', 'product/details'),
             getItem('Category List', 'category'),
             getItem('Create Category', 'category/create'),
             getItem('Shop List', 'shop'),
         ]),
-        getItem('Users', 'sub1', <TeamOutlined />, [
-            getItem('Customer List', 'customer'),
-            getItem('Vendor', 'vendor'),
-            getItem('Admin List', 'admin'),
+        getItem('Seller', '/seller', <PieChartOutlined />),
+
+        getItem('Users', 'user', <TeamOutlined />, [
+            getItem('User List', 'user'),
+            getItem('Create', 'user/create'),
+            getItem('Customer List', 'user/customer'),
+            getItem('Vendor', 'user/vendor'),
+            getItem('Admin List', 'user/admin'),
         ]),
-        getItem('Orders', 'sub2', <ShoppingCartOutlined />, [getItem('Order List', 'order')]),
+        getItem('Orders', 'sub2', <ShoppingCartOutlined />, [
+            getItem('Order List', 'order'),
+        ]),
         getItem('Files', '9', <FileOutlined />),
     ];
 
@@ -39,7 +57,15 @@ const Sidebar = () => {
         navigate(e.key);
     };
 
-    return <Menu onClick={onClick} theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />;
+    return (
+        <Menu
+            onClick={onClick}
+            theme="dark"
+            defaultSelectedKeys={['1']}
+            mode="inline"
+            items={items}
+        />
+    );
 };
 
 export default Sidebar;

@@ -1,0 +1,26 @@
+.order__details__page {
+    .order__details__content {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+
+        .details {
+            flex: 2.5;
+        }
+
+        .info {
+            flex: 1;
+
+            .delivery__truc__img {
+                max-width: 150px;
+                width: 100%;
+                overflow: hidden;
+
+                img {
+                    width: 100%;
+                    scale: 2;
+                }
+            }
+        }
+    }
+}

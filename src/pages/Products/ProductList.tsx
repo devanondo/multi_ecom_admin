@@ -15,7 +15,9 @@ const ProductList = () => {
                 </Button>
             </Header>
 
-            <CollapsTable />
+            <div className="content__wrapper">
+                <CollapsTable />
+            </div>
         </div>
     );
 };

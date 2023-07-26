@@ -8,6 +8,15 @@ import ProductDetails from '../pages/Products/ProductDetails';
 import EditProduct from '../pages/Products/EditProduct';
 import Login from '../pages/Auth/Login';
 import Register from '../pages/Auth/Register';
+import UserList from '../pages/User/UserList';
+import CreateUser from '../pages/User/CreateUser';
+import AdminList from '../pages/User/AdminList';
+import VendorList from '../pages/User/VendorList';
+import CustomerList from '../pages/User/CustomerList';
+import SellerList from '../pages/Seller/SellerList';
+import SellerDetails from '../pages/Seller/SellerDetails';
+import OrderList from '../pages/Orders/OrderList';
+import OrderDetails from '../pages/Orders/OrderDetails';
 
 const routes: RouteObject[] = [
     {
@@ -27,16 +36,68 @@ const routes: RouteObject[] = [
                         element: <ProductList />,
                     },
                     {
-                        path: ':id',
+                        // path: ':id',
+                        path: 'details',
                         element: <ProductDetails />,
                     },
                     {
-                        path: ':id/edit',
+                        path: ':product_id/edit',
                         element: <EditProduct />,
                     },
                     {
                         path: 'create',
                         element: <CreateProduct />,
+                    },
+                ],
+            },
+            {
+                path: 'order',
+                children: [
+                    {
+                        index: true,
+                        element: <OrderList />,
+                    },
+                    {
+                        path: ':order_id',
+                        element: <OrderDetails />,
+                    },
+                ],
+            },
+            {
+                path: 'user',
+                children: [
+                    {
+                        index: true,
+                        element: <UserList />,
+                    },
+                    {
+                        path: 'create',
+                        element: <CreateUser />,
+                    },
+                    {
+                        path: 'admin',
+                        element: <AdminList />,
+                    },
+                    {
+                        path: 'vendor',
+                        element: <VendorList />,
+                    },
+                    {
+                        path: 'customer',
+                        element: <CustomerList />,
+                    },
+                ],
+            },
+            {
+                path: 'seller',
+                children: [
+                    {
+                        index: true,
+                        element: <SellerList />,
+                    },
+                    {
+                        path: ':shop_id',
+                        element: <SellerDetails />,
                     },
                 ],
             },
