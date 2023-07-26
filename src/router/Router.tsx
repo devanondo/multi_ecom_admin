@@ -15,6 +15,8 @@ import VendorList from '../pages/User/VendorList';
 import CustomerList from '../pages/User/CustomerList';
 import SellerList from '../pages/Seller/SellerList';
 import SellerDetails from '../pages/Seller/SellerDetails';
+import OrderList from '../pages/Orders/OrderList';
+import OrderDetails from '../pages/Orders/OrderDetails';
 
 const routes: RouteObject[] = [
     {
@@ -39,12 +41,25 @@ const routes: RouteObject[] = [
                         element: <ProductDetails />,
                     },
                     {
-                        path: ':id/edit',
+                        path: ':product_id/edit',
                         element: <EditProduct />,
                     },
                     {
                         path: 'create',
                         element: <CreateProduct />,
+                    },
+                ],
+            },
+            {
+                path: 'order',
+                children: [
+                    {
+                        index: true,
+                        element: <OrderList />,
+                    },
+                    {
+                        path: ':order_id',
+                        element: <OrderDetails />,
                     },
                 ],
             },
@@ -81,7 +96,7 @@ const routes: RouteObject[] = [
                         element: <SellerList />,
                     },
                     {
-                        path: ':id',
+                        path: ':shop_id',
                         element: <SellerDetails />,
                     },
                 ],

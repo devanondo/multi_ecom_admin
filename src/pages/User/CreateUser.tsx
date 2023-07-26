@@ -1,5 +1,11 @@
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { InboxOutlined, LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
+import {
+    InboxOutlined,
+    LockOutlined,
+    MailOutlined,
+    UserOutlined,
+} from '@ant-design/icons';
 import { Button, Divider, Form, Input, Modal, Select, Upload } from 'antd';
 import { SizeType } from 'antd/es/config-provider/SizeContext';
 import { RcFile, UploadFile, UploadProps } from 'antd/es/upload';
@@ -85,9 +91,18 @@ const CreateUser = () => {
                             name="first_name"
                             label="First name"
                             tooltip="What do you want others to call you?"
-                            rules={[{ required: true, message: 'Please input your first name!', whitespace: true }]}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your first name!',
+                                    whitespace: true,
+                                },
+                            ]}
                         >
-                            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="First name" />
+                            <Input
+                                prefix={<UserOutlined className="site-form-item-icon" />}
+                                placeholder="First name"
+                            />
                         </Form.Item>
 
                         <Form.Item
@@ -95,9 +110,18 @@ const CreateUser = () => {
                             name="last_name"
                             label="Last name"
                             tooltip="What do you want others to call you?"
-                            rules={[{ required: true, message: 'Please input your last name!', whitespace: true }]}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your last name!',
+                                    whitespace: true,
+                                },
+                            ]}
                         >
-                            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Last name" />
+                            <Input
+                                prefix={<UserOutlined className="site-form-item-icon" />}
+                                placeholder="Last name"
+                            />
                         </Form.Item>
                     </Flex>
                     <Flex gap={20}>
@@ -133,11 +157,16 @@ const CreateUser = () => {
                                 },
                                 ({ getFieldValue }) => ({
                                     validator(_, value) {
-                                        if (!value || getFieldValue('password') === value) {
+                                        if (
+                                            !value ||
+                                            getFieldValue('password') === value
+                                        ) {
                                             return Promise.resolve();
                                         }
                                         return Promise.reject(
-                                            new Error('The new password that you entered do not match!'),
+                                            new Error(
+                                                'The new password that you entered do not match!',
+                                            ),
                                         );
                                     },
                                 }),
@@ -162,7 +191,10 @@ const CreateUser = () => {
                             },
                         ]}
                     >
-                        <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email" />
+                        <Input
+                            prefix={<MailOutlined className="site-form-item-icon" />}
+                            placeholder="Email"
+                        />
                     </Form.Item>
 
                     <Form.Item
@@ -170,7 +202,12 @@ const CreateUser = () => {
                         name="phone"
                         label="Phone Number"
                         tooltip="Enter your Phone Number"
-                        rules={[{ required: true, message: 'Please input your phone number!' }]}
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your phone number!',
+                            },
+                        ]}
                     >
                         <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
                     </Form.Item>
@@ -205,8 +242,12 @@ const CreateUser = () => {
                                 <p className="ant-upload-drag-icon">
                                     <InboxOutlined />
                                 </p>
-                                <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                                <p className="ant-upload-hint">Support for a single or bulk upload.</p>
+                                <p className="ant-upload-text">
+                                    Click or drag file to this area to upload
+                                </p>
+                                <p className="ant-upload-hint">
+                                    Support for a single or bulk upload.
+                                </p>
                             </Upload.Dragger>
                         </Form.Item>
                     </Form.Item>
@@ -226,7 +267,12 @@ const CreateUser = () => {
                     </Form.Item>
                 </Form>
 
-                <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
+                <Modal
+                    open={previewOpen}
+                    title={previewTitle}
+                    footer={null}
+                    onCancel={handleCancel}
+                >
                     <img alt="example" style={{ width: '100%' }} src={previewImage} />
                 </Modal>
             </div>

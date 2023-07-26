@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Avatar, Card, Col, Image, List, Rate, Row, Typography } from 'antd';
 import Flex from '../../Shared/Flex/Flex';
 import './Details.scss';
@@ -30,14 +31,22 @@ const Ratings = () => {
 
             <Row style={{ marginTop: '20px' }} gutter={[20, 20]}>
                 <Col sm={24} lg={8}>
-                    <Card size="small" style={{ padding: '0', backgroundColor: '#f5f5f5' }}>
+                    <Card
+                        size="small"
+                        style={{ padding: '0', backgroundColor: '#f5f5f5' }}
+                    >
                         <Flex align="center" justify="space-between" gap={20}>
                             <Rate style={{ fontSize: 18 }} disabled defaultValue={4.5} />
 
                             <Text strong>4.5 out of 5</Text>
                         </Flex>
                     </Card>
-                    <Flex align="center" justify="center" width="100%" style={{ paddingTop: 5 }}>
+                    <Flex
+                        align="center"
+                        justify="center"
+                        width="100%"
+                        style={{ paddingTop: 5 }}
+                    >
                         <Text type="secondary" strong>
                             Total 5.50k reviews
                         </Text>
@@ -57,7 +66,9 @@ const Ratings = () => {
                         renderItem={(item, index) => (
                             <List.Item>
                                 <Flex gap={10} style={{ marginBottom: 10 }}>
-                                    <Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />
+                                    <Avatar
+                                        src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
+                                    />
 
                                     <Flex justify="space-between">
                                         <div>
@@ -84,17 +95,25 @@ const Ratings = () => {
                                     <Image.PreviewGroup
                                         preview={{
                                             onChange: (current, prev) =>
-                                                console.log(`current index: ${current}, prev index: ${prev}`),
+                                                console.log(
+                                                    `current index: ${current}, prev index: ${prev}`,
+                                                ),
                                         }}
                                     >
                                         <Image
                                             width={45}
-                                            style={{ background: '#f5f5f5', borderRadius: '5px' }}
+                                            style={{
+                                                background: '#f5f5f5',
+                                                borderRadius: '5px',
+                                            }}
                                             src="https://themesbrand.com/velzon/html/default/assets/images/products/img-6.png"
                                         />
                                         <Image
                                             width={45}
-                                            style={{ background: '#f5f5f5', borderRadius: '5px' }}
+                                            style={{
+                                                background: '#f5f5f5',
+                                                borderRadius: '5px',
+                                            }}
                                             src="https://themesbrand.com/velzon/html/default/assets/images/products/img-1.png"
                                         />
                                     </Image.PreviewGroup>

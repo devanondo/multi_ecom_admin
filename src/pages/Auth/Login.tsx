@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {
     FacebookOutlined,
     PhoneOutlined,
@@ -47,7 +48,9 @@ const Login = () => {
 
     useEffect(() => {
         if (options.isSuccess) {
-            Cookies.set('a4weopkd1287u65', options.data?.data?.accessToken, { expires: 60 });
+            Cookies.set('a4weopkd1287u65', options.data?.data?.accessToken, {
+                expires: 60,
+            });
 
             message.success('Login Successfully');
             message.success('Redirecting to Dashboard');
@@ -88,7 +91,11 @@ const Login = () => {
                     CONTINUE MANUALY
                 </Divider>
 
-                <Form.Item style={{ marginBottom: '10px' }} label="Login With" name="toggle_filed">
+                <Form.Item
+                    style={{ marginBottom: '10px' }}
+                    label="Login With"
+                    name="toggle_filed"
+                >
                     <Radio.Group onChange={onChange} value={loginWith}>
                         <Radio value={1}>ID</Radio>
                         <Radio value={2}>Email</Radio>
@@ -137,7 +144,12 @@ const Login = () => {
                         name="id"
                         label="Phone"
                         tooltip="Enter your Phone Number"
-                        rules={[{ required: true, message: 'Please input your Phone | Email | ID!' }]}
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your Phone | Email | ID!',
+                            },
+                        ]}
                     >
                         <Input
                             addonBefore={prefixSelector}
@@ -179,7 +191,12 @@ const Login = () => {
                 </Form.Item>
 
                 <Form.Item>
-                    <Button block type="primary" htmlType="submit" loading={options?.isLoading}>
+                    <Button
+                        block
+                        type="primary"
+                        htmlType="submit"
+                        loading={options?.isLoading}
+                    >
                         Login
                     </Button>
                 </Form.Item>
@@ -197,7 +214,12 @@ const Login = () => {
                     >
                         Google
                     </Button>
-                    <Button icon={<FacebookOutlined />} style={{ cursor: 'pointer' }} size="large" type="primary">
+                    <Button
+                        icon={<FacebookOutlined />}
+                        style={{ cursor: 'pointer' }}
+                        size="large"
+                        type="primary"
+                    >
                         Facebook
                     </Button>
                 </Space>

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HomeOutlined, InboxOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -110,7 +111,11 @@ const CreateProduct = () => {
     ];
 
     const filter = (inputValue: string, path: DefaultOptionType[]) =>
-        path.some((option) => (option.label as string).toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
+        path.some(
+            (option) =>
+                (option.label as string).toLowerCase().indexOf(inputValue.toLowerCase()) >
+                -1,
+        );
 
     const SIZE__OPTIONS = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
 
@@ -151,14 +156,22 @@ const CreateProduct = () => {
                 >
                     <Row gutter={[20, 20]}>
                         <Col xs={24} lg={12} xl={16}>
-                            <Card style={{ backgroundColor: '#fff' }} title="Product Info" bordered={false}>
+                            <Card
+                                style={{ backgroundColor: '#fff' }}
+                                title="Product Info"
+                                bordered={false}
+                            >
                                 <Form.Item
                                     style={{ marginBottom: '10px', width: '100%' }}
                                     name="name"
                                     label="Product name"
                                     tooltip="What do you want others to call your product?"
                                     rules={[
-                                        { required: true, message: 'Please input product name!', whitespace: true },
+                                        {
+                                            required: true,
+                                            message: 'Please input product name!',
+                                            whitespace: true,
+                                        },
                                     ]}
                                 >
                                     <Input placeholder="Product Title" />
@@ -170,7 +183,8 @@ const CreateProduct = () => {
                                         {
                                             type: 'array',
                                             required: true,
-                                            message: 'Please select the product category!',
+                                            message:
+                                                'Please select the product category!',
                                         },
                                     ]}
                                 >
@@ -185,11 +199,19 @@ const CreateProduct = () => {
                                     name="price"
                                     label="Product Price"
                                     tooltip="What do your product price?"
-                                    rules={[{ required: true, message: 'Please input product Price!' }]}
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please input product Price!',
+                                        },
+                                    ]}
                                 >
                                     <InputNumber
                                         addonAfter={
-                                            <Select defaultValue="USD" style={{ width: 60 }}>
+                                            <Select
+                                                defaultValue="USD"
+                                                style={{ width: 60 }}
+                                            >
                                                 <Option value="USD">$</Option>
                                                 <Option value="EUR">€</Option>
                                                 <Option value="GBP">£</Option>
@@ -207,7 +229,10 @@ const CreateProduct = () => {
                                     label="Product Stock"
                                     tooltip="What do your product stocked?"
                                     rules={[
-                                        { required: true, message: 'Please input product stock!' },
+                                        {
+                                            required: true,
+                                            message: 'Please input product stock!',
+                                        },
                                         {
                                             type: 'number',
                                         },
@@ -227,7 +252,10 @@ const CreateProduct = () => {
                                     label="Product Weight"
                                     tooltip="What do your product weight?"
                                     rules={[
-                                        { required: true, message: 'Please input product weight!' },
+                                        {
+                                            required: true,
+                                            message: 'Please input product weight!',
+                                        },
                                         {
                                             type: 'number',
                                         },
@@ -241,18 +269,27 @@ const CreateProduct = () => {
                                     name="brand"
                                     label="Product Brand"
                                     tooltip="What do you want others to call your brand?"
-                                    rules={[{ required: true, message: 'Please input product brand!' }]}
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please input product brand!',
+                                        },
+                                    ]}
                                 >
                                     <Select
                                         showSearch
                                         // style={{ width: 200 }}
                                         placeholder="Search to Select"
                                         optionFilterProp="children"
-                                        filterOption={(input, option) => (option?.label ?? '').includes(input)}
+                                        filterOption={(input, option) =>
+                                            (option?.label ?? '').includes(input)
+                                        }
                                         filterSort={(optionA, optionB) =>
                                             (optionA?.label ?? '')
                                                 .toLowerCase()
-                                                .localeCompare((optionB?.label ?? '').toLowerCase())
+                                                .localeCompare(
+                                                    (optionB?.label ?? '').toLowerCase(),
+                                                )
                                         }
                                         options={[
                                             {
@@ -287,18 +324,27 @@ const CreateProduct = () => {
                                     name="shop"
                                     label="Product Shop"
                                     tooltip="What do you want others to call your shop?"
-                                    rules={[{ required: true, message: 'Please input product shop!' }]}
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please input product shop!',
+                                        },
+                                    ]}
                                 >
                                     <Select
                                         showSearch
                                         // style={{ width: 200 }}
                                         placeholder="Search to Select"
                                         optionFilterProp="children"
-                                        filterOption={(input, option) => (option?.label ?? '').includes(input)}
+                                        filterOption={(input, option) =>
+                                            (option?.label ?? '').includes(input)
+                                        }
                                         filterSort={(optionA, optionB) =>
                                             (optionA?.label ?? '')
                                                 .toLowerCase()
-                                                .localeCompare((optionB?.label ?? '').toLowerCase())
+                                                .localeCompare(
+                                                    (optionB?.label ?? '').toLowerCase(),
+                                                )
                                         }
                                         options={[
                                             {
@@ -333,19 +379,31 @@ const CreateProduct = () => {
                                         label="Product Description"
                                         tooltip="What do you want others to call your description?"
                                     >
-                                        <CKEditor editor={ClassicEditor} data="<p>Hello from CKEditor 5!</p>" />
+                                        <CKEditor
+                                            editor={ClassicEditor}
+                                            data="<p>Hello from CKEditor 5!</p>"
+                                        />
                                     </Form.Item>
                                 </Form.Item>
                             </Card>
                         </Col>
                         <Col xs={24} lg={12} xl={8}>
-                            <Card style={{ backgroundColor: '#fff' }} title="Product Info" bordered={false}>
+                            <Card
+                                style={{ backgroundColor: '#fff' }}
+                                title="Product Info"
+                                bordered={false}
+                            >
                                 <Form.Item
                                     style={{ marginBottom: '10px', width: '100%' }}
                                     name="size"
                                     label="Size"
                                     tooltip="What do your product Variations?"
-                                    rules={[{ required: true, message: 'Please enter the product size!' }]}
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please enter the product size!',
+                                        },
+                                    ]}
                                 >
                                     <Select
                                         mode="tags"
@@ -387,7 +445,12 @@ const CreateProduct = () => {
                                         name="photo"
                                         valuePropName="fileList"
                                         getValueFromEvent={normFile}
-                                        rules={[{ required: true, message: 'Select an Photo!' }]}
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Select an Photo!',
+                                            },
+                                        ]}
                                     >
                                         <Upload.Dragger
                                             fileList={fileList}
@@ -399,14 +462,24 @@ const CreateProduct = () => {
                                             <p className="ant-upload-drag-icon">
                                                 <InboxOutlined />
                                             </p>
-                                            <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                                            <p className="ant-upload-hint">Support for a single or bulk upload.</p>
+                                            <p className="ant-upload-text">
+                                                Click or drag file to this area to upload
+                                            </p>
+                                            <p className="ant-upload-hint">
+                                                Support for a single or bulk upload.
+                                            </p>
                                         </Upload.Dragger>
                                     </Form.Item>
                                 </Form.Item>
 
-                                <Form.Item name="short_descriptions" label="Short Description">
-                                    <Input.TextArea showCount placeholder="Enter Shopt Description" />
+                                <Form.Item
+                                    name="short_descriptions"
+                                    label="Short Description"
+                                >
+                                    <Input.TextArea
+                                        showCount
+                                        placeholder="Enter Shopt Description"
+                                    />
                                 </Form.Item>
                             </Card>
 
@@ -438,12 +511,23 @@ const CreateProduct = () => {
                                     />
                                 </Form.Item>
 
-                                <Form.Item name="meta_description" label="Meta Description">
-                                    <Input.TextArea showCount placeholder="Enter Meta Description" />
+                                <Form.Item
+                                    name="meta_description"
+                                    label="Meta Description"
+                                >
+                                    <Input.TextArea
+                                        showCount
+                                        placeholder="Enter Meta Description"
+                                    />
                                 </Form.Item>
 
                                 <Form.Item>
-                                    <Button style={{ marginTop: '20px' }} block type="primary" htmlType="submit">
+                                    <Button
+                                        style={{ marginTop: '20px' }}
+                                        block
+                                        type="primary"
+                                        htmlType="submit"
+                                    >
                                         Submit
                                     </Button>
                                 </Form.Item>
@@ -452,7 +536,12 @@ const CreateProduct = () => {
                     </Row>
                 </Form>
 
-                <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
+                <Modal
+                    open={previewOpen}
+                    title={previewTitle}
+                    footer={null}
+                    onCancel={handleCancel}
+                >
                     <img alt="example" style={{ width: '100%' }} src={previewImage} />
                 </Modal>
             </div>

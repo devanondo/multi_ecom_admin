@@ -1,37 +1,33 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import Cookies from 'js-cookie';
-import type { BaseQueryFn } from '@reduxjs/toolkit/query';
-import axios from 'axios';
-import type { AxiosRequestConfig, AxiosError } from 'axios';
 
-const axiosBaseQuery =
-    (
-        { baseUrl, headers }: { baseUrl: string; headers: Record<string, string> } = { baseUrl: '', headers: {} },
-    ): BaseQueryFn<
-        {
-            url: string;
-            method: AxiosRequestConfig['method'];
-            data?: AxiosRequestConfig['data'];
-            params?: AxiosRequestConfig['params'];
-        },
-        unknown,
-        unknown
-    > =>
-    async ({ url, method, data, params }) => {
-        try {
-            const result = await axios({ url: baseUrl + url, method, data, params, headers });
-            return { data: result.data };
-        } catch (axiosError) {
-            const err = axiosError as AxiosError;
-            return {
-                error: {
-                    status: err.response?.status,
-                    data: err.response?.data || err.message,
-                },
-            };
-        }
-    };
+// const axiosBaseQuery =
+//     (
+//         { baseUrl, headers }: { baseUrl: string; headers: Record<string, string> } = { baseUrl: '', headers: {} },
+//     ): BaseQueryFn<
+//         {
+//             url: string;
+//             method: AxiosRequestConfig['method'];
+//             data?: AxiosRequestConfig['data'];
+//             params?: AxiosRequestConfig['params'];
+//         },
+//         unknown,
+//         unknown
+//     > =>
+//     async ({ url, method, data, params }) => {
+//         try {
+//             const result = await axios({ url: baseUrl + url, method, data, params, headers });
+//             return { data: result.data };
+//         } catch (axiosError) {
+//             const err = axiosError as AxiosError;
+//             return {
+//                 error: {
+//                     status: err.response?.status,
+//                     data: err.response?.data || err.message,
+//                 },
+//             };
+//         }
+//     };
 
 export const api = createApi({
     reducerPath: 'api',
