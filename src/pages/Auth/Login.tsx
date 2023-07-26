@@ -39,7 +39,10 @@ const Login = () => {
     const navigate = useNavigate();
 
     const onFinish = (values: IValues) => {
-        getLogin(values);
+        const { id, password } = values;
+        getLogin({ id, password });
+
+        console.log(values);
     };
 
     useEffect(() => {

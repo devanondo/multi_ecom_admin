@@ -22,14 +22,17 @@ const Sidebar = () => {
         getItem('Catalog', '/products', <DesktopOutlined />, [
             getItem('Product List', '/product'),
             getItem('Create Product', 'product/create'),
+            getItem('Product Details', 'product/details'),
             getItem('Category List', 'category'),
             getItem('Create Category', 'category/create'),
             getItem('Shop List', 'shop'),
         ]),
-        getItem('Users', 'sub1', <TeamOutlined />, [
-            getItem('Customer List', 'customer'),
-            getItem('Vendor', 'vendor'),
-            getItem('Admin List', 'admin'),
+        getItem('Users', 'user', <TeamOutlined />, [
+            getItem('User List', 'user'),
+            getItem('Create', 'user/create'),
+            getItem('Customer List', 'user/customer'),
+            getItem('Vendor', 'user/vendor'),
+            getItem('Admin List', 'user/admin'),
         ]),
         getItem('Orders', 'sub2', <ShoppingCartOutlined />, [getItem('Order List', 'order')]),
         getItem('Files', '9', <FileOutlined />),

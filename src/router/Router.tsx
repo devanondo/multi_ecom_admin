@@ -8,6 +8,12 @@ import ProductDetails from '../pages/Products/ProductDetails';
 import EditProduct from '../pages/Products/EditProduct';
 import Login from '../pages/Auth/Login';
 import Register from '../pages/Auth/Register';
+import UserList from '../pages/User/UserList';
+import CreateUser from '../pages/User/CreateUser';
+import AdminList from '../pages/User/AdminList';
+import VendorList from '../pages/User/VendorList';
+import CustomerList from '../pages/User/CustomerList';
+import SellerList from '../pages/Seller/SellerList';
 
 const routes: RouteObject[] = [
     {
@@ -27,7 +33,8 @@ const routes: RouteObject[] = [
                         element: <ProductList />,
                     },
                     {
-                        path: ':id',
+                        // path: ':id',
+                        path: 'details',
                         element: <ProductDetails />,
                     },
                     {
@@ -37,6 +44,40 @@ const routes: RouteObject[] = [
                     {
                         path: 'create',
                         element: <CreateProduct />,
+                    },
+                ],
+            },
+            {
+                path: 'user',
+                children: [
+                    {
+                        index: true,
+                        element: <UserList />,
+                    },
+                    {
+                        path: 'create',
+                        element: <CreateUser />,
+                    },
+                    {
+                        path: 'admin',
+                        element: <AdminList />,
+                    },
+                    {
+                        path: 'vendor',
+                        element: <VendorList />,
+                    },
+                    {
+                        path: 'customer',
+                        element: <CustomerList />,
+                    },
+                ],
+            },
+            {
+                path: 'seller',
+                children: [
+                    {
+                        index: true,
+                        element: <SellerList />,
                     },
                 ],
             },

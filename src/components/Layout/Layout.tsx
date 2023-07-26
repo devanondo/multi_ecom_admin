@@ -22,7 +22,7 @@ const LayoutPage: FC<ILayout> = ({ children }) => {
     useGetProductsQuery(undefined);
 
     return (
-        <Layout style={{ minHeight: '100vh' }}>
+        <Layout style={{ height: '100vh', overflowY: 'hidden' }}>
             <Sider width={256} trigger={null} collapsible collapsed={collapsed}>
                 <div className="sidebar__header">
                     <img src={Images.Logo} alt="ecrypt ecommerce logo" />
@@ -55,9 +55,10 @@ const LayoutPage: FC<ILayout> = ({ children }) => {
                 </Header>
                 <Content
                     style={{
-                        margin: '24px 16px 0 16px',
-                        padding: 24,
-                        background: colorBgContainer,
+                        margin: '0',
+                        padding: '0',
+                        background: '#f5f5f5',
+                        overflowY: 'scroll',
                     }}
                 >
                     {children}
