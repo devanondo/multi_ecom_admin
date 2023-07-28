@@ -1,12 +1,14 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+    HomeOutlined,
     InboxOutlined,
     LockOutlined,
     MailOutlined,
+    UnorderedListOutlined,
     UserOutlined,
 } from '@ant-design/icons';
-import { Button, Divider, Form, Input, Modal, Select, Upload } from 'antd';
+import { Breadcrumb, Button, Divider, Form, Input, Modal, Select, Upload } from 'antd';
 import { SizeType } from 'antd/es/config-provider/SizeContext';
 import { RcFile, UploadFile, UploadProps } from 'antd/es/upload';
 import { useState } from 'react';
@@ -68,213 +70,247 @@ const CreateUser = () => {
 
     return (
         <div className="create__user__page">
-            <Header title="Create Admin"></Header>
+            <Header title="Create Admin">
+                <Breadcrumb
+                    items={[
+                        {
+                            href: '/',
+                            title: <HomeOutlined />,
+                        },
+                        {
+                            href: '/user',
+                            title: (
+                                <>
+                                    <UnorderedListOutlined />
+                                    <span>User</span>
+                                </>
+                            ),
+                        },
+                        {
+                            title: 'Create Admin',
+                        },
+                    ]}
+                />
+            </Header>
 
-            <div className="create__user__form">
-                <Form
-                    form={form}
-                    name="register"
-                    onFinish={onFinish}
-                    style={{ maxWidth: 600 }}
-                    scrollToFirstError
-                    size={'large' as SizeType}
-                    layout="vertical"
-                    className="register__form"
-                >
-                    <Divider orientation="center" plain>
-                        CONTINUE MANUALY
-                    </Divider>
+            <div className="content__wrapper">
+                <div className="create__user__form">
+                    <Form
+                        form={form}
+                        name="register"
+                        onFinish={onFinish}
+                        style={{ maxWidth: 600 }}
+                        scrollToFirstError
+                        size={'large' as SizeType}
+                        layout="vertical"
+                        className="register__form"
+                    >
+                        <Divider orientation="center" plain>
+                            CONTINUE MANUALY
+                        </Divider>
 
-                    <Flex gap={20}>
-                        <Form.Item
-                            style={{ marginBottom: '10px', width: '100%' }}
-                            name="first_name"
-                            label="First name"
-                            tooltip="What do you want others to call you?"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your first name!',
-                                    whitespace: true,
-                                },
-                            ]}
-                        >
-                            <Input
-                                prefix={<UserOutlined className="site-form-item-icon" />}
-                                placeholder="First name"
-                            />
-                        </Form.Item>
-
-                        <Form.Item
-                            style={{ marginBottom: '10px', width: '100%' }}
-                            name="last_name"
-                            label="Last name"
-                            tooltip="What do you want others to call you?"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your last name!',
-                                    whitespace: true,
-                                },
-                            ]}
-                        >
-                            <Input
-                                prefix={<UserOutlined className="site-form-item-icon" />}
-                                placeholder="Last name"
-                            />
-                        </Form.Item>
-                    </Flex>
-                    <Flex gap={20}>
-                        <Form.Item
-                            style={{ marginBottom: '10px', width: '100%' }}
-                            name="password"
-                            label="Password"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your password!',
-                                },
-                            ]}
-                            hasFeedback
-                        >
-                            <Input.Password
-                                prefix={<LockOutlined className="site-form-item-icon" />}
-                                type="password"
-                                placeholder="Password"
-                            />
-                        </Form.Item>
-
-                        <Form.Item
-                            style={{ marginBottom: '10px', width: '100%' }}
-                            name="confirm"
-                            label="Confirm Password"
-                            dependencies={['password']}
-                            hasFeedback
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please confirm your password!',
-                                },
-                                ({ getFieldValue }) => ({
-                                    validator(_, value) {
-                                        if (
-                                            !value ||
-                                            getFieldValue('password') === value
-                                        ) {
-                                            return Promise.resolve();
-                                        }
-                                        return Promise.reject(
-                                            new Error(
-                                                'The new password that you entered do not match!',
-                                            ),
-                                        );
+                        <Flex gap={20}>
+                            <Form.Item
+                                style={{ marginBottom: '10px', width: '100%' }}
+                                name="first_name"
+                                label="First name"
+                                tooltip="What do you want others to call you?"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please input your first name!',
+                                        whitespace: true,
                                     },
-                                }),
+                                ]}
+                            >
+                                <Input
+                                    prefix={
+                                        <UserOutlined className="site-form-item-icon" />
+                                    }
+                                    placeholder="First name"
+                                />
+                            </Form.Item>
+
+                            <Form.Item
+                                style={{ marginBottom: '10px', width: '100%' }}
+                                name="last_name"
+                                label="Last name"
+                                tooltip="What do you want others to call you?"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please input your last name!',
+                                        whitespace: true,
+                                    },
+                                ]}
+                            >
+                                <Input
+                                    prefix={
+                                        <UserOutlined className="site-form-item-icon" />
+                                    }
+                                    placeholder="Last name"
+                                />
+                            </Form.Item>
+                        </Flex>
+                        <Flex gap={20}>
+                            <Form.Item
+                                style={{ marginBottom: '10px', width: '100%' }}
+                                name="password"
+                                label="Password"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please input your password!',
+                                    },
+                                ]}
+                                hasFeedback
+                            >
+                                <Input.Password
+                                    prefix={
+                                        <LockOutlined className="site-form-item-icon" />
+                                    }
+                                    type="password"
+                                    placeholder="Password"
+                                />
+                            </Form.Item>
+
+                            <Form.Item
+                                style={{ marginBottom: '10px', width: '100%' }}
+                                name="confirm"
+                                label="Confirm Password"
+                                dependencies={['password']}
+                                hasFeedback
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please confirm your password!',
+                                    },
+                                    ({ getFieldValue }) => ({
+                                        validator(_, value) {
+                                            if (
+                                                !value ||
+                                                getFieldValue('password') === value
+                                            ) {
+                                                return Promise.resolve();
+                                            }
+                                            return Promise.reject(
+                                                new Error(
+                                                    'The new password that you entered do not match!',
+                                                ),
+                                            );
+                                        },
+                                    }),
+                                ]}
+                            >
+                                <Input.Password
+                                    prefix={
+                                        <LockOutlined className="site-form-item-icon" />
+                                    }
+                                    type="password"
+                                    placeholder="Password"
+                                />
+                            </Form.Item>
+                        </Flex>
+                        <Form.Item
+                            style={{ marginBottom: '10px' }}
+                            name="email"
+                            label="E-mail"
+                            tooltip="Enter your Email"
+                            rules={[
+                                {
+                                    type: 'email',
+                                    message: 'The input is not valid E-mail!',
+                                },
                             ]}
                         >
-                            <Input.Password
-                                prefix={<LockOutlined className="site-form-item-icon" />}
-                                type="password"
-                                placeholder="Password"
+                            <Input
+                                prefix={<MailOutlined className="site-form-item-icon" />}
+                                placeholder="Email"
                             />
                         </Form.Item>
-                    </Flex>
-                    <Form.Item
-                        style={{ marginBottom: '10px' }}
-                        name="email"
-                        label="E-mail"
-                        tooltip="Enter your Email"
-                        rules={[
-                            {
-                                type: 'email',
-                                message: 'The input is not valid E-mail!',
-                            },
-                        ]}
-                    >
-                        <Input
-                            prefix={<MailOutlined className="site-form-item-icon" />}
-                            placeholder="Email"
-                        />
-                    </Form.Item>
 
-                    <Form.Item
-                        style={{ marginBottom: '10px' }}
-                        name="phone"
-                        label="Phone Number"
-                        tooltip="Enter your Phone Number"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please input your phone number!',
-                            },
-                        ]}
-                    >
-                        <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
-                    </Form.Item>
-
-                    <Form.Item
-                        style={{ marginBottom: '10px' }}
-                        name="gender"
-                        label="Gender"
-                        rules={[{ required: true, message: 'Please select gender!' }]}
-                    >
-                        <Select placeholder="select your gender">
-                            <Option value="male">Male</Option>
-                            <Option value="female">Female</Option>
-                            <Option value="other">Other</Option>
-                        </Select>
-                    </Form.Item>
-
-                    <Form.Item label="Upload Photo">
                         <Form.Item
-                            name="photo"
-                            valuePropName="fileList"
-                            getValueFromEvent={normFile}
-                            rules={[{ required: true, message: 'Select an Photo!' }]}
+                            style={{ marginBottom: '10px' }}
+                            name="phone"
+                            label="Phone Number"
+                            tooltip="Enter your Phone Number"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your phone number!',
+                                },
+                            ]}
                         >
-                            <Upload.Dragger
-                                fileList={fileList}
-                                onPreview={handlePreview}
-                                onChange={handleChange}
-                                name="files"
-                                listType="picture"
-                            >
-                                <p className="ant-upload-drag-icon">
-                                    <InboxOutlined />
-                                </p>
-                                <p className="ant-upload-text">
-                                    Click or drag file to this area to upload
-                                </p>
-                                <p className="ant-upload-hint">
-                                    Support for a single or bulk upload.
-                                </p>
-                            </Upload.Dragger>
+                            <Input
+                                addonBefore={prefixSelector}
+                                style={{ width: '100%' }}
+                            />
                         </Form.Item>
-                    </Form.Item>
 
-                    <Form.Item
-                        name="intro"
-                        label="Intro"
-                        rules={[{ required: true, message: 'Should have someting!' }]}
+                        <Form.Item
+                            style={{ marginBottom: '10px' }}
+                            name="gender"
+                            label="Gender"
+                            rules={[{ required: true, message: 'Please select gender!' }]}
+                        >
+                            <Select placeholder="select your gender">
+                                <Option value="male">Male</Option>
+                                <Option value="female">Female</Option>
+                                <Option value="other">Other</Option>
+                            </Select>
+                        </Form.Item>
+
+                        <Form.Item label="Upload Photo">
+                            <Form.Item
+                                name="photo"
+                                valuePropName="fileList"
+                                getValueFromEvent={normFile}
+                                rules={[{ required: true, message: 'Select an Photo!' }]}
+                            >
+                                <Upload.Dragger
+                                    fileList={fileList}
+                                    onPreview={handlePreview}
+                                    onChange={handleChange}
+                                    name="files"
+                                    listType="picture"
+                                >
+                                    <p className="ant-upload-drag-icon">
+                                        <InboxOutlined />
+                                    </p>
+                                    <p className="ant-upload-text">
+                                        Click or drag file to this area to upload
+                                    </p>
+                                    <p className="ant-upload-hint">
+                                        Support for a single or bulk upload.
+                                    </p>
+                                </Upload.Dragger>
+                            </Form.Item>
+                        </Form.Item>
+
+                        <Form.Item
+                            name="intro"
+                            label="Intro"
+                            rules={[{ required: true, message: 'Should have someting!' }]}
+                        >
+                            <Input.TextArea showCount />
+                        </Form.Item>
+
+                        <Form.Item>
+                            <Button block type="primary" htmlType="submit">
+                                Submit
+                            </Button>
+                        </Form.Item>
+                    </Form>
+
+                    <Modal
+                        open={previewOpen}
+                        title={previewTitle}
+                        footer={null}
+                        onCancel={handleCancel}
                     >
-                        <Input.TextArea showCount />
-                    </Form.Item>
-
-                    <Form.Item>
-                        <Button block type="primary" htmlType="submit">
-                            Submit
-                        </Button>
-                    </Form.Item>
-                </Form>
-
-                <Modal
-                    open={previewOpen}
-                    title={previewTitle}
-                    footer={null}
-                    onCancel={handleCancel}
-                >
-                    <img alt="example" style={{ width: '100%' }} src={previewImage} />
-                </Modal>
+                        <img alt="example" style={{ width: '100%' }} src={previewImage} />
+                    </Modal>
+                </div>
             </div>
         </div>
     );

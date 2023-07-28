@@ -8,7 +8,7 @@ import {
     PhoneOutlined,
     DownloadOutlined,
 } from '@ant-design/icons';
-import { Breadcrumb, Button, Card, Image, Steps, Typography } from 'antd';
+import { Breadcrumb, Button, Card, Divider, Image, Steps, Typography } from 'antd';
 import Header from '../../components/Shared/Header/Header';
 import './Order.scss';
 import { Link } from 'react-router-dom';
@@ -56,42 +56,158 @@ const OrderDetails: React.FC = () => {
                                 </>
                             }
                         >
-                            <table>
-                                <tr>
-                                    <th>
-                                        <Text strong>Product Details</Text>
-                                    </th>
-                                    <th>
-                                        <Text strong>Item Price</Text>
-                                    </th>
-                                    <th>
-                                        <Text strong>Quantity</Text>
-                                    </th>
-                                    <th>
-                                        <Text strong>Total Amount</Text>
-                                    </th>
-                                </tr>
+                            <table width="100%">
+                                <thead>
+                                    <tr style={{ backgroundColor: '#f3f3f9' }}>
+                                        <th align="center">
+                                            <Text strong>#</Text>
+                                        </th>
+                                        <th align="left">
+                                            <Text strong>Product Details</Text>
+                                        </th>
+                                        <th align="left">
+                                            <Text strong>Item Price</Text>
+                                        </th>
+                                        <th align="left">
+                                            <Text strong>Quantity</Text>
+                                        </th>
+                                        <th align="right">
+                                            <Text strong>Total Amount</Text>
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {[1, 2, 3].map((item) => (
+                                        <tr key={item}>
+                                            <td width="20px" align="center">
+                                                {item}
+                                            </td>
+                                            <td width="50%">
+                                                <Flex align="center" gap={10}>
+                                                    <Image
+                                                        width={70}
+                                                        height={70}
+                                                        style={{ borderRadius: 5 }}
+                                                        src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                                                    />
+
+                                                    <div>
+                                                        <Title level={5}>
+                                                            Sweatshirt for Men (Pink)
+                                                        </Title>
+                                                        <Paragraph type="secondary">
+                                                            Color :{' '}
+                                                            <Text strong type="secondary">
+                                                                Red
+                                                            </Text>
+                                                        </Paragraph>
+                                                        <Paragraph type="secondary">
+                                                            Size :{' '}
+                                                            <Text strong type="secondary">
+                                                                M
+                                                            </Text>
+                                                        </Paragraph>
+                                                    </div>
+                                                </Flex>
+                                            </td>
+                                            <td width="12%">
+                                                <Paragraph type="secondary">
+                                                    $121
+                                                </Paragraph>
+                                            </td>
+                                            <td width="13%">
+                                                <Paragraph type="secondary">2</Paragraph>
+                                            </td>
+                                            <td width="20%" align="right">
+                                                <Paragraph type="secondary" strong>
+                                                    $242
+                                                </Paragraph>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                            <Divider />
+
+                            <table align="right">
+                                <tbody>
+                                    <tr>
+                                        <td width="60%" align="left">
+                                            <Paragraph strong>Sub Total :</Paragraph>
+                                        </td>
+                                        <td width="40%" align="right">
+                                            $1221
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="60%" align="left">
+                                            <Paragraph strong>
+                                                Discount (VELZON15) :
+                                            </Paragraph>
+                                        </td>
+                                        <td width="40%" align="right">
+                                            -$53.99
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="60%" align="left">
+                                            <Paragraph strong>
+                                                Shipping Charge :
+                                            </Paragraph>
+                                        </td>
+                                        <td width="40%" align="right">
+                                            $65.00
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="60%" align="left">
+                                            <Paragraph strong>Estimated Tax :</Paragraph>
+                                        </td>
+                                        <td width="40%" align="right">
+                                            $44.99
+                                        </td>
+                                    </tr>
+                                    <tr style={{ borderTop: '1px solid lightgray' }}>
+                                        <td width="60%" align="left">
+                                            <Paragraph strong>Total (USD) :</Paragraph>
+                                        </td>
+                                        <td width="40%" align="right">
+                                            $65.00
+                                        </td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </Card>
-
-                        <Steps
-                            direction="vertical"
-                            current={1}
-                            items={[
-                                {
-                                    title: 'Finished',
-                                    description,
-                                },
-                                {
-                                    title: 'In Progress',
-                                    description,
-                                },
-                                {
-                                    title: 'Waiting',
-                                    description,
-                                },
-                            ]}
-                        />
+                        <Card
+                            style={{ marginTop: 20 }}
+                            title="Order Status"
+                            extra={
+                                <Flex gap={10}>
+                                    <Button size="small">Change Address</Button>
+                                    <Button size="small">Cancel Order</Button>
+                                </Flex>
+                            }
+                        >
+                            <Steps
+                                direction="vertical"
+                                current={1}
+                                items={[
+                                    {
+                                        title: 'Finished',
+                                        description,
+                                    },
+                                    {
+                                        title: 'In Progress',
+                                        description,
+                                    },
+                                    {
+                                        title: 'Waiting',
+                                        description,
+                                    },
+                                ]}
+                            />
+                        </Card>
                     </div>
 
                     <div className="info">

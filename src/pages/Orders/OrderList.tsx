@@ -43,7 +43,7 @@ const OrderList: React.FC = () => {
                     title="ORDERS"
                     extra={
                         <Flex gap={10}>
-                            <Button>
+                            <Button type="primary">
                                 <PlusOutlined />
                                 Create Order
                             </Button>
@@ -139,7 +139,7 @@ const OrderList: React.FC = () => {
                             ]}
                         />
 
-                        <Button>
+                        <Button type="primary">
                             <SlidersOutlined />
                             Filter
                         </Button>
