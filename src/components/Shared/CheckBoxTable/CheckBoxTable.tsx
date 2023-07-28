@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-console */
 import { DeleteFilled, EditFilled, SyncOutlined } from '@ant-design/icons';
 import { Tag } from 'antd';
 import Table, { ColumnsType } from 'antd/es/table';
