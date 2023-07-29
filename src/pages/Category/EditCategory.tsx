@@ -1,6 +1,6 @@
 import React from 'react';
 
-const EditCategory = () => {
+const EditCategory: React.FC = () => {
     return <div>EditCategory</div>;
 };
 
