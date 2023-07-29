@@ -17,6 +17,10 @@ import SellerList from '../pages/Seller/SellerList';
 import SellerDetails from '../pages/Seller/SellerDetails';
 import OrderList from '../pages/Orders/OrderList';
 import OrderDetails from '../pages/Orders/OrderDetails';
+import CategoryList from '../pages/Category/CategoryList';
+import CategoryDetails from '../pages/Category/CategoryDetails';
+import CreateCategory from '../pages/Category/CreateCategory';
+import EditCategory from '../pages/Category/EditCategory';
 
 const routes: RouteObject[] = [
     {
@@ -47,6 +51,28 @@ const routes: RouteObject[] = [
                     {
                         path: 'create',
                         element: <CreateProduct />,
+                    },
+                ],
+            },
+            {
+                path: 'category',
+                children: [
+                    {
+                        index: true,
+                        element: <CategoryList />,
+                    },
+                    {
+                        // path: ':id',
+                        path: 'details',
+                        element: <CategoryDetails />,
+                    },
+                    {
+                        path: ':category_id/edit',
+                        element: <EditCategory />,
+                    },
+                    {
+                        path: 'create',
+                        element: <CreateCategory />,
                     },
                 ],
             },

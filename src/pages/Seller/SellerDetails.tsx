@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
 import {
     HomeOutlined,
+    PlusOutlined,
     RocketOutlined,
     StarFilled,
     UnorderedListOutlined,
-    PlusOutlined,
 } from '@ant-design/icons';
 import {
     Avatar,
@@ -19,15 +19,16 @@ import {
     Tabs,
     Typography,
 } from 'antd';
+import Search from 'antd/es/input/Search';
 import moment from 'moment';
 import React from 'react';
 import RatingDetails from '../../components/Products/Details/RatingDetails';
 import InfoTable from '../../components/Seller/Details/InfoTable';
+import SplineChart from '../../components/Shared/Charts/AreaChart/SplineChart';
+import CheckBoxTable from '../../components/Shared/CheckBoxTable/CheckBoxTable';
 import Flex from '../../components/Shared/Flex/Flex';
 import Header from '../../components/Shared/Header/Header';
 import './Seller.scss';
-import SplineChart from '../../components/Shared/Charts/AreaChart/SplineChart';
-import Search from 'antd/es/input/Search';
 import CollapsTable from '../../components/Shared/CollapsTable/CollapsTable';
 
 const SellerDetails: React.FC = () => {
@@ -42,19 +43,16 @@ const SellerDetails: React.FC = () => {
         },
     ];
 
-    const sds = <CollapsTable />;
-    const sds2 = <h1>what</h1>;
-
     const tabOptions = [
         {
             label: 'ORDERS',
             key: '1',
-            children: sds2,
+            children: <CheckBoxTable />,
         },
         {
             label: 'PRODUCTS',
             key: '2',
-            children: sds,
+            children: <CollapsTable />,
         },
     ];
 
@@ -241,19 +239,7 @@ const SellerDetails: React.FC = () => {
                         </Card>
                     </div>
                     <div className="seller__details">
-                        <Card title="REVENUE">
-                            <div
-                                style={{
-                                    overflow: 'hidden',
-                                    maxWidth: '800px',
-                                    width: '100%',
-                                }}
-                            >
-                                <SplineChart />
-                            </div>
-                        </Card>
-
-                        <Card style={{ marginTop: 20 }}>
+                        <Card>
                             <Flex justify="space-between">
                                 <Button>
                                     <PlusOutlined /> Add Seller
@@ -264,6 +250,18 @@ const SellerDetails: React.FC = () => {
                                     style={{ width: 200 }}
                                 />
                             </Flex>
+                        </Card>
+
+                        <Card style={{ marginTop: 20 }} title="REVENUE">
+                            <div
+                                style={{
+                                    overflow: 'hidden',
+                                    // maxWidth: '800px',
+                                    width: '100%',
+                                }}
+                            >
+                                <SplineChart />
+                            </div>
                         </Card>
 
                         <Card style={{ marginTop: 20 }}>

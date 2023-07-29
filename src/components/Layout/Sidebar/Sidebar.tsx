@@ -30,13 +30,15 @@ const Sidebar = () => {
 
     const items: MenuItem[] = [
         getItem('Dashboard', '/', <PieChartOutlined />),
-        getItem('Catalog', '/products', <DesktopOutlined />, [
+        getItem('Product', '/products', <DesktopOutlined />, [
             getItem('Product List', '/product'),
             getItem('Create Product', 'product/create'),
             getItem('Product Details', 'product/details'),
-            getItem('Category List', 'category'),
+        ]),
+        getItem('Category', '/category', <DesktopOutlined />, [
+            getItem('Category List', '/category'),
             getItem('Create Category', 'category/create'),
-            getItem('Shop List', 'shop'),
+            getItem('Category Details', 'category/details'),
         ]),
         getItem('Seller', '/seller', <PieChartOutlined />),
 
