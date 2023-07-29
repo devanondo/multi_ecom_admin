@@ -8,6 +8,7 @@ import {
 import { Tabs } from 'antd';
 import React from 'react';
 import CollapsTable from '../Shared/CollapsTable/CollapsTable';
+import CheckBoxTable from '../Shared/CheckBoxTable/CheckBoxTable';
 
 const OrderListTable: React.FC = () => {
     const taboptions = [
@@ -20,32 +21,32 @@ const OrderListTable: React.FC = () => {
         {
             icon: CheckCircleOutlined,
             label: 'Deliverd',
-            key: '1',
-            children: '1',
+            key: '2',
+            children: <CheckBoxTable />,
         },
         {
             icon: CarOutlined,
             label: 'Pickups',
-            key: '1',
-            children: '1',
+            key: '3',
+            children: <CheckBoxTable />,
         },
         {
             icon: SwapOutlined,
             label: 'Return',
-            key: '1',
-            children: '1',
+            key: '4',
+            children: <CheckBoxTable />,
         },
         {
             icon: CloseCircleOutlined,
             label: 'Canclled',
-            key: '1',
-            children: '1',
+            key: '5',
+            children: <CheckBoxTable />,
         },
     ];
     return (
         <div>
             <Tabs
-                defaultActiveKey="2"
+                defaultActiveKey="1"
                 items={taboptions.map((item, i) => {
                     const id = String(i + 1);
 

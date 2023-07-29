@@ -6,6 +6,41 @@
 
         .details {
             flex: 2.5;
+
+            table {
+                border-collapse: collapse;
+
+                thead {
+                    tr {
+                        padding: 10px;
+                        th {
+                            padding-top: 10px;
+                            padding-bottom: 10px;
+                            padding-left: 10px;
+                            padding-right: 10px;
+                        }
+                    }
+                }
+
+                tbody {
+                    tr {
+                        td {
+                            padding-top: 10px;
+                            padding-bottom: 10px;
+                            padding-left: 10px;
+                            padding-right: 10px;
+
+                            h5 {
+                                margin: 0;
+                            }
+
+                            div {
+                                margin: 0;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         .info {

@@ -1,21 +1,44 @@
-import { Breadcrumb, Button, Card, Select } from 'antd';
-import Header from '../../components/Shared/Header/Header';
-import Flex from '../../components/Shared/Flex/Flex';
-import Search from 'antd/es/input/Search';
-import DateRange from '../../components/Shared/DateRangePicker/DateRange';
-import CheckBoxTable from '../../components/Shared/CheckBoxTable/CheckBoxTable';
-
 import {
+    CheckCircleOutlined,
     HomeOutlined,
     PlusOutlined,
+    ProjectFilled,
     SlidersOutlined,
     UnorderedListOutlined,
 } from '@ant-design/icons';
+import { Breadcrumb, Button, Card, Select, Tabs } from 'antd';
+import Search from 'antd/es/input/Search';
+import React from 'react';
+import CategoryTable from '../../components/Category/CategoryTable';
+import DateRange from '../../components/Shared/DateRangePicker/DateRange';
+import Flex from '../../components/Shared/Flex/Flex';
+import Header from '../../components/Shared/Header/Header';
 
-const CustomerList = () => {
+const CategoryList: React.FC = () => {
+    const taboptions = [
+        {
+            icon: ProjectFilled,
+            label: 'Active Category',
+            key: '1',
+            children: <CategoryTable title={'Active Category'} />,
+        },
+        {
+            icon: CheckCircleOutlined,
+            label: 'Peding Category',
+            key: '2',
+            children: <CategoryTable title={'Pending Category'} />,
+        },
+        {
+            icon: CheckCircleOutlined,
+            label: 'Restricted Category',
+            key: '2',
+            children: <CategoryTable title={'Restricted Category'} />,
+        },
+    ];
+
     return (
-        <div className="customer__list__page">
-            <Header title="User List">
+        <div className="category__list__page">
+            <Header title="Category List">
                 <Breadcrumb
                     items={[
                         {
@@ -23,16 +46,16 @@ const CustomerList = () => {
                             title: <HomeOutlined />,
                         },
                         {
-                            href: '/user',
+                            href: '/category',
                             title: (
                                 <>
                                     <UnorderedListOutlined />
-                                    <span>User</span>
+                                    <span>Category</span>
                                 </>
                             ),
                         },
                         {
-                            title: 'Customer list',
+                            title: 'Category List',
                         },
                     ]}
                 />
@@ -44,13 +67,8 @@ const CustomerList = () => {
                     extra={
                         <Flex gap={10}>
                             <Button type="primary">
-                                <PlusOutlined /> Customer
-                            </Button>
-                            <Button danger>
-                                <PlusOutlined /> Vendor
-                            </Button>
-                            <Button>
-                                <PlusOutlined /> Admin
+                                <PlusOutlined />
+                                Add Category
                             </Button>
                         </Flex>
                     }
@@ -147,12 +165,26 @@ const CustomerList = () => {
                     </Flex>
                 </Card>
 
-                <Card title="Customer List" style={{ marginTop: 20 }}>
-                    <CheckBoxTable />
-                </Card>
+                <Tabs
+                    defaultActiveKey="1"
+                    items={taboptions.map((item, i) => {
+                        const id = String(i + 1);
+
+                        return {
+                            label: (
+                                <span>
+                                    <item.icon />
+                                    {item.label}{' '}
+                                </span>
+                            ),
+                            key: id,
+                            children: item.children,
+                        };
+                    })}
+                />
             </div>
         </div>
     );
 };
 
-export default CustomerList;
+export default CategoryList;
