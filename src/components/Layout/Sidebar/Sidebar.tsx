@@ -1,16 +1,16 @@
 import {
     DesktopOutlined,
-    FileOutlined,
     PieChartOutlined,
     ShoppingCartOutlined,
     TeamOutlined,
 } from '@ant-design/icons';
 import { Menu, type MenuProps } from 'antd';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
     type MenuItem = Required<MenuProps>['items'][number];
+    const location = useLocation();
 
     const navigate = useNavigate();
 
@@ -30,29 +30,28 @@ const Sidebar = () => {
 
     const items: MenuItem[] = [
         getItem('Dashboard', '/', <PieChartOutlined />),
-        getItem('Product', '/products', <DesktopOutlined />, [
+        getItem('Product', 'product', <DesktopOutlined />, [
             getItem('Product List', '/product'),
-            getItem('Create Product', 'product/create'),
-            getItem('Product Details', 'product/details'),
+            getItem('Create Product', '/product/create'),
+            getItem('Product Details', '/product/details'),
         ]),
-        getItem('Category', '/category', <DesktopOutlined />, [
+        getItem('Category', 'category', <DesktopOutlined />, [
             getItem('Category List', '/category'),
-            getItem('Create Category', 'category/create'),
-            getItem('Category Details', 'category/details'),
+            getItem('Create Category', '/category/create'),
+            getItem('Category Details', '/category/details'),
         ]),
-        getItem('Seller', '/seller', <PieChartOutlined />),
+        getItem('Seller', 'seller', <PieChartOutlined />),
 
         getItem('Users', 'user', <TeamOutlined />, [
-            getItem('User List', 'user'),
-            getItem('Create', 'user/create'),
-            getItem('Customer List', 'user/customer'),
-            getItem('Vendor', 'user/vendor'),
-            getItem('Admin List', 'user/admin'),
+            getItem('User List', '/user'),
+            getItem('Create', '/user/create'),
+            getItem('Customer List', '/user/customer'),
+            getItem('Vendor', '/user/vendor'),
+            getItem('Admin List', '/user/admin'),
         ]),
-        getItem('Orders', 'sub2', <ShoppingCartOutlined />, [
-            getItem('Order List', 'order'),
+        getItem('Orders', 'order', <ShoppingCartOutlined />, [
+            getItem('Order List', '/order'),
         ]),
-        getItem('Files', '9', <FileOutlined />),
     ];
 
     const onClick: MenuProps['onClick'] = (e) => {
@@ -63,7 +62,8 @@ const Sidebar = () => {
         <Menu
             onClick={onClick}
             theme="dark"
-            defaultSelectedKeys={['1']}
+            defaultSelectedKeys={[location.pathname]}
+            defaultOpenKeys={[location?.pathname.split('/')?.[1]]}
             mode="inline"
             items={items}
         />

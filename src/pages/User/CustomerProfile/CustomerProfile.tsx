@@ -4,15 +4,15 @@ import {
     ProjectFilled,
     UnorderedListOutlined,
 } from '@ant-design/icons';
-import { Breadcrumb, Carousel, Image, Tabs } from 'antd';
+import { Breadcrumb, Card, Carousel, Col, Image, Row, Tabs, Typography } from 'antd';
 import React from 'react';
 import Header from '../../../components/Shared/Header/Header';
-import CustomerAddress from './CustomerAddress';
-import CustomerCards from './CustomerCards';
-import CustomerDashboard from './CustomerDashboard';
-import CustomerOrders from './CustomerOrders';
-import CustomerProfileInfo from './CustomerProfileInfo';
-import CustomerWishlist from './CustomerWishlist';
+import CustomerAddress from '../../../components/Users/CustomerProfile/CustomerAddress';
+import CustomerCards from '../../../components/Users/CustomerProfile/CustomerCards';
+import CustomerDashboard from '../../../components/Users/CustomerProfile/CustomerDashboard';
+import CustomerOrders from '../../../components/Users/CustomerProfile/CustomerOrders';
+import CustomerProfileInfo from '../../../components/Users/CustomerProfile/CustomerProfileInfo';
+import CustomerWishlist from '../../../components/Users/CustomerProfile/CustomerWishlist';
 
 const CustomerProfile: React.FC = () => {
     const contentStyle: React.CSSProperties = {
@@ -22,6 +22,8 @@ const CustomerProfile: React.FC = () => {
         textAlign: 'center',
         background: '#364d79',
     };
+
+    const { Paragraph } = Typography;
 
     const taboptions = [
         {
@@ -102,44 +104,71 @@ const CustomerProfile: React.FC = () => {
                             <h3 style={contentStyle}>4</h3>
                         </div>
                     </Carousel>
-                    <div
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            width: '100%',
-                        }}
-                    >
-                        <Image
-                            width={140}
-                            style={{
-                                borderRadius: '50%',
-                                marginTop: '-80px',
-                                border: '5px solid lightgray',
-                            }}
-                            src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-                        />
-                    </div>
                 </div>
 
-                <Tabs
-                    style={{ marginTop: 20 }}
-                    defaultActiveKey="1"
-                    items={taboptions.map((item, i) => {
-                        const id = String(i + 1);
+                <Row style={{ marginTop: 20 }} gutter={[20, 20]}>
+                    <Col sm={24} xl={8}>
+                        <Card style={{ marginTop: 20 }}>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    width: '100%',
+                                }}
+                            >
+                                <Image
+                                    width={140}
+                                    style={{
+                                        borderRadius: '50%',
+                                        border: '5px solid lightgray',
+                                    }}
+                                    src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                                />
+                            </div>
 
-                        return {
-                            label: (
-                                <span>
-                                    <item.icon />
-                                    {item.label}{' '}
-                                </span>
-                            ),
-                            key: id,
-                            children: item.children,
-                        };
-                    })}
-                />
+                            <Typography.Title
+                                style={{ textAlign: 'center', marginTop: 10 }}
+                                level={4}
+                            >
+                                John Smith
+                            </Typography.Title>
+
+                            <Paragraph
+                                style={{ textAlign: 'center', margin: 0 }}
+                                type="secondary"
+                            >
+                                +880 1711 000000
+                            </Paragraph>
+                            <Paragraph
+                                style={{ textAlign: 'center', margin: 0 }}
+                                type="secondary"
+                            >
+                                example@example.com
+                            </Paragraph>
+                        </Card>
+                    </Col>
+                    <Col sm={24} xl={16}>
+                        <Tabs
+                            style={{ marginTop: 20 }}
+                            defaultActiveKey="1"
+                            items={taboptions.map((item, i) => {
+                                const id = String(i + 1);
+
+                                return {
+                                    label: (
+                                        <span>
+                                            <item.icon />
+                                            {item.label}{' '}
+                                        </span>
+                                    ),
+                                    key: id,
+                                    children: item.children,
+                                };
+                            })}
+                        />
+                    </Col>
+                </Row>
             </div>
         </div>
     );
