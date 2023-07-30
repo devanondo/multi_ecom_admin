@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Form, Input } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 
@@ -5,7 +7,7 @@ const AddAddressForm = () => {
     const [form] = Form.useForm();
 
     const onFinish = (values: any) => {
-        console.log('Received values of form: ', values);
+        console.log('Received values of form: Nothing to hide simple', values);
     };
     return (
         <div>

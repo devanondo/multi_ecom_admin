@@ -34,7 +34,7 @@
         "sass": "^1.64.1"
     },
     "lint-staged": {
-        "src/*.{json,js,ts,jsx,tsx,html}": [
+        "src/**/*.{json,js,ts,jsx,tsx,html}": [
             "yarn lint-prettier"
         ]
     },
