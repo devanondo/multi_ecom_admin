@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Form, Input } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 
