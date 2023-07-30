@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Card, Col, Form, Input, Row, Select } from 'antd';
-import { SizeType } from 'antd/es/config-provider/SizeContext';
 import React from 'react';
 
 const CustomerProfileInfo: React.FC = () => {
@@ -49,7 +48,6 @@ const CustomerProfileInfo: React.FC = () => {
                     name="register"
                     onFinish={onFinish}
                     scrollToFirstError
-                    size={'large' as SizeType}
                     layout="vertical"
                     className="register__form"
                 >

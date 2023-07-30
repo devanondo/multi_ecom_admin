@@ -16,7 +16,6 @@ import {
     UploadFile,
     UploadProps,
 } from 'antd';
-import { SizeType } from 'antd/es/config-provider/SizeContext';
 import { RcFile } from 'antd/es/upload';
 import React, { useState } from 'react';
 import Flex from '../Shared/Flex/Flex';
@@ -71,7 +70,6 @@ const CreateSubCategoryForm: React.FC = () => {
                 name="register"
                 onFinish={onFinish}
                 scrollToFirstError
-                size={'large' as SizeType}
                 layout="vertical"
             >
                 <Row gutter={[20, 20]}>
