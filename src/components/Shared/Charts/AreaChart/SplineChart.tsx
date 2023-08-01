@@ -49,11 +49,7 @@ const SplineChart: FC<ISplineChart> = ({ data = [31, 40, 28, 51, 42, 109, 100] }
         },
     ];
 
-    return (
-        <div style={{ maxWidth: '800px', overflow: 'hidden' }}>
-            <ReactApexChart options={options} series={series} type="area" height={400} />
-        </div>
-    );
+    return <ReactApexChart options={options} series={series} type="area" height={400} />;
 };
 
 export default SplineChart;
