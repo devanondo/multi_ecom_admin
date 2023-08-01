@@ -19,7 +19,6 @@ import {
     Upload,
 } from 'antd';
 import { DefaultOptionType } from 'antd/es/cascader';
-import { SizeType } from 'antd/es/config-provider/SizeContext';
 import { RcFile, UploadFile, UploadProps } from 'antd/es/upload';
 import { useState } from 'react';
 import Header from '../../components/Shared/Header/Header';
@@ -150,7 +149,6 @@ const CreateProduct = () => {
                     name="register"
                     onFinish={onFinish}
                     scrollToFirstError
-                    size={'large' as SizeType}
                     layout="vertical"
                     className="register__form"
                 >
@@ -381,7 +379,7 @@ const CreateProduct = () => {
                                     >
                                         <CKEditor
                                             editor={ClassicEditor}
-                                            data="<p>Hello from CKEditor 5!</p>"
+                                            data={EditorDefaultValue}
                                         />
                                     </Form.Item>
                                 </Form.Item>
@@ -550,3 +548,6 @@ const CreateProduct = () => {
 };
 
 export default CreateProduct;
+
+const EditorDefaultValue =
+    "<h3><strong>Electronics &amp; Gadgets</strong></h3><p>&nbsp;</p><p>Almost 90% of the people who use online shopping have once in a lifetime bought an electronic appliance, gadget or device, or device online, according to recent surveys. Great offers, discounts, and deals are mostly available online which might be absent in a physical store.</p><p>&nbsp;</p><blockquote><p>Because electronics are quite expensive, people always want to save on them. Hence they prefer buying it online. From phones to laptops and TV to fridges, <a href='https://startuptalky.com/ecommerce-platforms/'>online shopping sites</a> are a hot market for electronics.</p></blockquote><p>&nbsp;</p><p><strong>Here …&nbsp;</strong></p>";

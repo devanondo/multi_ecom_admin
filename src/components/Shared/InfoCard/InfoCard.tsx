@@ -1,14 +1,10 @@
-import {
-    ArrowUpOutlined,
-    MoreOutlined,
-    SettingOutlined,
-    UserOutlined,
-} from '@ant-design/icons';
-import { Dropdown, MenuProps, Space, Statistic, message } from 'antd';
-import { Link } from 'react-router-dom';
-import './InfoCard.scss';
-
+import { RiseOutlined, DollarOutlined } from '@ant-design/icons';
+import { Typography } from 'antd';
 import { FC } from 'react';
+import CountUp from 'react-countup';
+import Flex from '../Flex/Flex';
+import './InfoCard.scss';
+import { Link } from 'react-router-dom';
 
 interface IInforCard {
     title: string;
@@ -18,60 +14,39 @@ interface IInforCard {
 }
 
 const InfoCard: FC<IInforCard> = ({ title, amount, percent_value }) => {
-    const handleMenuClick: MenuProps['onClick'] = () => {
-        message.info('Click on menu item.');
-    };
-
-    const items: MenuProps['items'] = [
-        {
-            label: <Link to="/profile">Profile</Link>,
-            key: '1',
-            icon: <UserOutlined />,
-        },
-        {
-            label: <Link to="/profile">Setting</Link>,
-            key: '2',
-            icon: <SettingOutlined />,
-        },
-    ];
-
-    const menuProps = {
-        items,
-        onClick: handleMenuClick,
-    };
-
     return (
-        <div className="info__card">
-            <div className="card__header">
-                <div className="sub__title__gray">{title}</div>
+        <div style={{ background: '#fff' }} className="info__card">
+            <Flex justify="space-between">
+                <Typography.Title style={{ margin: 0 }} level={5}>
+                    {title}
+                </Typography.Title>
 
-                <Dropdown menu={menuProps} trigger={['click']}>
-                    <MoreOutlined />
-                </Dropdown>
-            </div>
+                <Typography.Paragraph style={{ color: '#0ab39c', margin: 0 }}>
+                    <RiseOutlined /> + {percent_value} %
+                </Typography.Paragraph>
+            </Flex>
 
-            <Space
-                style={{ width: '100%', marginTop: 20, justifyContent: 'space-between' }}
-                wrap
-            >
-                <Statistic
-                    prefix="৳"
-                    title="Account Balance (BDT)"
-                    value={amount}
-                    precision={2}
-                />
+            <Typography.Title style={{ marginTop: 20, marginBottom: 0 }} level={4}>
+                $ <CountUp end={amount} /> k
+            </Typography.Title>
 
-                <Space>
-                    <Statistic
-                        title="Active"
-                        value={percent_value}
-                        precision={2}
-                        valueStyle={{ color: '#3f8600' }}
-                        prefix={<ArrowUpOutlined />}
-                        suffix="%"
-                    />
-                </Space>
-            </Space>
+            <Flex justify="space-between" align="flex-end">
+                <Link to="/earnings">View net earnings</Link>
+
+                <div
+                    style={{
+                        width: '65px',
+                        height: '65px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: 5,
+                        background: '#daf4f0',
+                    }}
+                >
+                    <DollarOutlined style={{ fontSize: 30, color: '#0ab39c' }} />
+                </div>
+            </Flex>
         </div>
     );
 };

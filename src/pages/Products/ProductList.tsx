@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import CollapsTable from '../../components/Shared/CollapsTable/CollapsTable';
+import CheckBoxTable from '../../components/Shared/CheckBoxTable/CheckBoxTable';
 import Header from '../../components/Shared/Header/Header';
 
 const ProductList = () => {
@@ -16,7 +16,7 @@ const ProductList = () => {
             </Header>
 
             <div className="content__wrapper">
-                <CollapsTable />
+                <CheckBoxTable />
             </div>
         </div>
     );

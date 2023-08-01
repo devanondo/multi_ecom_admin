@@ -21,6 +21,7 @@ import CategoryList from '../pages/Category/CategoryList';
 import CategoryDetails from '../pages/Category/CategoryDetails';
 import CreateCategory from '../pages/Category/CreateCategory';
 import EditCategory from '../pages/Category/EditCategory';
+import CustomerProfile from '../pages/User/CustomerProfile/CustomerProfile';
 
 const routes: RouteObject[] = [
     {
@@ -110,7 +111,16 @@ const routes: RouteObject[] = [
                     },
                     {
                         path: 'customer',
-                        element: <CustomerList />,
+                        children: [
+                            {
+                                index: true,
+                                element: <CustomerList />,
+                            },
+                            {
+                                path: ':customer_id',
+                                element: <CustomerProfile />,
+                            },
+                        ],
                     },
                 ],
             },

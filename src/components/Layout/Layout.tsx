@@ -23,7 +23,7 @@ const LayoutPage: FC<ILayout> = ({ children }) => {
 
     return (
         <Layout style={{ height: '100vh', overflowY: 'hidden' }}>
-            <Sider width={256} trigger={null} collapsible collapsed={collapsed}>
+            <Sider breakpoint="lg" width={256}>
                 <div className="sidebar__header">
                     <img src={Images.Logo} alt="ecrypt ecommerce logo" />
                 </div>

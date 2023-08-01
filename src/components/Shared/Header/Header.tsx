@@ -10,7 +10,7 @@ interface IHeader {
 const Header: FC<IHeader> = ({ title, children }) => {
     return (
         <div className="dashboard__header">
-            <Typography.Title level={2} style={{ margin: 0 }}>
+            <Typography.Title level={4} style={{ margin: 0 }}>
                 {title}
             </Typography.Title>
 
