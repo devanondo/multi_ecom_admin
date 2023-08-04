@@ -147,9 +147,7 @@ const UserList = () => {
                     </Flex>
                 </Card>
 
-                <Card title="Uesr List" style={{ marginTop: 20 }}>
-                    <UserListTables />
-                </Card>
+                <UserListTables />
             </div>
         </div>
     );

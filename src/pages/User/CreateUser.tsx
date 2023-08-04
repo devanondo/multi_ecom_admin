@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
     HomeOutlined,
@@ -19,12 +19,15 @@ import {
     Row,
     Select,
     Upload,
+    message,
 } from 'antd';
-import { RcFile, UploadFile, UploadProps } from 'antd/es/upload';
-import { useState } from 'react';
+import { RcFile, UploadFile } from 'antd/es/upload';
+import { useEffect, useState } from 'react';
 import Flex from '../../components/Shared/Flex/Flex';
 import Header from '../../components/Shared/Header/Header';
+import { useGetSignUpMutation } from '../../redux/users/userApi';
 import './User.scss';
+import { pickFormData } from '../../utils/FormData/FormData';
 
 const getBase64 = (file: RcFile): Promise<string> =>
     new Promise((resolve, reject) => {
@@ -36,9 +39,25 @@ const getBase64 = (file: RcFile): Promise<string> =>
 
 const CreateUser = () => {
     const [form] = Form.useForm();
+    const [getSignUp, options] = useGetSignUpMutation();
+    const [images, setImages] = useState<string[]>([]);
 
-    const onFinish = (values: any) => {
-        console.log('Received values of form: ', values);
+    useEffect(() => {
+        if (options.isSuccess) {
+            message.success(options?.data?.message);
+            form.resetFields();
+        }
+        if (options.isError && options.error?.data) {
+            message.error(options.error?.data.message);
+        }
+    }, [options]);
+
+    const onFinish = (data: any) => {
+        const myForm = pickFormData(data);
+        myForm.set('file', images[0]);
+        myForm.set('role', 'vendor');
+
+        getSignUp(myForm);
     };
 
     const { Option } = Select;
@@ -56,12 +75,27 @@ const CreateUser = () => {
     const [previewTitle, setPreviewTitle] = useState('');
     const [fileList, setFileList] = useState<UploadFile[]>([]);
 
-    const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
-        setFileList(newFileList);
+    const onDrop = (e: any) => {
+        setFileList(e.dataTransfer.files);
+        const files = Array.from(e.dataTransfer.files);
+        setImages([]);
+        files.forEach((file) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file as Blob);
+
+            reader.onload = () => {
+                if (reader.readyState === 2) {
+                    setImages((oldImages: string[]) => [
+                        ...oldImages,
+                        reader.result as string,
+                    ]);
+                }
+            };
+        });
     };
+
     const handleCancel = () => setPreviewOpen(false);
     const normFile = (e: any) => {
-        console.log('Upload event:', e);
         if (Array.isArray(e)) {
             return e;
         }
@@ -274,6 +308,15 @@ const CreateUser = () => {
                                         />
                                     </Form.Item>
 
+                                    {/* <input
+                                        type="file"
+                                        name="filesas"
+                                        id=""
+                                        onChange={(e) => {
+                                            console.log(e.target.files);
+                                        }}
+                                    /> */}
+
                                     <Form.Item
                                         style={{ marginBottom: '10px' }}
                                         name="gender"
@@ -310,9 +353,11 @@ const CreateUser = () => {
                                             <Upload.Dragger
                                                 fileList={fileList}
                                                 onPreview={handlePreview}
-                                                onChange={handleChange}
+                                                // onChange={handleChange}
+                                                onDrop={onDrop}
                                                 name="files"
                                                 listType="picture"
+                                                multiple={true}
                                             >
                                                 <p className="ant-upload-drag-icon">
                                                     <InboxOutlined />
