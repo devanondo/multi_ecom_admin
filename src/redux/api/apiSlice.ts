@@ -2,6 +2,18 @@ import { BaseQueryFn, createApi } from '@reduxjs/toolkit/query/react';
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie';
 
+export interface ErrorRes {
+    status: boolean;
+    stack: string;
+    message: string;
+    errorMessages?: [
+        {
+            path?: string;
+            message?: string;
+        },
+    ];
+}
+
 const axiosBaseQuery =
     (
         { baseUrl, headers }: { baseUrl: string; headers: Record<string, string> } = {
@@ -16,7 +28,7 @@ const axiosBaseQuery =
             params?: AxiosRequestConfig['params'];
         },
         unknown,
-        unknown
+        ErrorRes
     > =>
     async ({ url, method, data, params }) => {
         try {
@@ -30,12 +42,8 @@ const axiosBaseQuery =
             return { data: result.data };
         } catch (axiosError) {
             const err = axiosError as AxiosError;
-            return {
-                error: {
-                    status: err.response?.status,
-                    data: err.response?.data || err.message,
-                },
-            };
+            const error = (err.response?.data as ErrorRes) || (err.message as string);
+            return { error };
         }
     };
 export const api = createApi({
@@ -47,6 +55,6 @@ export const api = createApi({
             'Content-Type': 'application/json',
         },
     }),
-    tagTypes: ['CreatedUser'],
+    tagTypes: ['CreatedUser', 'CategoryCreated', 'SubCategoryCreated'],
     endpoints: () => ({}),
 });

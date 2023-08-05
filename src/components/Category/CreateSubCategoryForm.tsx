@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { InboxOutlined } from '@ant-design/icons';
@@ -14,12 +15,18 @@ import {
     Select,
     Upload,
     UploadFile,
-    UploadProps,
+    message,
 } from 'antd';
 import { RcFile } from 'antd/es/upload';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import {
+    useCreateSubCategoryMutation,
+    useGetCategoryQuery,
+} from '../../redux/category/categoryApi';
+import { pickFormData } from '../../utils/FormData/FormData';
 import Flex from '../Shared/Flex/Flex';
 import './Category.scss';
+import { ICategory } from './Interface/categoryInterface';
 
 const getBase64 = (file: RcFile): Promise<string> =>
     new Promise((resolve, reject) => {
@@ -31,18 +38,52 @@ const getBase64 = (file: RcFile): Promise<string> =>
 
 const CreateSubCategoryForm: React.FC = () => {
     const [form] = Form.useForm();
+    const { data: category } = useGetCategoryQuery(undefined);
+    const [createSubCategory, response] = useCreateSubCategoryMutation();
 
-    const onFinish = (values: any) => {
-        console.log('Received values of form: ', values);
-    };
+    useEffect(() => {
+        if (response.isSuccess) {
+            message.success(response?.data?.message);
+            form.resetFields();
+        }
+        if (response.isError && response.error) {
+            message.error(response.error?.message);
+        }
+    }, [response]);
+
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
     const [previewTitle, setPreviewTitle] = useState('');
     const [fileList, setFileList] = useState<UploadFile[]>([]);
+    const [images, setImages] = useState<string[]>([]);
+    const [description, setDescription] = useState<string>('');
 
-    const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
-        setFileList(newFileList);
+    const onDrop = (e: any) => {
+        setFileList(e.dataTransfer.files);
+        const files = Array.from(e.dataTransfer.files);
+        setImages([]);
+        files.forEach((file) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file as Blob);
+
+            reader.onload = () => {
+                if (reader.readyState === 2) {
+                    setImages((oldImages: string[]) => [
+                        ...oldImages,
+                        reader.result as string,
+                    ]);
+                }
+            };
+        });
     };
+    const onFinish = (values: any) => {
+        console.log(values);
+        const myForm = pickFormData(values);
+        myForm.set('description', description);
+        myForm.append('banner_image', images[0]);
+        createSubCategory({ id: values.parent_id, body: myForm });
+    };
+
     const handleCancel = () => setPreviewOpen(false);
 
     const normFile = (e: any) => {
@@ -63,6 +104,13 @@ const CreateSubCategoryForm: React.FC = () => {
         setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1));
     };
 
+    const options = category?.data.map((item: ICategory) => {
+        return {
+            value: item.id,
+            label: item.title,
+        };
+    });
+    console.log(options);
     return (
         <div className="create__sub__category__form">
             <Form
@@ -77,7 +125,7 @@ const CreateSubCategoryForm: React.FC = () => {
                         <Card title="Sub Category Info">
                             <Form.Item
                                 style={{ marginBottom: '10px', width: '100%' }}
-                                name="parent__category"
+                                name="parent_id"
                                 label="Parent Category"
                                 tooltip="What do you want others to call your parent category?"
                                 rules={[
@@ -89,45 +137,19 @@ const CreateSubCategoryForm: React.FC = () => {
                             >
                                 <Select
                                     showSearch
-                                    // style={{ width: 200 }}
                                     placeholder="Search to Select"
                                     optionFilterProp="children"
                                     filterOption={(input, option) =>
-                                        (option?.label ?? '').includes(input)
+                                        (option?.label ?? '').toString().includes(input)
                                     }
-                                    filterSort={(optionA, optionB) =>
-                                        (optionA?.label ?? '')
+                                    filterSort={(optionA, optionB) => {
+                                        const labelA = optionA?.label?.toString() ?? '';
+                                        const labelB = optionB?.label?.toString() ?? '';
+                                        return labelA
                                             .toLowerCase()
-                                            .localeCompare(
-                                                (optionB?.label ?? '').toLowerCase(),
-                                            )
-                                    }
-                                    options={[
-                                        {
-                                            value: '1',
-                                            label: 'Not Identified',
-                                        },
-                                        {
-                                            value: '2',
-                                            label: 'Closed',
-                                        },
-                                        {
-                                            value: '3',
-                                            label: 'Communicated',
-                                        },
-                                        {
-                                            value: '4',
-                                            label: 'Identified',
-                                        },
-                                        {
-                                            value: '5',
-                                            label: 'Resolved',
-                                        },
-                                        {
-                                            value: '6',
-                                            label: 'Cancelled',
-                                        },
-                                    ]}
+                                            .localeCompare(labelB.toLowerCase());
+                                    }}
+                                    options={options}
                                 />
                             </Form.Item>
                             <Form.Item
@@ -155,9 +177,9 @@ const CreateSubCategoryForm: React.FC = () => {
                                 <CKEditor
                                     editor={ClassicEditor}
                                     data={EditorDefaultValue}
-                                    onChange={(event, editor) => {
+                                    onChange={(_, editor) => {
                                         const data = editor.getData();
-                                        console.log({ event, editor, data });
+                                        setDescription(data);
                                     }}
                                 />
                             </Form.Item>
@@ -181,7 +203,7 @@ const CreateSubCategoryForm: React.FC = () => {
                                     <Upload.Dragger
                                         fileList={fileList}
                                         onPreview={handlePreview}
-                                        onChange={handleChange}
+                                        onDrop={onDrop}
                                         name="files"
                                         listType="picture"
                                     >
@@ -231,7 +253,12 @@ const CreateSubCategoryForm: React.FC = () => {
                                 />
                             </Form.Item>
                             <Form.Item>
-                                <Button block type="primary" htmlType="submit">
+                                <Button
+                                    block
+                                    type="primary"
+                                    htmlType="submit"
+                                    loading={response?.isLoading}
+                                >
                                     Submit
                                 </Button>
                             </Form.Item>

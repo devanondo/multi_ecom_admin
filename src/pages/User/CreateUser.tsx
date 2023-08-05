@@ -26,8 +26,8 @@ import { useEffect, useState } from 'react';
 import Flex from '../../components/Shared/Flex/Flex';
 import Header from '../../components/Shared/Header/Header';
 import { useGetSignUpMutation } from '../../redux/users/userApi';
-import './User.scss';
 import { pickFormData } from '../../utils/FormData/FormData';
+import './User.scss';
 
 const getBase64 = (file: RcFile): Promise<string> =>
     new Promise((resolve, reject) => {
@@ -47,8 +47,8 @@ const CreateUser = () => {
             message.success(options?.data?.message);
             form.resetFields();
         }
-        if (options.isError && options.error?.data) {
-            message.error(options.error?.data.message);
+        if (options.isError && options.error) {
+            message.error(options.error?.message);
         }
     }, [options]);
 
