@@ -9,10 +9,10 @@ import {
 import { Breadcrumb, Button, Card, Select, Tabs } from 'antd';
 import Search from 'antd/es/input/Search';
 import React from 'react';
-import CategoryTable from '../../components/Category/CategoryTable/CategoryTable';
 import DateRange from '../../components/Shared/DateRangePicker/DateRange';
 import Flex from '../../components/Shared/Flex/Flex';
 import Header from '../../components/Shared/Header/Header';
+import CategoryTable from '../../components/Category/CategoryTable/CategoryTable';
 
 const CategoryList: React.FC = () => {
     const taboptions = [
@@ -184,7 +184,7 @@ const CategoryList: React.FC = () => {
                 </Card>
 
                 <Tabs
-                    defaultActiveKey="1"
+                    defaultActiveKey="2"
                     items={taboptions.map((item, i) => {
                         const id = String(i + 1);
 

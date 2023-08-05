@@ -290,7 +290,12 @@ const CreateCategoryForm: React.FC = () => {
                                 )}
                             </Form.List>
                             <Form.Item>
-                                <Button block type="primary" htmlType="submit">
+                                <Button
+                                    block
+                                    type="primary"
+                                    htmlType="submit"
+                                    loading={options?.isLoading}
+                                >
                                     Submit
                                 </Button>
                             </Form.Item>

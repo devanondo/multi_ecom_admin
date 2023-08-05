@@ -106,7 +106,7 @@ const CategoryDetails: React.FC = () => {
                 <Card style={{ marginTop: 20, marginBottom: 10 }}>
                     <Flex align="center" justify="space-between">
                         <Typography.Title style={{ margin: 0 }} level={5}>
-                            Category Title : Smart Phone
+                            Smart Phone
                         </Typography.Title>
                         <Flex gap={5} width={'fit-content'}>
                             <Select
@@ -180,9 +180,9 @@ const CategoryDetails: React.FC = () => {
                             })}
                         />
 
-                        <Card style={{ marginTop: 20 }} title="Sub Categories">
-                            <CheckBoxTable />
-                        </Card>
+                        {/* <Card style={{ marginTop: 20 }} title="Sub Categories">
+                        </Card> */}
+                        <CheckBoxTable />
                     </Col>
                     <Col xs={24} xxl={8}>
                         <Tabs
