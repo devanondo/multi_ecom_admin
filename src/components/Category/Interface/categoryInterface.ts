@@ -6,6 +6,7 @@ export type ISubCategory = {
     banner_image?: string;
     active_status?: boolean;
     id?: string;
+    _id?: string;
 };
 
 export type ICategory = {

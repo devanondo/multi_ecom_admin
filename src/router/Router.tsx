@@ -67,7 +67,7 @@ const routes: RouteObject[] = [
                         element: <CategoryList />,
                     },
                     {
-                        path: ':id',
+                        path: ':category_id',
                         element: <CategoryDetails />,
                     },
                     {

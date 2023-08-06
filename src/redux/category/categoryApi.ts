@@ -13,6 +13,12 @@ const categoryApi = api.injectEndpoints({
             }),
             providesTags: ['CategoryCreated', 'SubCategoryCreated'],
         }),
+        getACategory: builder.query({
+            query: (id) => ({
+                url: `category/${id}`,
+                method: 'GET',
+            }),
+        }),
         createSubCategory: builder.mutation({
             query: ({ id, body }) => ({
                 url: `category/sub_category/${id}`,
@@ -27,5 +33,6 @@ const categoryApi = api.injectEndpoints({
 export const {
     useCreateCategoryMutation,
     useGetCategoryQuery,
+    useGetACategoryQuery,
     useCreateSubCategoryMutation,
 } = categoryApi;
