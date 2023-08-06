@@ -18,6 +18,8 @@ const CategoryDetails: React.FC = () => {
 
     const { data: category_details } = useGetACategoryQuery(category_id);
 
+    const categoryInfo = category_details?.data;
+
     const handleChange = (value: string) => {
         console.log(`selected ${value}`);
     };
@@ -53,9 +55,31 @@ const CategoryDetails: React.FC = () => {
         },
         {
             icon: CheckCircleOutlined,
+            label: 'Protected Product',
+            key: '3',
+            children: (
+                <CategoryProductTable
+                    title={'Restricted Product'}
+                    query={{
+                        category: category_details?.data?.title,
+                        visibility: 'protected',
+                    }}
+                />
+            ),
+        },
+        {
+            icon: CheckCircleOutlined,
             label: 'Restricted Product',
-            key: '2',
-            children: <CategoryProductTable title={'Restricted Product'} />,
+            key: '4',
+            children: (
+                <CategoryProductTable
+                    title={'Restricted Product'}
+                    query={{
+                        category: category_details?.data?.title,
+                        visibility: 'restricted',
+                    }}
+                />
+            ),
         },
     ];
     const tabDetailsOptions = [
@@ -97,55 +121,36 @@ const CategoryDetails: React.FC = () => {
                 <Card style={{ marginTop: 20, marginBottom: 10 }}>
                     <Flex align="center" justify="space-between">
                         <Typography.Title style={{ margin: 0 }} level={5}>
-                            Smart Phone
+                            {categoryInfo?.title}
                         </Typography.Title>
                         <Flex gap={5} width={'fit-content'}>
-                            <Select
-                                style={{ width: 200 }}
-                                onChange={handleChange}
-                                defaultValue={category_details?.data?.active_status || ''}
-                                options={[
-                                    {
-                                        value: 'active',
-                                        label: 'Active',
-                                    },
-                                    {
-                                        value: 'pending',
-                                        label: 'Pending',
-                                    },
-                                    {
-                                        value: 'restricted',
-                                        label: 'Restricted',
-                                    },
-                                ]}
-                            />
+                            {categoryInfo && (
+                                <Select
+                                    style={{ width: 200 }}
+                                    onChange={handleChange}
+                                    defaultValue={categoryInfo?.active_status}
+                                    options={[
+                                        {
+                                            value: 'active',
+                                            label: 'Active',
+                                        },
+                                        {
+                                            value: 'pending',
+                                            label: 'Pending',
+                                        },
+                                        {
+                                            value: 'restricted',
+                                            label: 'Restricted',
+                                        },
+                                    ]}
+                                />
+                            )}
 
                             <Button>
                                 <Link to="/category/create">
                                     <PlusOutlined /> Add Category
                                 </Link>
                             </Button>
-
-                            <Select
-                                style={{ width: 200 }}
-                                placeholder="Sort By"
-                                onChange={handleChange}
-                                defaultValue="Popularity"
-                                options={[
-                                    {
-                                        value: '1',
-                                        label: 'Popularity',
-                                    },
-                                    {
-                                        value: '2',
-                                        label: 'Low - High Price',
-                                    },
-                                    {
-                                        value: '3',
-                                        label: 'High - Low Price',
-                                    },
-                                ]}
-                            />
                         </Flex>
                     </Flex>
                 </Card>
@@ -153,6 +158,7 @@ const CategoryDetails: React.FC = () => {
                 <Row gutter={[20, 20]}>
                     <Col xs={24} xxl={16}>
                         <Tabs
+                            style={{ marginBottom: 20 }}
                             defaultActiveKey="1"
                             items={taboptions.map((item, i) => {
                                 const id = String(i + 1);

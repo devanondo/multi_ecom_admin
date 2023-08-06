@@ -11,6 +11,8 @@ const CategoryInfoDetails: React.FC = () => {
     const { category_id } = useParams();
     const { data: category_details } = useGetACategoryQuery(category_id);
 
+    const categoryInfo = category_details?.data;
+
     const { Text } = Typography;
     return (
         <div>
@@ -24,8 +26,8 @@ const CategoryInfoDetails: React.FC = () => {
                 >
                     <Statistic
                         prefix="৳"
-                        title={`Total Sold ${category_details?.data?.totalSold}`}
-                        value={category_details?.data?.totalSoldPrice}
+                        title={`Total Sold ${categoryInfo?.totalSold}`}
+                        value={categoryInfo?.totalSoldPrice}
                         precision={2}
                     />
 
@@ -43,19 +45,19 @@ const CategoryInfoDetails: React.FC = () => {
             </Card>
             <Card style={{ marginTop: 20 }} title="Description">
                 <Typography.Text type="secondary">
-                    {Parse(category_details?.data?.description || '')}
+                    {Parse(categoryInfo?.description || '')}
                 </Typography.Text>
             </Card>
             <Card style={{ marginTop: 20 }} title="Ratings">
                 <Typography.Paragraph>
                     Total Reviews:{' '}
-                    <Text type="secondary">{category_details?.data?.reviews.length}</Text>
+                    <Text type="secondary">{categoryInfo?.reviews.length}</Text>
                 </Typography.Paragraph>
                 <RatingDetails />
             </Card>
 
             <Card style={{ marginTop: 20 }} title="Reviews">
-                <CategoryReviews />
+                <CategoryReviews reviews={categoryInfo?.reviews} />
             </Card>
         </div>
     );

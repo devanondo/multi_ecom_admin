@@ -1,12 +1,14 @@
 /* eslint-disable no-console */
 import { DeleteFilled, EditFilled } from '@ant-design/icons';
-import { Tag } from 'antd';
-import Table, { ColumnsType } from 'antd/es/table';
+import { Rate, Tag, Typography } from 'antd';
+import Table, { ColumnsType, TableProps } from 'antd/es/table';
 import React from 'react';
 import { useGetProductsQuery } from '../../redux/products/productApi';
 import { queryBuilder } from '../../utils/QueryBuilder/queryBuilder';
 import { IProduct } from '../Products/Interface/productInterface';
 import Flex from '../Shared/Flex/Flex';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 interface ICategoryProductTable {
     title: string;
@@ -22,46 +24,178 @@ const CategoryProductTable: React.FC<ICategoryProductTable> = ({ title, query = 
         {
             title: '#',
             dataIndex: 'key',
+            align: 'center',
+            ellipsis: true,
         },
         {
             title: 'Name',
             dataIndex: 'name',
-            render: (text: string) => <a>{text}</a>,
+            width: 200,
         },
         {
-            title: 'Email',
-            dataIndex: 'email',
+            title: 'Product ID',
+            dataIndex: 'product_id',
+            width: 200,
         },
         {
-            title: 'Phone',
-            dataIndex: 'phone',
-        },
-        {
-            title: 'Joining Data',
-            dataIndex: 'joining_date',
+            title: 'Price',
+            dataIndex: 'price',
+            width: 80,
             align: 'center',
         },
+        {
+            title: 'Total Sold ($)',
+            dataIndex: 'total_sold_price',
+            width: 120,
+            align: 'center',
+        },
+        {
+            title: 'Total Sold',
+            dataIndex: 'sold',
+            width: 100,
+            align: 'center',
+        },
+        {
+            title: 'Stock',
+            dataIndex: 'stocked',
+            width: 100,
+            align: 'center',
+        },
+        {
+            title: 'Category',
+            dataIndex: 'category',
+            width: 150,
+            align: 'center',
+        },
+        {
+            title: 'Sub Category',
+            dataIndex: 'sub_category',
+            width: 150,
+            align: 'center',
+            render: (sub_category: string | null) => (
+                <p>{sub_category || 'No Sub Category'}</p>
+            ),
+        },
+        {
+            title: 'Visibility',
+            dataIndex: 'visibility',
+            width: 130,
+            align: 'center',
+            render: (vs: string) => (
+                <Tag
+                    bordered={false}
+                    style={{ textTransform: 'uppercase' }}
+                    color="success"
+                >
+                    {vs}
+                </Tag>
+            ),
+        },
+        {
+            title: 'Variations',
+            dataIndex: 'variations',
+            width: 180,
+            align: 'center',
+            render: (va: string[]) => {
+                return (
+                    <>
+                        {va.map((itm) => (
+                            <Tag
+                                key={itm}
+                                bordered={false}
+                                style={{ textTransform: 'uppercase' }}
+                            >
+                                {itm}
+                            </Tag>
+                        ))}
+                    </>
+                );
+            },
+        },
+        {
+            title: 'Weight',
+            dataIndex: 'weight',
+            width: 80,
+            align: 'center',
+        },
+        {
+            title: 'Features',
+            dataIndex: 'fearutes',
+            width: 200,
+            render: (fe: string[] | null) => {
+                return (
+                    <>
+                        {fe
+                            ? fe.map((itm) => (
+                                  <Tag
+                                      key={itm}
+                                      bordered={false}
+                                      style={{ textTransform: 'uppercase' }}
+                                  >
+                                      {itm}
+                                  </Tag>
+                              ))
+                            : 'No Features'}
+                    </>
+                );
+            },
+        },
+        {
+            title: 'Rating',
+            dataIndex: 'rating',
+            width: 80,
+            align: 'center',
+        },
+        {
+            title: 'Brand',
+            dataIndex: 'brand',
+            width: 130,
+            align: 'center',
+        },
+        {
+            title: 'Shop',
+            dataIndex: 'shop',
+            width: 200,
+            align: 'center',
+            render: (shop) => {
+                return (
+                    <>
+                        <Typography.Paragraph style={{ margin: 0 }} strong>
+                            {shop.shop_name}
+                        </Typography.Paragraph>
+                        <Typography.Text style={{ color: 'green' }}>
+                            <Link to={`/shop/${shop.shop_id}`}>{shop.shop_id}</Link>
+                        </Typography.Text>{' '}
+                        <br />
+                        <Rate
+                            style={{ fontSize: 15 }}
+                            disabled
+                            defaultValue={shop.shop_rating}
+                        />
+                    </>
+                );
+            },
+        },
 
-        // {
-        //     title: 'Status',
-        //     dataIndex: 'status',
-        //     align: 'center',
-        //     render: (_, { vilibility }) => (
-        //         <Tag
-        //             bordered={false}
-        //             icon={<SyncOutlined spin />}
-        //             color="processing"
-        //             key={vilibility}
-        //         >
-        //             {vilibility?.toUpperCase()}
-        //         </Tag>
-        //     ),
-        // },
+        {
+            title: 'Creation Date',
+            dataIndex: 'createdAt',
+            align: 'center',
+            width: 120,
+            render: (date: string) => moment(date).format('MMMM Do YYYY, h:mm:ss a'),
+        },
+        {
+            title: 'Last Update',
+            dataIndex: 'updatedAt',
+            align: 'center',
+            width: 120,
+            render: (date: string) => moment(date).format('MMMM Do YYYY, h:mm:ss a'),
+        },
         {
             title: 'Actions',
             dataIndex: 'action',
+            width: 200,
             align: 'center',
-            // render: (data: any, record: DataType, index) => {
             render: () => {
                 return (
                     <Flex justify="center" gap={5}>
@@ -87,9 +221,10 @@ const CategoryProductTable: React.FC<ICategoryProductTable> = ({ title, query = 
         },
     ];
 
-    const rows = products?.data?.map((_pd: IProduct, i: number) => {
+    const rows = products?.data?.map((pd: IProduct, i: number) => {
         return {
             key: i + 1,
+            ...pd,
         };
     });
 
@@ -107,6 +242,15 @@ const CategoryProductTable: React.FC<ICategoryProductTable> = ({ title, query = 
         }),
     };
 
+    const onChange: TableProps<IProduct>['onChange'] = (
+        pagination,
+        filters,
+        sorter,
+        extra,
+    ) => {
+        console.log('params', pagination, filters, sorter, extra);
+    };
+
     return (
         <Table
             bordered
@@ -118,7 +262,8 @@ const CategoryProductTable: React.FC<ICategoryProductTable> = ({ title, query = 
             title={() => title}
             columns={columns}
             dataSource={rows}
-            scroll={{ x: 1000 }}
+            scroll={{ x: 1600 }}
+            onChange={onChange}
         />
     );
 };

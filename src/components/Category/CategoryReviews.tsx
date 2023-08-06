@@ -2,92 +2,99 @@
 import { StarFilled } from '@ant-design/icons';
 import { Avatar, Image, List, Typography } from 'antd';
 import moment from 'moment';
-import Flex from '../../components/Shared/Flex/Flex';
 import React from 'react';
+import Flex from '../../components/Shared/Flex/Flex';
+import { IReviewDetails } from '../../utils/interface';
 
-const CategoryReviews: React.FC = () => {
+interface ICategoryReviews {
+    reviews: IReviewDetails[];
+}
+
+const CategoryReviews: React.FC<ICategoryReviews> = ({ reviews = [] }) => {
     const { Text } = Typography;
+    console.log(reviews);
 
-    const data = [
-        {
-            title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, molestiae.',
-        },
-        {
-            title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, molestiae.',
-        },
-    ];
     return (
         <List
             style={{ maxHeight: 350, overflowY: 'scroll' }}
             itemLayout="vertical"
-            dataSource={data}
-            renderItem={(item, index) => (
-                <List.Item>
-                    <Flex gap={10} style={{ marginBottom: 10 }}>
-                        <Avatar
-                            src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
-                        />
+            renderItem={(item: IReviewDetails, index) => {
+                console.log(item);
+                return (
+                    <List.Item>
+                        <Flex gap={10} style={{ marginBottom: 10 }}>
+                            <Avatar
+                                src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
+                            />
 
-                        <Flex justify="space-between">
-                            <div>
-                                <Text type="secondary" strong>
-                                    John Smith
-                                </Text>
+                            <Flex justify="space-between">
+                                <div>
+                                    <Text type="secondary" strong>
+                                        {item?.author?.userDetails?.name?.first_name +
+                                            ' ' +
+                                            item?.author?.userDetails?.name?.last_name}
+                                    </Text>
 
-                                <div style={{ marginBottom: 5 }} className="ratings_info">
-                                    <StarFilled /> <span>4.2</span>
-                                </div>
-                                <Text code>{moment().format('MMM Do YY')}</Text>
+                                    <div
+                                        style={{ marginBottom: 5 }}
+                                        className="ratings_info"
+                                    >
+                                        <StarFilled /> <span>{item?.rating}</span>
+                                    </div>
+                                    <Text code>
+                                        {moment(item?.createdAt).format('MMM Do YY')}
+                                    </Text>
 
-                                {/* message */}
+                                    {/* message */}
 
-                                <div
-                                    style={{
-                                        marginTop: 10,
-                                    }}
-                                >
-                                    <Text
-                                        type="secondary"
+                                    <div
                                         style={{
-                                            fontStyle: 'italic',
+                                            marginTop: 10,
                                         }}
                                     >
-                                        {item.title}
-                                    </Text>
+                                        <Text
+                                            type="secondary"
+                                            style={{
+                                                fontStyle: 'italic',
+                                            }}
+                                        >
+                                            {item?.message}
+                                        </Text>
+                                    </div>
                                 </div>
-                            </div>
+                            </Flex>
                         </Flex>
-                    </Flex>
 
-                    <div style={{ marginLeft: 40, marginTop: 10 }}>
-                        <Image.PreviewGroup
-                            preview={{
-                                onChange: (current, prev) =>
-                                    console.log(
-                                        `current index: ${current}, prev index: ${prev}`,
-                                    ),
-                            }}
-                        >
-                            <Image
-                                width={45}
-                                style={{
-                                    background: '#f5f5f5',
-                                    borderRadius: '5px',
+                        <div style={{ marginLeft: 40, marginTop: 10 }}>
+                            <Image.PreviewGroup
+                                preview={{
+                                    onChange: (current, prev) =>
+                                        console.log(
+                                            `current index: ${current}, prev index: ${prev}`,
+                                        ),
                                 }}
-                                src="https://themesbrand.com/velzon/html/default/assets/images/products/img-6.png"
-                            />
-                            <Image
-                                width={45}
-                                style={{
-                                    background: '#f5f5f5',
-                                    borderRadius: '5px',
-                                }}
-                                src="https://themesbrand.com/velzon/html/default/assets/images/products/img-1.png"
-                            />
-                        </Image.PreviewGroup>
-                    </div>
-                </List.Item>
-            )}
+                            >
+                                <Image
+                                    width={45}
+                                    style={{
+                                        background: '#f5f5f5',
+                                        borderRadius: '5px',
+                                    }}
+                                    src="https://themesbrand.com/velzon/html/default/assets/images/products/img-6.png"
+                                />
+                                <Image
+                                    width={45}
+                                    style={{
+                                        background: '#f5f5f5',
+                                        borderRadius: '5px',
+                                    }}
+                                    src="https://themesbrand.com/velzon/html/default/assets/images/products/img-1.png"
+                                />
+                            </Image.PreviewGroup>
+                        </div>
+                    </List.Item>
+                );
+            }}
         />
     );
 };
