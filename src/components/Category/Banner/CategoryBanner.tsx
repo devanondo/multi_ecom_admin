@@ -7,7 +7,7 @@ interface ICategoryBanner {
     banner_image: IImage[];
 }
 
-const CategoryBanner: React.FC<ICategoryBanner> = ({ banner_image }) => {
+const CategoryBanner: React.FC<ICategoryBanner> = ({ banner_image = [] }) => {
     return (
         <div>
             <Carousel autoplay>

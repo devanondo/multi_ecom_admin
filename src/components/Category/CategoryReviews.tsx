@@ -12,14 +12,14 @@ interface ICategoryReviews {
 
 const CategoryReviews: React.FC<ICategoryReviews> = ({ reviews = [] }) => {
     const { Text } = Typography;
-    console.log(reviews);
+    console.log(reviews[0]?.message ? reviews : []);
 
     return (
         <List
             style={{ maxHeight: 350, overflowY: 'scroll' }}
             itemLayout="vertical"
-            renderItem={(item: IReviewDetails, index) => {
-                console.log(item);
+            dataSource={reviews[0]?.message ? reviews : []}
+            renderItem={(item, index) => {
                 return (
                     <List.Item>
                         <Flex gap={10} style={{ marginBottom: 10 }}>
