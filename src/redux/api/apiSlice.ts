@@ -55,6 +55,11 @@ export const api = createApi({
             'Content-Type': 'application/json',
         },
     }),
-    tagTypes: ['CreatedUser', 'CategoryCreated', 'SubCategoryCreated'],
+    tagTypes: [
+        'CreatedUser',
+        'CategoryCreated',
+        'SubCategoryCreated',
+        'UpdateCategoryStatus',
+    ],
     endpoints: () => ({}),
 });

@@ -1,27 +1,43 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Live Link `https://cryp-multi-ecom.vercel.app/`
 
-Currently, two official plugins are available:
+## Developer Environment
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   React Js
+-   Vite
+-   Ant D & SCSS
+-   TypeScript
+-   Redux Toolkit & RTK Query
+-   Axios
 
-## Expanding the ESLint configuration
+## Project setup for `Development`
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. `yarn` is our package manager. So, install it by running the `command` bellow.
 
-- Configure the top-level `parserOptions` property like this:
+```bash
+npm i -g yarn
+```
+
+2. Install `eslint` and `prettier` extension in your `vscode`.
+
+3. Clone project on your local machine by running `git clone https://github.com/devanondo/multi_ecom_admin`
+
+4. Go to the project directory `multi_ecom_admin` and run `yarn` then `yarn prepare`.
+
+5. Create `.env` file in your root directory.Then copy the contents of `.env.example` to `.env`.
+
+6. Finally run `yarn dev` to start the dev server.
+
+#### Credentials to access the project
 
 ```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
+   {
+    id: 'ADM0Y23000001',
+    password: 'password',
    },
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+```
+   Site is under construction...
+```
