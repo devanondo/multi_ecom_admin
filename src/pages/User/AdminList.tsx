@@ -1,16 +1,16 @@
-import { Breadcrumb, Button, Card, Select } from 'antd';
-import Header from '../../components/Shared/Header/Header';
-import Flex from '../../components/Shared/Flex/Flex';
-import Search from 'antd/es/input/Search';
-import DateRange from '../../components/Shared/DateRangePicker/DateRange';
-import CheckBoxTable from '../../components/Shared/CheckBoxTable/CheckBoxTable';
-
 import {
     HomeOutlined,
     PlusOutlined,
     SlidersOutlined,
     UnorderedListOutlined,
 } from '@ant-design/icons';
+import { Breadcrumb, Button, Card, Select } from 'antd';
+import Search from 'antd/es/input/Search';
+import DateRange from '../../components/Shared/DateRangePicker/DateRange';
+import Flex from '../../components/Shared/Flex/Flex';
+import Header from '../../components/Shared/Header/Header';
+
+import AdminTable from '../../components/Users/UserTable/AdminTable';
 
 const AdminList = () => {
     return (
@@ -54,6 +54,7 @@ const AdminList = () => {
                             </Button>
                         </Flex>
                     }
+                    style={{ marginBottom: 10 }}
                 >
                     <Flex gap={20} align="center">
                         <Search placeholder="Search here.." />
@@ -147,9 +148,7 @@ const AdminList = () => {
                     </Flex>
                 </Card>
 
-                <Card title="Vendor List" style={{ marginTop: 20 }}>
-                    <CheckBoxTable />
-                </Card>
+                <AdminTable />
             </div>
         </div>
     );

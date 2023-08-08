@@ -1,27 +1,31 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createBrowserRouter, RouteObject } from 'react-router-dom';
-import App from '../App';
-import Dashboard from '../pages/Dashboard';
-import NotFound from '../pages/NotFound';
-import ProductList from '../pages/Products/ProductList';
-import CreateProduct from '../pages/Products/CreateProduct';
-import ProductDetails from '../pages/Products/ProductDetails';
-import EditProduct from '../pages/Products/EditProduct';
-import Login from '../pages/Auth/Login';
-import Register from '../pages/Auth/Register';
-import UserList from '../pages/User/UserList';
-import CreateUser from '../pages/User/CreateUser';
-import AdminList from '../pages/User/AdminList';
-import VendorList from '../pages/User/VendorList';
-import CustomerList from '../pages/User/CustomerList';
-import SellerList from '../pages/Seller/SellerList';
-import SellerDetails from '../pages/Seller/SellerDetails';
-import OrderList from '../pages/Orders/OrderList';
-import OrderDetails from '../pages/Orders/OrderDetails';
-import CategoryList from '../pages/Category/CategoryList';
-import CategoryDetails from '../pages/Category/CategoryDetails';
-import CreateCategory from '../pages/Category/CreateCategory';
-import EditCategory from '../pages/Category/EditCategory';
-import CustomerProfile from '../pages/User/CustomerProfile/CustomerProfile';
+import { lazy } from 'react';
+const App = lazy(() => import('../App'));
+const Dashboard = lazy(() => import('../pages/Dashboard'));
+const NotFound = lazy(() => import('../pages/NotFound'));
+const ProductList = lazy(() => import('../pages/Products/ProductList'));
+const CreateProduct = lazy(() => import('../pages/Products/CreateProduct'));
+const ProductDetails = lazy(() => import('../pages/Products/ProductDetails'));
+const EditProduct = lazy(() => import('../pages/Products/EditProduct'));
+const Login = lazy(() => import('../pages/Auth/Login'));
+const Register = lazy(() => import('../pages/Auth/Register'));
+const UserList = lazy(() => import('../pages/User/UserList'));
+const CreateUser = lazy(() => import('../pages/User/CreateUser'));
+const AdminList = lazy(() => import('../pages/User/AdminList'));
+const VendorList = lazy(() => import('../pages/User/VendorList'));
+const CustomerList = lazy(() => import('../pages/User/CustomerList'));
+const SellerList = lazy(() => import('../pages/Seller/SellerList'));
+const SellerDetails = lazy(() => import('../pages/Seller/SellerDetails'));
+const OrderList = lazy(() => import('../pages/Orders/OrderList'));
+const OrderDetails = lazy(() => import('../pages/Orders/OrderDetails'));
+const CategoryList = lazy(() => import('../pages/Category/CategoryList'));
+const CategoryDetails = lazy(() => import('../pages/Category/CategoryDetails'));
+const CreateCategory = lazy(() => import('../pages/Category/CreateCategory'));
+const EditCategory = lazy(() => import('../pages/Category/EditCategory'));
+const CustomerProfile = lazy(
+    () => import('../pages/User/CustomerProfile/CustomerProfile'),
+);
 
 const routes: RouteObject[] = [
     {
@@ -63,8 +67,7 @@ const routes: RouteObject[] = [
                         element: <CategoryList />,
                     },
                     {
-                        // path: ':id',
-                        path: 'details',
+                        path: ':category_id',
                         element: <CategoryDetails />,
                     },
                     {

@@ -1,24 +1,65 @@
-/* eslint-disable no-console */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Checkbox, Divider, Form, Input, Select, Space, Typography } from 'antd';
-import React from 'react';
-import './LoginRegister.scss';
-import { SizeType } from 'antd/es/config-provider/SizeContext';
-const { Option } = Select;
 import {
-    LockOutlined,
-    UserOutlined,
-    MailOutlined,
-    GoogleOutlined,
     FacebookOutlined,
+    GoogleOutlined,
+    LockOutlined,
+    MailOutlined,
+    UserOutlined,
 } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import {
+    Button,
+    Checkbox,
+    Divider,
+    Form,
+    Input,
+    Select,
+    Space,
+    Typography,
+    message,
+} from 'antd';
+import { SizeType } from 'antd/es/config-provider/SizeContext';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import Flex from '../../components/Shared/Flex/Flex';
+import { useGetSignUpMutation } from '../../redux/users/userApi';
+import './LoginRegister.scss';
+const { Option } = Select;
+
+interface IRegisterInfo {
+    agreement: boolean;
+    confirm: string;
+    email: string;
+    first_name: string;
+    last_name: string;
+    password: string;
+    phone: string | number;
+    prefix: '88';
+}
 
 const Register: React.FC = () => {
     const [form] = Form.useForm();
+    const [getSignUp, options] = useGetSignUpMutation();
+    const navigate = useNavigate();
 
-    const onFinish = (values: any) => {
-        console.log('Received values of form: ', values);
+    useEffect(() => {
+        if (options.isSuccess) {
+            message.success('Account Created Successfully!');
+            message.success('Redirecting to Dashboard!');
+            navigate('/');
+        }
+    }, [options.isSuccess, navigate]);
+
+    const onFinish = (data: Partial<IRegisterInfo>) => {
+        const submitData = {
+            name: {
+                first_name: data?.first_name,
+                last_name: data?.last_name,
+            },
+            phone: data?.phone,
+            password: data?.password,
+            role: 'vendor',
+        };
+
+        getSignUp(submitData);
     };
 
     const prefixSelector = (
@@ -46,10 +87,10 @@ const Register: React.FC = () => {
                 <Typography.Title level={2}>Sign Up here</Typography.Title>
 
                 <Divider orientation="center" plain>
-                    CONTINUE MANUALY
+                    REGISTER AS A SELLER
                 </Divider>
 
-                <Space wrap>
+                <Flex gap={10} align="center">
                     <Form.Item
                         style={{ marginBottom: '10px' }}
                         name="first_name"
@@ -87,7 +128,7 @@ const Register: React.FC = () => {
                             placeholder="Last name"
                         />
                     </Form.Item>
-                </Space>
+                </Flex>
 
                 <Form.Item
                     style={{ marginBottom: '10px' }}
@@ -173,19 +214,6 @@ const Register: React.FC = () => {
 
                 <Form.Item
                     style={{ marginBottom: '10px' }}
-                    name="gender"
-                    label="Gender"
-                    rules={[{ required: true, message: 'Please select gender!' }]}
-                >
-                    <Select placeholder="select your gender">
-                        <Option value="male">Male</Option>
-                        <Option value="female">Female</Option>
-                        <Option value="other">Other</Option>
-                    </Select>
-                </Form.Item>
-
-                <Form.Item
-                    style={{ marginBottom: '10px' }}
                     name="agreement"
                     valuePropName="checked"
                     rules={[
@@ -204,7 +232,12 @@ const Register: React.FC = () => {
                     </Checkbox>
                 </Form.Item>
                 <Form.Item>
-                    <Button block type="primary" htmlType="submit">
+                    <Button
+                        block
+                        type="primary"
+                        htmlType="submit"
+                        loading={options?.isLoading}
+                    >
                         Register
                     </Button>
                 </Form.Item>

@@ -1,11 +1,10 @@
-import { FC, ReactNode, useState } from 'react';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Button, Layout, theme } from 'antd';
+import { FC, ReactNode, useState } from 'react';
+import { Images } from '../../utils/images';
+import './LayoutPage.scss';
 import Navbar from './Navbar/Navbar';
 import Sidebar from './Sidebar/Sidebar';
-import './LayoutPage.scss';
-import { Images } from '../../utils/images';
-import { useGetProductsQuery } from '../../redux/products/productApi';
 
 const { Header, Sider, Footer, Content } = Layout;
 
@@ -18,8 +17,6 @@ const LayoutPage: FC<ILayout> = ({ children }) => {
     const {
         token: { colorBgContainer },
     } = theme.useToken();
-
-    useGetProductsQuery(undefined);
 
     return (
         <Layout style={{ height: '100vh', overflowY: 'hidden' }}>

@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { InboxOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -14,10 +14,12 @@ import {
     Select,
     Upload,
     UploadFile,
-    UploadProps,
+    message,
 } from 'antd';
 import { RcFile } from 'antd/es/upload';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useCreateCategoryMutation } from '../../redux/category/categoryApi';
+import { pickFormData } from '../../utils/FormData/FormData';
 import Flex from '../Shared/Flex/Flex';
 import './Category.scss';
 
@@ -32,21 +34,55 @@ const getBase64 = (file: RcFile): Promise<string> =>
 const CreateCategoryForm: React.FC = () => {
     const [form] = Form.useForm();
 
-    const onFinish = (values: any) => {
-        console.log('Received values of form: ', values);
-    };
+    // Dispatch
+    const [createCategory, options] = useCreateCategoryMutation();
+
+    useEffect(() => {
+        if (options.isSuccess) {
+            message.success(options?.data?.message);
+            form.resetFields();
+        }
+        if (options.isError && options.error) {
+            message.error(options.error?.message);
+        }
+    }, [options]);
+
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
     const [previewTitle, setPreviewTitle] = useState('');
     const [fileList, setFileList] = useState<UploadFile[]>([]);
+    const [description, setDescription] = useState<string>('');
+    const [images, setImages] = useState<string[]>([]);
 
-    const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
-        setFileList(newFileList);
+    const onDrop = (e: any) => {
+        setFileList(e.dataTransfer.files);
+        const files = Array.from(e.dataTransfer.files);
+        setImages([]);
+        files.forEach((file) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file as Blob);
+
+            reader.onload = () => {
+                if (reader.readyState === 2) {
+                    setImages((oldImages: string[]) => [
+                        ...oldImages,
+                        reader.result as string,
+                    ]);
+                }
+            };
+        });
     };
+
+    const onFinish = (values: any) => {
+        const myForm = pickFormData(values);
+        myForm.set('description', description);
+        myForm.append('banner_image', JSON.stringify(images));
+        createCategory(myForm);
+    };
+
     const handleCancel = () => setPreviewOpen(false);
 
     const normFile = (e: any) => {
-        console.log('Upload event:', e);
         if (Array.isArray(e)) {
             return e;
         }
@@ -100,9 +136,9 @@ const CreateCategoryForm: React.FC = () => {
                                 <CKEditor
                                     editor={ClassicEditor}
                                     data={EditorDefaultValue}
-                                    onChange={(event, editor) => {
+                                    onChange={(_, editor) => {
                                         const data = editor.getData();
-                                        console.log({ event, editor, data });
+                                        setDescription(data);
                                     }}
                                 />
                             </Form.Item>
@@ -159,9 +195,11 @@ const CreateCategoryForm: React.FC = () => {
                                     <Upload.Dragger
                                         fileList={fileList}
                                         onPreview={handlePreview}
-                                        onChange={handleChange}
+                                        // onChange={handleChange}
+                                        onDrop={onDrop}
                                         name="files"
                                         listType="picture"
+                                        multiple
                                     >
                                         <p className="ant-upload-drag-icon">
                                             <InboxOutlined />
@@ -178,7 +216,7 @@ const CreateCategoryForm: React.FC = () => {
                         </Card>
 
                         <Card style={{ marginTop: 20 }} title="Sub Category">
-                            <Form.List name="users">
+                            <Form.List name="sub_category">
                                 {(fields, { add, remove }) => (
                                     <>
                                         {fields.map(({ key, name, ...restField }) => (
@@ -252,7 +290,12 @@ const CreateCategoryForm: React.FC = () => {
                                 )}
                             </Form.List>
                             <Form.Item>
-                                <Button block type="primary" htmlType="submit">
+                                <Button
+                                    block
+                                    type="primary"
+                                    htmlType="submit"
+                                    loading={options?.isLoading}
+                                >
                                     Submit
                                 </Button>
                             </Form.Item>

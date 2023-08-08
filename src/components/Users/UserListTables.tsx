@@ -1,29 +1,32 @@
 import { CarOutlined, CheckCircleOutlined, ProjectFilled } from '@ant-design/icons';
 import { Tabs } from 'antd';
 import React from 'react';
-import CheckBoxTable from '../Shared/CheckBoxTable/CheckBoxTable';
+import AdminTable from './UserTable/AdminTable';
+import CustomerTable from './UserTable/CustomerTable';
+import VendorTable from './UserTable/VendorTable';
 
 const UserListTables: React.FC = () => {
     const taboptions = [
         {
             icon: ProjectFilled,
-            label: 'Customers',
+            label: 'customers',
             key: '1',
-            children: <CheckBoxTable />,
+            children: <CustomerTable />,
         },
         {
             icon: CheckCircleOutlined,
             label: 'Admin',
             key: '2',
-            children: <CheckBoxTable />,
+            children: <AdminTable />,
         },
         {
             icon: CarOutlined,
             label: 'Vendors',
             key: '3',
-            children: <CheckBoxTable />,
+            children: <VendorTable />,
         },
     ];
+
     return (
         <Tabs
             defaultActiveKey="1"

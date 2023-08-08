@@ -1,9 +1,8 @@
 import { Breadcrumb, Button, Card, Select } from 'antd';
-import Header from '../../components/Shared/Header/Header';
-import Flex from '../../components/Shared/Flex/Flex';
 import Search from 'antd/es/input/Search';
 import DateRange from '../../components/Shared/DateRangePicker/DateRange';
-import CheckBoxTable from '../../components/Shared/CheckBoxTable/CheckBoxTable';
+import Flex from '../../components/Shared/Flex/Flex';
+import Header from '../../components/Shared/Header/Header';
 
 import {
     HomeOutlined,
@@ -11,6 +10,7 @@ import {
     SlidersOutlined,
     UnorderedListOutlined,
 } from '@ant-design/icons';
+import CustomerTable from '../../components/Users/UserTable/CustomerTable';
 
 const CustomerList = () => {
     return (
@@ -54,6 +54,7 @@ const CustomerList = () => {
                             </Button>
                         </Flex>
                     }
+                    style={{ marginBottom: 10 }}
                 >
                     <Flex gap={20} align="center">
                         <Search placeholder="Search here.." />
@@ -147,9 +148,7 @@ const CustomerList = () => {
                     </Flex>
                 </Card>
 
-                <Card title="Customer List" style={{ marginTop: 20 }}>
-                    <CheckBoxTable />
-                </Card>
+                <CustomerTable />
             </div>
         </div>
     );

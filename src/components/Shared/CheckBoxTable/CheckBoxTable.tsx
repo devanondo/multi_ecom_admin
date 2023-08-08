@@ -128,6 +128,7 @@ const CheckBoxTable = () => {
                 type: 'checkbox',
                 ...rowSelection,
             }}
+            title={() => 'Header'}
             columns={columns}
             dataSource={datas}
             scroll={{ x: 1000 }}

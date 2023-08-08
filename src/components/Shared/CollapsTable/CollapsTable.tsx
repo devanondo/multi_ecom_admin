@@ -56,7 +56,7 @@ const CollapsTable = () => {
         ];
 
         const data = [];
-        for (let i = 0; i < 3; ++i) {
+        for (let i = 0; i < 2; ++i) {
             data.push({
                 key: i.toString(),
                 date: '2014-12-24 23:12:00',
@@ -78,7 +78,7 @@ const CollapsTable = () => {
     ];
 
     const data: DataType[] = [];
-    for (let i = 0; i < 3; ++i) {
+    for (let i = 0; i < 8; ++i) {
         data.push({
             key: i.toString(),
             name: 'Screen',
@@ -96,6 +96,7 @@ const CollapsTable = () => {
                 columns={columns}
                 expandable={{ expandedRowRender, defaultExpandedRowKeys: ['0'] }}
                 dataSource={data}
+                scroll={{ x: 1000 }}
             />
         </div>
     );

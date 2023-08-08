@@ -9,10 +9,10 @@ import {
 import { Breadcrumb, Button, Card, Select, Tabs } from 'antd';
 import Search from 'antd/es/input/Search';
 import React from 'react';
-import CategoryTable from '../../components/Category/CategoryTable';
 import DateRange from '../../components/Shared/DateRangePicker/DateRange';
 import Flex from '../../components/Shared/Flex/Flex';
 import Header from '../../components/Shared/Header/Header';
+import CategoryTable from '../../components/Category/CategoryTable/CategoryTable';
 
 const CategoryList: React.FC = () => {
     const taboptions = [
@@ -20,19 +20,37 @@ const CategoryList: React.FC = () => {
             icon: ProjectFilled,
             label: 'Active Category',
             key: '1',
-            children: <CategoryTable title={'Active Category'} />,
+            children: (
+                <CategoryTable
+                    query={{
+                        active_status: 'active',
+                    }}
+                />
+            ),
         },
         {
             icon: CheckCircleOutlined,
-            label: 'Peding Category',
+            label: 'Pending Category',
             key: '2',
-            children: <CategoryTable title={'Pending Category'} />,
+            children: (
+                <CategoryTable
+                    query={{
+                        active_status: 'pending',
+                    }}
+                />
+            ),
         },
         {
             icon: CheckCircleOutlined,
             label: 'Restricted Category',
             key: '2',
-            children: <CategoryTable title={'Restricted Category'} />,
+            children: (
+                <CategoryTable
+                    query={{
+                        active_status: 'restricted',
+                    }}
+                />
+            ),
         },
     ];
 
@@ -166,7 +184,7 @@ const CategoryList: React.FC = () => {
                 </Card>
 
                 <Tabs
-                    defaultActiveKey="1"
+                    defaultActiveKey="2"
                     items={taboptions.map((item, i) => {
                         const id = String(i + 1);
 
