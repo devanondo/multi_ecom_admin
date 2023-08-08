@@ -1,9 +1,12 @@
-import { Select, Table, Tag, Tooltip } from 'antd';
+import { Select, Table, Tag, Tooltip, message } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import Parse from 'html-react-parser';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useGetCategoryQuery } from '../../../redux/category/categoryApi';
+import {
+    useGetCategoryQuery,
+    useUpdateStatusMutation,
+} from '../../../redux/category/categoryApi';
 import Flex from '../../Shared/Flex/Flex';
 import { ICategory, ISubCategory } from '../Interface/categoryInterface';
 
@@ -18,6 +21,18 @@ interface ICategoryTable {
 
 const CategoryTable: React.FC<ICategoryTable> = ({ query = {} }) => {
     const { data: categories } = useGetCategoryQuery(queryBuilder('category', query));
+
+    const [updateStatus, response] = useUpdateStatusMutation();
+
+    useEffect(() => {
+        if (response.isSuccess) {
+            message.success(response.data.message);
+        }
+
+        if (response.isError) {
+            message.success(response.error.message);
+        }
+    }, [response]);
 
     const columns: ColumnsType<ICategory> = [
         {
@@ -50,12 +65,18 @@ const CategoryTable: React.FC<ICategoryTable> = ({ query = {} }) => {
             title: 'Active Status',
             dataIndex: 'active_status',
             align: 'center',
-            render: (active_status) => {
+            render: (_: string, cd) => {
                 return (
                     <Select
-                        defaultValue={active_status}
+                        defaultValue={cd?.active_status}
                         style={{ width: 110, textAlign: 'left' }}
-                        onChange={() => {}}
+                        onChange={(value) => {
+                            const url = queryBuilder(`category/active_status/${cd?.id}`, {
+                                status: value,
+                            });
+
+                            updateStatus(url);
+                        }}
                         size="small"
                         options={[
                             { label: 'Active', value: 'active' },

@@ -6,13 +6,14 @@ import {
     SlidersOutlined,
     UnorderedListOutlined,
 } from '@ant-design/icons';
-import { Breadcrumb, Button, Card, Select, Tabs } from 'antd';
+import { Breadcrumb, Button, Card, Tabs } from 'antd';
 import Search from 'antd/es/input/Search';
 import React from 'react';
+import { Link } from 'react-router-dom';
+import CategoryTable from '../../components/Category/CategoryTable/CategoryTable';
 import DateRange from '../../components/Shared/DateRangePicker/DateRange';
 import Flex from '../../components/Shared/Flex/Flex';
 import Header from '../../components/Shared/Header/Header';
-import CategoryTable from '../../components/Category/CategoryTable/CategoryTable';
 
 const CategoryList: React.FC = () => {
     const taboptions = [
@@ -85,101 +86,34 @@ const CategoryList: React.FC = () => {
                     extra={
                         <Flex gap={10}>
                             <Button type="primary">
-                                <PlusOutlined />
-                                Add Category
+                                <Link to="create">
+                                    <PlusOutlined />
+                                    Add Category
+                                </Link>
                             </Button>
                         </Flex>
                     }
                 >
-                    <Flex gap={20} align="center">
-                        <Search placeholder="Search here.." />
-                        <DateRange />
+                    <Flex
+                        gap={20}
+                        align="center"
+                        justify="space-between"
+                        style={{ flexWrap: 'wrap' }}
+                    >
+                        <Search style={{ maxWidth: 300 }} placeholder="Search here.." />
 
-                        <Select
-                            showSearch
-                            style={{ width: 300 }}
-                            placeholder=" select by Order status"
-                            optionFilterProp="children"
-                            filterOption={(input, option) =>
-                                (option?.label ?? '').includes(input)
-                            }
-                            filterSort={(optionA, optionB) =>
-                                (optionA?.label ?? '')
-                                    .toLowerCase()
-                                    .localeCompare((optionB?.label ?? '').toLowerCase())
-                            }
-                            options={[
-                                {
-                                    value: '1',
-                                    label: 'Not Identified',
-                                },
-                                {
-                                    value: '2',
-                                    label: 'Closed',
-                                },
-                                {
-                                    value: '3',
-                                    label: 'Communicated',
-                                },
-                                {
-                                    value: '4',
-                                    label: 'Identified',
-                                },
-                                {
-                                    value: '5',
-                                    label: 'Resolved',
-                                },
-                                {
-                                    value: '6',
-                                    label: 'Cancelled',
-                                },
-                            ]}
-                        />
-                        <Select
-                            showSearch
-                            style={{ width: 300 }}
-                            placeholder="Select by Payment"
-                            optionFilterProp="children"
-                            filterOption={(input, option) =>
-                                (option?.label ?? '').includes(input)
-                            }
-                            filterSort={(optionA, optionB) =>
-                                (optionA?.label ?? '')
-                                    .toLowerCase()
-                                    .localeCompare((optionB?.label ?? '').toLowerCase())
-                            }
-                            options={[
-                                {
-                                    value: '1',
-                                    label: 'Not Identified',
-                                },
-                                {
-                                    value: '2',
-                                    label: 'Closed',
-                                },
-                                {
-                                    value: '3',
-                                    label: 'Communicated',
-                                },
-                                {
-                                    value: '4',
-                                    label: 'Identified',
-                                },
-                                {
-                                    value: '5',
-                                    label: 'Resolved',
-                                },
-                                {
-                                    value: '6',
-                                    label: 'Cancelled',
-                                },
-                            ]}
-                        />
+                        <Flex
+                            gap={20}
+                            align="center"
+                            style={{ flexWrap: 'wrap', width: 'fit-content' }}
+                        >
+                            <DateRange />
 
-                        <Button type="primary">
-                            <SlidersOutlined />
-                            Filter
-                        </Button>
+                            <Button type="primary">
+                                <SlidersOutlined />
+                                Filter
+                            </Button>
+                        </Flex>
                     </Flex>
                 </Card>
 

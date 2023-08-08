@@ -1,4 +1,9 @@
-import { HomeOutlined, PlusOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import {
+    HomeOutlined,
+    PlusOutlined,
+    UnorderedListOutlined,
+    EditFilled,
+} from '@ant-design/icons';
 import {
     Breadcrumb,
     Button,
@@ -176,9 +181,14 @@ const CategoryDetails: React.FC = () => {
                                     />
                                 )}
 
-                                <Button>
+                                <Button type="primary">
                                     <Link to="/category/create">
                                         <PlusOutlined /> Add Category
+                                    </Link>
+                                </Button>
+                                <Button type="primary" danger>
+                                    <Link to={`/category/${category_id}/edit`}>
+                                        <EditFilled /> Edit
                                     </Link>
                                 </Button>
                             </Flex>

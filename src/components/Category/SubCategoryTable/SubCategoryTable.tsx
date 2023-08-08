@@ -1,12 +1,16 @@
 import { DeleteFilled, EditFilled } from '@ant-design/icons';
-import { Select, Table, Tag, Tooltip } from 'antd';
+import { Select, Spin, Table, Tag, Tooltip, message } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import Parse from 'html-react-parser';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useGetACategoryQuery } from '../../../redux/category/categoryApi';
+import {
+    useGetACategoryQuery,
+    useUpdateStatusMutation,
+} from '../../../redux/category/categoryApi';
 import Flex from '../../Shared/Flex/Flex';
 import { ISubCategory } from '../Interface/categoryInterface';
+import { queryBuilder } from '../../../utils/QueryBuilder/queryBuilder';
 
 interface ISubCategoryTable {
     header: string;
@@ -16,6 +20,17 @@ const SubCategoryTable: React.FC<ISubCategoryTable> = ({ header }) => {
     const { category_id } = useParams();
 
     const { data: category_details } = useGetACategoryQuery(category_id);
+    const [updateStatus, response] = useUpdateStatusMutation();
+
+    useEffect(() => {
+        if (response.isSuccess) {
+            message.success(response.data.message);
+        }
+
+        if (response.isError) {
+            message.success(response.error.message);
+        }
+    }, [response]);
 
     const columns: ColumnsType<ISubCategory> = [
         {
@@ -48,12 +63,21 @@ const SubCategoryTable: React.FC<ISubCategoryTable> = ({ header }) => {
             title: 'Active Status',
             dataIndex: 'active_status',
             align: 'center',
-            render: (active_status: string) => {
+            render: (_: string, scd) => {
                 return (
                     <Select
-                        defaultValue={active_status}
+                        defaultValue={scd?.active_status}
                         style={{ width: 110, textAlign: 'left' }}
-                        onChange={() => {}}
+                        onChange={(value) => {
+                            const url = queryBuilder(
+                                `category/sub_active_status/${scd.id}`,
+                                {
+                                    sub_status: value,
+                                },
+                            );
+
+                            updateStatus(url);
+                        }}
                         size="small"
                         options={[
                             { label: 'Active', value: 'active' },
@@ -107,14 +131,16 @@ const SubCategoryTable: React.FC<ISubCategoryTable> = ({ header }) => {
     );
 
     return (
-        <Table
-            bordered
-            size="small"
-            title={() => header}
-            columns={columns}
-            dataSource={rows}
-            scroll={{ x: 1000 }}
-        />
+        <Spin spinning={response.isLoading} delay={0}>
+            <Table
+                bordered
+                size="small"
+                title={() => header}
+                columns={columns}
+                dataSource={rows}
+                scroll={{ x: 1000 }}
+            />
+        </Spin>
     );
 };
 
