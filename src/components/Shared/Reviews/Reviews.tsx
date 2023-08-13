@@ -3,14 +3,14 @@ import { StarFilled } from '@ant-design/icons';
 import { Avatar, Image, List, Typography } from 'antd';
 import moment from 'moment';
 import React from 'react';
-import Flex from '../../components/Shared/Flex/Flex';
-import { IReviewDetails } from '../../utils/interface';
+import { IReviewDetails } from '../../../utils/interface';
+import Flex from '../Flex/Flex';
 
-interface ICategoryReviews {
+interface IReviewsComponent {
     reviews: IReviewDetails[];
 }
 
-const CategoryReviews: React.FC<ICategoryReviews> = ({ reviews = [] }) => {
+const Reviews: React.FC<IReviewsComponent> = ({ reviews = [] }) => {
     const { Text } = Typography;
     console.log(reviews[0]?.message ? reviews : []);
 
@@ -99,4 +99,4 @@ const CategoryReviews: React.FC<ICategoryReviews> = ({ reviews = [] }) => {
     );
 };
 
-export default CategoryReviews;
+export default Reviews;

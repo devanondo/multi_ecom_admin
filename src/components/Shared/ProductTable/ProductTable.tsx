@@ -1,24 +1,38 @@
 /* eslint-disable no-console */
 import { DeleteFilled, EditFilled } from '@ant-design/icons';
 import { Rate, Tag, Typography } from 'antd';
-import Table, { ColumnsType, TableProps } from 'antd/es/table';
-import React from 'react';
-import { useGetProductsQuery } from '../../redux/products/productApi';
-import { queryBuilder } from '../../utils/QueryBuilder/queryBuilder';
-import { IProduct } from '../Products/Interface/productInterface';
-import Flex from '../Shared/Flex/Flex';
-import { Link } from 'react-router-dom';
+import Table, { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useGetProductsQuery } from '../../../redux/products/productApi';
+import { queryBuilder } from '../../../utils/QueryBuilder/queryBuilder';
+import { IProduct } from '../../Products/Interface/productInterface';
+import Flex from '../Flex/Flex';
 
-interface ICategoryProductTable {
+interface IProductTable {
     title: string;
-    query?: {
+    url: string;
+    additional_query?: {
         [key: string]: string | number | boolean;
     };
 }
 
-const CategoryProductTable: React.FC<ICategoryProductTable> = ({ title, query = {} }) => {
-    const { data: products } = useGetProductsQuery(queryBuilder('product', query));
+const ProductTable: React.FC<IProductTable> = ({
+    title,
+    url = 'product',
+    additional_query = {},
+}) => {
+    const [page, setPage] = useState<number>(1);
+    const [limit, setLimit] = useState<number>(10);
+
+    const query = {
+        ...additional_query,
+        page,
+        limit,
+    };
+
+    const { data: products } = useGetProductsQuery(queryBuilder(url, query));
 
     const columns: ColumnsType<IProduct> = [
         {
@@ -242,15 +256,19 @@ const CategoryProductTable: React.FC<ICategoryProductTable> = ({ title, query = 
         }),
     };
 
-    const onChange: TableProps<IProduct>['onChange'] = (
-        pagination,
-        filters,
-        sorter,
-        extra,
-    ) => {
-        console.log('params', pagination, filters, sorter, extra);
-    };
+    // const onChange: TableProps<IProduct>['onChange'] = (
+    //     pagination,
+    //     filters,
+    //     sorter,
+    //     extra,
+    // ) => {
+    //     console.log('params', pagination, filters, sorter, extra);
+    // };
 
+    const onchange = (page: number, pageSize: number) => {
+        setPage(page);
+        setLimit(pageSize);
+    };
     return (
         <Table
             bordered
@@ -263,9 +281,15 @@ const CategoryProductTable: React.FC<ICategoryProductTable> = ({ title, query = 
             columns={columns}
             dataSource={rows}
             scroll={{ x: 1600 }}
-            onChange={onChange}
+            // onChange={onChange}
+            pagination={{
+                onChange: onchange,
+                total: products?.data?.length,
+                showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
+                showQuickJumper: true,
+            }}
         />
     );
 };
 
-export default CategoryProductTable;
+export default ProductTable;
