@@ -1,6 +1,8 @@
 export type IImage = {
     public_id: string;
     url: string;
+    preview?: string;
+    name?: string;
 };
 
 export type IUser = {
