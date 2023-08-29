@@ -5,7 +5,10 @@ const productApi = api.injectEndpoints({
         getProducts: builder.query({
             query: (url) => ({ url: url, method: 'GET' }),
         }),
+        createProduct: builder.mutation({
+            query: ({ url, data }) => ({ url: url, method: 'POST', data: data }),
+        }),
     }),
 });
 
-export const { useGetProductsQuery } = productApi;
+export const { useGetProductsQuery, useCreateProductMutation } = productApi;

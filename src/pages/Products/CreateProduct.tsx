@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { HomeOutlined, InboxOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import { HomeOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import {
@@ -13,24 +14,25 @@ import {
     Form,
     Input,
     InputNumber,
-    Modal,
     Row,
     Select,
-    Upload,
+    message,
 } from 'antd';
 import { DefaultOptionType } from 'antd/es/cascader';
-import { RcFile, UploadFile, UploadProps } from 'antd/es/upload';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { IShop } from '../../components/Seller/Interface/ShopInterface';
+import DropUpload, { IImgType } from '../../components/Shared/DropFile/DropUpload';
 import Header from '../../components/Shared/Header/Header';
+import { useGetShopQuery } from '../../redux/Shop/ShopApi';
+import { queryBuilder } from '../../utils/QueryBuilder/queryBuilder';
 import './Product.scss';
-
-const getBase64 = (file: RcFile): Promise<string> =>
-    new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result as string);
-        reader.onerror = (error) => reject(error);
-    });
+import { pickFData } from '../../utils/FormData/DataPicker';
+import { useGetCategoryQuery } from '../../redux/category/categoryApi';
+import {
+    ICategory,
+    ISubCategory,
+} from '../../components/Category/Interface/categoryInterface';
+import { useCreateProductMutation } from '../../redux/products/productApi';
 
 interface DataNodeType {
     value: string;
@@ -41,73 +43,60 @@ interface DataNodeType {
 const CreateProduct = () => {
     const [form] = Form.useForm();
     const { Option } = Select;
+    const [images, setImages] = useState<IImgType[] | null>();
+    const [description, setDescription] = useState<string>('');
+
+    const { data: shops } = useGetShopQuery(
+        queryBuilder('shop', { active_status: 'public' }),
+    );
+    const { data: categories } = useGetCategoryQuery(
+        queryBuilder('category', { active_status: 'active' }),
+    );
+    const [createProduct, response] = useCreateProductMutation();
+
+    console.log(response);
+
+    useEffect(() => {
+        if (response.isSuccess) {
+            message.success('Product created successfully!');
+            form.resetFields();
+            setDescription('');
+            setImages(null);
+        }
+
+        if (response.isError && response.error) {
+            message.error(response.error?.message);
+        }
+    }, [response]);
 
     const onFinish = (values: any) => {
-        console.log('Received values of form: ', values);
+        values.description = description;
+        values.product_image = images;
+        values.sub_category = values.category[1];
+        values.category = values.category[0];
+        values.description = description;
+
+        const formData = pickFData(values);
+
+        createProduct({ url: 'product', data: formData });
     };
 
-    const [previewOpen, setPreviewOpen] = useState(false);
-    const [previewImage, setPreviewImage] = useState('');
-    const [previewTitle, setPreviewTitle] = useState('');
-    const [fileList, setFileList] = useState<UploadFile[]>([]);
-
-    const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
-        setFileList(newFileList);
-    };
-    const handleCancel = () => setPreviewOpen(false);
-
-    const normFile = (e: any) => {
-        console.log('Upload event:', e);
-        if (Array.isArray(e)) {
-            return e;
-        }
-        return e?.fileList;
-    };
-
-    const handlePreview = async (file: UploadFile) => {
-        if (!file.url && !file.preview) {
-            file.preview = await getBase64(file.originFileObj as RcFile);
-        }
-
-        setPreviewImage(file.url || (file.preview as string));
-        setPreviewOpen(true);
-        setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1));
-    };
-
-    const residences: CascaderProps<DataNodeType>['options'] = [
-        {
-            value: 'zhejiang',
-            label: 'Zhejiang',
-            children: [
-                {
-                    value: 'hangzhou',
-                    label: 'Hangzhou',
-                    children: [
-                        {
-                            value: 'xihu',
-                            label: 'West Lake',
-                        },
-                    ],
-                },
-            ],
+    const residences: CascaderProps<DataNodeType>['options'] = categories?.data?.map(
+        (category: ICategory) => {
+            return {
+                value: category.title,
+                label: category.title,
+                children: category?.sub_category
+                    ?.filter((item: ISubCategory) => item.active_status === 'active')
+                    .map((activeItem) => {
+                        return {
+                            value: activeItem.title,
+                            label: activeItem.title,
+                        };
+                    }),
+            };
         },
-        {
-            value: 'jiangsu',
-            label: 'Jiangsu',
-            children: [
-                {
-                    value: 'nanjing',
-                    label: 'Nanjing',
-                    children: [
-                        {
-                            value: 'zhonghuamen',
-                            label: 'Zhong Hua Men',
-                        },
-                    ],
-                },
-            ],
-        },
-    ];
+    );
 
     const filter = (inputValue: string, path: DefaultOptionType[]) =>
         path.some(
@@ -155,7 +144,7 @@ const CreateProduct = () => {
                     <Row gutter={[20, 20]}>
                         <Col xs={24} lg={12} xl={16}>
                             <Card
-                                style={{ backgroundColor: '#fff' }}
+                                style={{ backgroundColor: '#fff', marginTop: 20 }}
                                 title="Product Info"
                                 bordered={false}
                             >
@@ -231,12 +220,12 @@ const CreateProduct = () => {
                                             required: true,
                                             message: 'Please input product stock!',
                                         },
-                                        {
-                                            type: 'number',
-                                        },
                                     ]}
                                 >
-                                    <Input placeholder="Product Stock" />
+                                    <InputNumber
+                                        style={{ width: '100%' }}
+                                        placeholder="Product Stock"
+                                    />
                                 </Form.Item>
                             </Card>
                             <Card
@@ -254,12 +243,12 @@ const CreateProduct = () => {
                                             required: true,
                                             message: 'Please input product weight!',
                                         },
-                                        {
-                                            type: 'number',
-                                        },
                                     ]}
                                 >
-                                    <Input placeholder="Product Stock" />
+                                    <InputNumber
+                                        style={{ width: '100%' }}
+                                        placeholder="Product Stock"
+                                    />
                                 </Form.Item>
 
                                 <Form.Item
@@ -291,28 +280,20 @@ const CreateProduct = () => {
                                         }
                                         options={[
                                             {
-                                                value: '1',
-                                                label: 'Not Identified',
+                                                value: 'apple',
+                                                label: 'Apple',
                                             },
                                             {
-                                                value: '2',
-                                                label: 'Closed',
+                                                value: 'samsung',
+                                                label: 'Samsung',
                                             },
                                             {
-                                                value: '3',
-                                                label: 'Communicated',
+                                                value: 'lg',
+                                                label: 'LG',
                                             },
                                             {
-                                                value: '4',
-                                                label: 'Identified',
-                                            },
-                                            {
-                                                value: '5',
-                                                label: 'Resolved',
-                                            },
-                                            {
-                                                value: '6',
-                                                label: 'Cancelled',
+                                                value: 'nokia',
+                                                label: 'Nokia',
                                             },
                                         ]}
                                     />
@@ -335,53 +316,54 @@ const CreateProduct = () => {
                                         placeholder="Search to Select"
                                         optionFilterProp="children"
                                         filterOption={(input, option) =>
-                                            (option?.label ?? '').includes(input)
-                                        }
-                                        filterSort={(optionA, optionB) =>
-                                            (optionA?.label ?? '')
+                                            (option?.label ?? '')
+                                                .toString() // Convert to string
                                                 .toLowerCase()
-                                                .localeCompare(
-                                                    (optionB?.label ?? '').toLowerCase(),
-                                                )
+                                                .includes(input.toLowerCase())
                                         }
-                                        options={[
-                                            {
-                                                value: '1',
-                                                label: 'Not Identified',
-                                            },
-                                            {
-                                                value: '2',
-                                                label: 'Closed',
-                                            },
-                                            {
-                                                value: '3',
-                                                label: 'Communicated',
-                                            },
-                                            {
-                                                value: '4',
-                                                label: 'Identified',
-                                            },
-                                            {
-                                                value: '5',
-                                                label: 'Resolved',
-                                            },
-                                            {
-                                                value: '6',
-                                                label: 'Cancelled',
-                                            },
-                                        ]}
+                                        // filterSort={(optionA, optionB) =>
+                                        //     (optionA?.label ?? '')
+                                        //         .toLowerCase()
+                                        //         .localeCompare(
+                                        //             (optionB?.label ?? '').toLowerCase(),
+                                        //         )
+                                        // }
+                                        filterSort={(optionA, optionB) => {
+                                            const labelA = optionA?.label ?? '';
+                                            const labelB = optionB?.label ?? '';
+
+                                            if (
+                                                typeof labelA === 'string' &&
+                                                typeof labelB === 'string'
+                                            ) {
+                                                return labelA
+                                                    .toLowerCase()
+                                                    .localeCompare(labelB.toLowerCase());
+                                            }
+
+                                            return 0; // Handle cases where labels are not strings
+                                        }}
+                                        options={shops?.data?.map((item: IShop) => ({
+                                            value: item?.shop_id,
+                                            label: item?.shop_name,
+                                        }))}
                                     />
-                                    <Form.Item
-                                        style={{ marginBottom: '10px', width: '100%' }}
-                                        name="description"
-                                        label="Product Description"
-                                        tooltip="What do you want others to call your description?"
-                                    >
-                                        <CKEditor
-                                            editor={ClassicEditor}
-                                            data={EditorDefaultValue}
-                                        />
-                                    </Form.Item>
+                                </Form.Item>
+
+                                <Form.Item
+                                    style={{ marginBottom: '10px', width: '100%' }}
+                                    name="description"
+                                    label="Product Description"
+                                    tooltip="What do you want others to call your description?"
+                                >
+                                    <CKEditor
+                                        editor={ClassicEditor}
+                                        data={EditorDefaultValue}
+                                        onChange={(_, editor) => {
+                                            const data = editor.getData();
+                                            setDescription(data);
+                                        }}
+                                    />
                                 </Form.Item>
                             </Card>
                         </Col>
@@ -439,35 +421,11 @@ const CreateProduct = () => {
                                 </Form.Item>
 
                                 <Form.Item label="Upload Photo">
-                                    <Form.Item
-                                        name="photo"
-                                        valuePropName="fileList"
-                                        getValueFromEvent={normFile}
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message: 'Select an Photo!',
-                                            },
-                                        ]}
-                                    >
-                                        <Upload.Dragger
-                                            fileList={fileList}
-                                            onPreview={handlePreview}
-                                            onChange={handleChange}
-                                            name="files"
-                                            listType="picture"
-                                        >
-                                            <p className="ant-upload-drag-icon">
-                                                <InboxOutlined />
-                                            </p>
-                                            <p className="ant-upload-text">
-                                                Click or drag file to this area to upload
-                                            </p>
-                                            <p className="ant-upload-hint">
-                                                Support for a single or bulk upload.
-                                            </p>
-                                        </Upload.Dragger>
-                                    </Form.Item>
+                                    <DropUpload
+                                        onChange={(files) => {
+                                            setImages(files || null);
+                                        }}
+                                    />
                                 </Form.Item>
 
                                 <Form.Item
@@ -525,6 +483,7 @@ const CreateProduct = () => {
                                         block
                                         type="primary"
                                         htmlType="submit"
+                                        loading={response.isLoading}
                                     >
                                         Submit
                                     </Button>
@@ -533,15 +492,6 @@ const CreateProduct = () => {
                         </Col>
                     </Row>
                 </Form>
-
-                <Modal
-                    open={previewOpen}
-                    title={previewTitle}
-                    footer={null}
-                    onCancel={handleCancel}
-                >
-                    <img alt="example" style={{ width: '100%' }} src={previewImage} />
-                </Modal>
             </div>
         </div>
     );

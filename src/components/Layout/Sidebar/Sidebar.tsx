@@ -38,7 +38,6 @@ const Sidebar = () => {
         getItem('Category', 'category', <DesktopOutlined />, [
             getItem('Category List', '/category'),
             getItem('Create Category', '/category/create'),
-            getItem('Category Details', '/category/details'),
         ]),
         getItem('Seller', 'seller', <PieChartOutlined />),
 

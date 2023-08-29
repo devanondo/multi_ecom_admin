@@ -4,7 +4,7 @@ export type ISubCategory = {
     title: string;
     description: string;
     banner_image?: string;
-    active_status?: boolean;
+    active_status?: string | boolean;
     id?: string;
     _id?: string;
 };

@@ -15,6 +15,7 @@ const categoryApi = api.injectEndpoints({
                 'CategoryCreated',
                 'SubCategoryCreated',
                 'UpdateCategoryStatus',
+                'UpdateCategory',
             ],
         }),
         getACategory: builder.query({
@@ -22,7 +23,7 @@ const categoryApi = api.injectEndpoints({
                 url: `category/${id}`,
                 method: 'GET',
             }),
-            providesTags: ['UpdateCategoryStatus'],
+            providesTags: ['UpdateCategoryStatus', 'UpdateCategory'],
         }),
         updateACategory: builder.mutation({
             query: ({ id, data }) => ({
@@ -30,6 +31,7 @@ const categoryApi = api.injectEndpoints({
                 method: 'PATCH',
                 data: data,
             }),
+            invalidatesTags: ['UpdateCategory'],
         }),
         updateStatus: builder.mutation({
             query: (url) => ({

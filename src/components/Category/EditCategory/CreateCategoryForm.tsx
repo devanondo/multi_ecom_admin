@@ -6,7 +6,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { Button, Card, Col, Form, Input, Row, Select, message } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
     useGetACategoryQuery,
     useUpdateACategoryMutation,
@@ -19,15 +19,16 @@ const EditCategoryForm: React.FC = () => {
     const { category_id } = useParams();
     const { data: category_details } = useGetACategoryQuery(category_id);
     const [images, setImages] = useState<IImgType[] | null>();
+    const navigate = useNavigate();
 
     const [form] = Form.useForm();
-    // Dispatch
     const [updateACategory, options] = useUpdateACategoryMutation();
 
     useEffect(() => {
         if (options.isSuccess) {
             message.success(options?.data?.message);
             form.resetFields();
+            navigate(-1);
         }
         if (options.isError && options.error) {
             message.error(options.error?.message);
@@ -225,7 +226,7 @@ const EditCategoryForm: React.FC = () => {
                                     htmlType="submit"
                                     loading={options?.isLoading}
                                 >
-                                    Submit
+                                    Update
                                 </Button>
                             </Form.Item>
                         </Card>

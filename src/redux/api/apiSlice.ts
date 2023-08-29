@@ -60,6 +60,7 @@ export const api = createApi({
         'CategoryCreated',
         'SubCategoryCreated',
         'UpdateCategoryStatus',
+        'UpdateCategory',
     ],
     endpoints: () => ({}),
 });
