@@ -12,7 +12,6 @@ interface IReviewsComponent {
 
 const Reviews: React.FC<IReviewsComponent> = ({ reviews = [] }) => {
     const { Text } = Typography;
-    console.log(reviews[0]?.message ? reviews : []);
 
     return (
         <List

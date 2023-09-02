@@ -1,22 +1,21 @@
 import { Button } from 'antd';
-import CheckBoxTable from '../../components/Shared/CheckBoxTable/CheckBoxTable';
 import Header from '../../components/Shared/Header/Header';
+import ProductTable from '../../components/Shared/ProductTable/ProductTable';
+import { Link } from 'react-router-dom';
+import Filter from '../../components/Shared/Filter/Filter';
 
 const ProductList = () => {
-    // const { data } = useGetProductsQuery(undefined);
-
-    // console.log(products);
-
     return (
         <div>
             <Header title="Product List">
-                <Button size={'large'} type="primary">
-                    Primary Button
-                </Button>
+                <Link to={'create'}>
+                    <Button type="primary">Create Product</Button>
+                </Link>
             </Header>
 
             <div className="content__wrapper">
-                <CheckBoxTable />
+                <Filter />
+                <ProductTable url="product/admin" title="Products" />
             </div>
         </div>
     );

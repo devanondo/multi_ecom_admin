@@ -1,4 +1,5 @@
-import { IImage, IReview } from '../../../utils/interface';
+import { IImage, IReviewDetails } from '../../../utils/interface';
+import { IShop } from '../../Seller/Interface/ShopInterface';
 
 export type IProduct = {
     name?: string;
@@ -18,6 +19,10 @@ export type IProduct = {
     rating?: number;
     brand?: string;
     total_sold_price?: number;
-    reviews?: IReview[];
-    shop?: string;
+    reviews?: IReviewDetails[];
+    shop?: IShop;
+    createdAt?: string;
+    updatedAt?: string;
+    size?: string[];
+    short_description?: string;
 };

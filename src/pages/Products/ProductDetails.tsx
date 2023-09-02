@@ -1,6 +1,6 @@
 import { HomeOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { Breadcrumb, Carousel, Divider, Rate, Space, Typography } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import ProductPriceStockInfo from '../../components/Products/Details/ProductPriceStockInfo';
 import Flex from '../../components/Shared/Flex/Flex';
 import Header from '../../components/Shared/Header/Header';
@@ -8,12 +8,21 @@ import './Product.scss';
 import ProductSize from '../../components/Products/Details/ProductSize';
 import Description from '../../components/Products/Details/Description';
 import Ratings from '../../components/Products/Details/Ratings';
+import { useGetProductsQuery } from '../../redux/products/productApi';
+import { IImage } from '../../utils/interface';
+import { IProduct } from '../../components/Products/Interface/productInterface';
+import moment from 'moment';
 
 const ProductDetails = () => {
+    const { product_id } = useParams();
+    const { data: product } = useGetProductsQuery(`product/${product_id}`);
+
+    const pdInfo: IProduct = product?.data;
+
     const { Text } = Typography;
     return (
         <div className="product__details__page">
-            <Header title="Create Product">
+            <Header title="Product Details">
                 <Breadcrumb
                     items={[
                         {
@@ -40,36 +49,20 @@ const ProductDetails = () => {
                 <div className="product__details">
                     <div className="product__photo_slider">
                         <Carousel autoplay>
-                            <div className="product__carousel">
-                                <img
-                                    src="https://themesbrand.com/velzon/html/default/assets/images/products/img-8.png"
-                                    alt=""
-                                />
-                            </div>
-                            <div className="product__carousel">
-                                <img
-                                    src="https://themesbrand.com/velzon/html/default/assets/images/products/img-8.png"
-                                    alt=""
-                                />
-                            </div>
-                            <div className="product__carousel">
-                                <img
-                                    src="https://themesbrand.com/velzon/html/default/assets/images/products/img-8.png"
-                                    alt=""
-                                />
-                            </div>
-                            <div className="product__carousel">
-                                <img
-                                    src="https://themesbrand.com/velzon/html/default/assets/images/products/img-8.png"
-                                    alt=""
-                                />
-                            </div>
+                            {pdInfo?.product_image?.map((img: IImage, i: number) => (
+                                <div
+                                    key={i + img.public_id}
+                                    className="product__carousel"
+                                >
+                                    <img src={img.url} alt="" />
+                                </div>
+                            ))}
                         </Carousel>
                     </div>
 
                     <div className="product__content">
                         <Typography.Title type="secondary" level={4}>
-                            Full Sleeve Sweatshirt for Men (Pink)
+                            {pdInfo?.name}
                         </Typography.Title>
 
                         <Space>
@@ -80,7 +73,7 @@ const ProductDetails = () => {
                             <Flex>
                                 <Text>Seller : </Text>
                                 <Link to="">
-                                    <Text strong>Ant Design (strong)</Text>
+                                    <Text strong>{pdInfo?.shop?.shop_name}</Text>
                                 </Link>
                             </Flex>
                             <Divider type="vertical" />
@@ -88,26 +81,31 @@ const ProductDetails = () => {
                             <Flex>
                                 <Text>Published : </Text>
                                 <Link to="">
-                                    <Text>26 Mar, 2021</Text>
+                                    <Text> {moment(pdInfo?.createdAt).format('ll')}</Text>
                                 </Link>
                             </Flex>
                         </Space>
 
                         <Flex align="center" gap={10} style={{ marginTop: 20 }}>
-                            <Rate disabled defaultValue={5} />
-                            <Text>( 5.50k Customer Review )</Text>
+                            {pdInfo?.rating && (
+                                <Rate disabled defaultValue={pdInfo?.rating} />
+                            )}
+                            <Text>( {pdInfo?.reviews?.length} Customer Review )</Text>
                         </Flex>
 
                         <ProductPriceStockInfo />
 
                         {/* Product Size */}
-                        <ProductSize />
+                        <ProductSize size={pdInfo?.size} />
 
                         {/* Description */}
-                        <Description />
+                        <Description
+                            description={pdInfo?.description}
+                            short_description={pdInfo?.short_description}
+                        />
 
                         {/* Rating & Reviews */}
-                        <Ratings />
+                        <Ratings reviews={pdInfo?.reviews} rating={pdInfo?.rating} />
                     </div>
                 </div>
             </div>

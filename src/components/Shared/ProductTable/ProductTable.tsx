@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { DeleteFilled, EditFilled } from '@ant-design/icons';
-import { Rate, Tag, Typography } from 'antd';
+import { Image, Rate, Tag, Typography } from 'antd';
 import Table, { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
 import React, { useState } from 'react';
@@ -9,6 +9,7 @@ import { useGetProductsQuery } from '../../../redux/products/productApi';
 import { queryBuilder } from '../../../utils/QueryBuilder/queryBuilder';
 import { IProduct } from '../../Products/Interface/productInterface';
 import Flex from '../Flex/Flex';
+import { IImage } from '../../../utils/interface';
 
 interface IProductTable {
     title: string;
@@ -25,6 +26,7 @@ const ProductTable: React.FC<IProductTable> = ({
 }) => {
     const [page, setPage] = useState<number>(1);
     const [limit, setLimit] = useState<number>(10);
+    const { Text } = Typography;
 
     const query = {
         ...additional_query,
@@ -47,15 +49,39 @@ const ProductTable: React.FC<IProductTable> = ({
             width: 200,
         },
         {
+            title: 'Image',
+            dataIndex: 'product_image',
+            width: 100,
+            align: 'center',
+            render: (images: IImage[]) => {
+                const imgs = images.map((img) => img.url);
+
+                return (
+                    <Image.PreviewGroup items={imgs}>
+                        <Image
+                            width={80}
+                            height={80}
+                            src={
+                                imgs[0] ||
+                                'https://gw.alipayobjects.com/zos/antfincdn/LlvErxo8H9/photo-1503185912284-5271ff81b9a8.webp'
+                            }
+                        />
+                    </Image.PreviewGroup>
+                );
+            },
+        },
+        {
             title: 'Product ID',
             dataIndex: 'product_id',
             width: 200,
+            render: (id: string) => <Link to={`/product/${id}`}>{id}</Link>,
         },
         {
             title: 'Price',
             dataIndex: 'price',
             width: 80,
             align: 'center',
+            render: (price: number) => <Text>${price}</Text>,
         },
         {
             title: 'Total Sold ($)',
@@ -178,7 +204,7 @@ const ProductTable: React.FC<IProductTable> = ({
                             {shop.shop_name}
                         </Typography.Paragraph>
                         <Typography.Text style={{ color: 'green' }}>
-                            <Link to={`/shop/${shop.shop_id}`}>{shop.shop_id}</Link>
+                            <Link to={`/seller/${shop.shop_id}`}>{shop.shop_id}</Link>
                         </Typography.Text>{' '}
                         <br />
                         <Rate
@@ -210,17 +236,19 @@ const ProductTable: React.FC<IProductTable> = ({
             dataIndex: 'action',
             width: 200,
             align: 'center',
-            render: () => {
+            render: (_, pd: IProduct) => {
                 return (
                     <Flex justify="center" gap={5}>
-                        <Tag
-                            style={{ cursor: 'pointer' }}
-                            bordered={false}
-                            icon={<EditFilled />}
-                            color="warning"
-                        >
-                            EDIT
-                        </Tag>
+                        <Link to={`/product/${pd.product_id}`}>
+                            <Tag
+                                style={{ cursor: 'pointer' }}
+                                bordered={false}
+                                icon={<EditFilled />}
+                                color="warning"
+                            >
+                                EDIT
+                            </Tag>
+                        </Link>
                         <Tag
                             style={{ cursor: 'pointer' }}
                             bordered={false}

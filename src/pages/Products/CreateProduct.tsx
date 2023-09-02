@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HomeOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -53,8 +52,6 @@ const CreateProduct = () => {
         queryBuilder('category', { active_status: 'active' }),
     );
     const [createProduct, response] = useCreateProductMutation();
-
-    console.log(response);
 
     useEffect(() => {
         if (response.isSuccess) {
