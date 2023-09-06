@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
     HomeOutlined,
     PlusOutlined,
@@ -34,9 +34,26 @@ import { useGetShopQuery } from '../../redux/Shop/ShopApi';
 import { queryBuilder } from '../../utils/QueryBuilder/queryBuilder';
 import './Seller.scss';
 import InfoCard from '../../components/Shared/InfoCard/InfoCard';
+import { useGetProductsQuery } from '../../redux/products/productApi';
 
 const SellerDetails: React.FC = () => {
     const { shop_id } = useParams();
+    const url = `product/shop/${shop_id}`;
+    const query = {
+        page: 1,
+        limit: 10000,
+    };
+    const { data: products } = useGetProductsQuery(queryBuilder(url, query));
+
+    const totalsold = products?.data?.reduce(
+        (total: any, current: any) => total + current.sold,
+        0,
+    );
+
+    const totalsoldPrice = products?.data?.reduce(
+        (total: any, current: any) => total + current.total_sold_price,
+        0,
+    );
 
     const { Title, Text } = Typography;
 
@@ -49,13 +66,12 @@ const SellerDetails: React.FC = () => {
         {
             label: 'PRODUCTS',
             key: '2',
-            children: <ProductTable url={`product/shop/${shop_id}`} title="Products" />,
+            children: <ProductTable url={url} title="Products" />,
         },
     ];
 
     const { data: shopData } = useGetShopQuery(queryBuilder(`shop/${shop_id}`, {}));
     const shopDetails = shopData?.data;
-    console.log(shopData);
 
     return (
         <div className="seller__details__page">
@@ -106,7 +122,10 @@ const SellerDetails: React.FC = () => {
                                         size={100}
                                         src={
                                             <img
-                                                src="https://themesbrand.com/velzon/html/default/assets/images/companies/img-1.png"
+                                                src={
+                                                    shopDetails?.shop_logo?.url ||
+                                                    'https://themesbrand.com/velzon/html/default/assets/images/companies/img-1.png'
+                                                }
                                                 alt="avatar"
                                             />
                                         }
@@ -184,21 +203,21 @@ const SellerDetails: React.FC = () => {
                                 <Col xs={24} lg={8} xl={8}>
                                     <InfoCard
                                         title="TOTAL EARINGS"
-                                        amount={154284}
+                                        amount={totalsoldPrice}
                                         percent_value={21.48}
                                     />
                                 </Col>
                                 <Col xs={24} lg={8} xl={8}>
                                     <InfoCard
                                         title="TOTAL PRODUCTS"
-                                        amount={154284}
+                                        amount={products?.data?.length}
                                         percent_value={21.48}
                                     />
                                 </Col>
                                 <Col xs={24} lg={8} xl={8}>
                                     <InfoCard
                                         title="TOTAL ORDERS"
-                                        amount={154284}
+                                        amount={totalsold}
                                         percent_value={21.48}
                                     />
                                 </Col>

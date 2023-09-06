@@ -29,12 +29,18 @@ export interface IImgType {
 }
 
 interface IDropUpload {
-    files?: IImgType[] | [];
+    files?: IImgType[] | [] | null;
     onChange?: (files: IImgType[] | null) => void;
     uploadPath?: string;
+    multiple?: boolean;
 }
 
-const DropUpload: React.FC<IDropUpload> = ({ files, onChange, uploadPath = 'ecom' }) => {
+const DropUpload: React.FC<IDropUpload> = ({
+    files,
+    multiple = true,
+    onChange,
+    uploadPath = 'ecom',
+}) => {
     const [uploadImage, response] = useUploadImageMutation();
     const [deleteImage] = useDeleteImageMutation();
 
@@ -44,7 +50,9 @@ const DropUpload: React.FC<IDropUpload> = ({ files, onChange, uploadPath = 'ecom
     const [images, setImages] = useState<IImgType[]>(files || []);
 
     useEffect(() => {
-        setImages(files || []);
+        if (files?.length) {
+            setImages(files || []);
+        }
     }, [files]);
 
     useEffect(() => {
@@ -109,7 +117,10 @@ const DropUpload: React.FC<IDropUpload> = ({ files, onChange, uploadPath = 'ecom
         setImages((imgs) => imgs.filter((img) => img.public_id !== imge.public_id));
     };
 
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+        onDrop,
+        multiple: multiple,
+    });
     return (
         <div className="file__dragger">
             <div className="dragger__area" {...getRootProps()}>
@@ -153,7 +164,7 @@ const DropUpload: React.FC<IDropUpload> = ({ files, onChange, uploadPath = 'ecom
                                     className="info"
                                 >
                                     <div className="img__wrapper">
-                                        <img style={{ width: '100%' }} src={imgs.url} />
+                                        <img style={{ width: '100%' }} src={imgs?.url} />
                                     </div>
                                     <div className="img__name">
                                         {imgs?.name ||

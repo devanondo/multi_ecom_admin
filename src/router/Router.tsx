@@ -1,6 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createBrowserRouter, RouteObject } from 'react-router-dom';
 import { lazy } from 'react';
+import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
+import CreateSeller from '../pages/Seller/CreateSeller';
+import EditShop from '../pages/Seller/EditShop';
 const App = lazy(() => import('../App'));
 const Dashboard = lazy(() => import('../pages/Dashboard'));
 const NotFound = lazy(() => import('../pages/NotFound'));
@@ -30,7 +33,11 @@ const CustomerProfile = lazy(
 const routes: RouteObject[] = [
     {
         path: '/',
-        element: <App />,
+        element: (
+            <ProtectedRoute>
+                <App />
+            </ProtectedRoute>
+        ),
         errorElement: <NotFound />,
         children: [
             {
@@ -133,6 +140,14 @@ const routes: RouteObject[] = [
                     {
                         index: true,
                         element: <SellerList />,
+                    },
+                    {
+                        path: 'create',
+                        element: <CreateSeller />,
+                    },
+                    {
+                        path: 'edit/:shop_id',
+                        element: <EditShop />,
                     },
                     {
                         path: ':shop_id',

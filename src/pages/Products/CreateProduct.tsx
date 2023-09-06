@@ -426,7 +426,7 @@ const CreateProduct = () => {
                                 </Form.Item>
 
                                 <Form.Item
-                                    name="short_descriptions"
+                                    name="short_description"
                                     label="Short Description"
                                 >
                                     <Input.TextArea

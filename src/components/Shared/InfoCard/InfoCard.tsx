@@ -27,7 +27,7 @@ const InfoCard: FC<IInforCard> = ({ title, amount, percent_value }) => {
             </Flex>
 
             <Typography.Title style={{ marginTop: 20, marginBottom: 0 }} level={4}>
-                $ <CountUp end={amount} /> k
+                $ <CountUp end={amount} />
             </Typography.Title>
 
             <Flex justify="space-between" align="flex-end">

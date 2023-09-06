@@ -13,6 +13,7 @@ export type IUser = {
     vendor?: string;
     phone?: string;
     role?: string;
+    userid?: string;
     userDetails?: {
         createdAt?: string;
         updatedAt?: string;

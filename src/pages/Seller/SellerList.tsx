@@ -6,7 +6,6 @@ import {
     AppstoreOutlined,
     BarsOutlined,
     HomeOutlined,
-    PlusOutlined,
     SlidersOutlined,
     UnorderedListOutlined,
 } from '@ant-design/icons';
@@ -45,11 +44,6 @@ const SellerList: React.FC = () => {
                     title="Seller/Shop List"
                     extra={
                         <Flex gap={10}>
-                            <Button type="primary">
-                                <PlusOutlined />
-                                Create Shop
-                            </Button>
-
                             <Segmented
                                 options={[
                                     {

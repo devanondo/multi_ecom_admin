@@ -1,15 +1,22 @@
+import { getHeaders } from '../../utils/axiosInstance';
 import { api } from '../api/apiSlice';
 
 const categoryApi = api.injectEndpoints({
     endpoints: (builder) => ({
         createCategory: builder.mutation({
-            query: (body) => ({ url: 'category', method: 'POST', data: body }),
+            query: (body) => ({
+                url: 'category',
+                method: 'POST',
+                data: body,
+                headers: getHeaders(),
+            }),
             invalidatesTags: ['CategoryCreated'],
         }),
         getCategory: builder.query({
             query: (url) => ({
                 url: url,
                 method: 'GET',
+                headers: getHeaders(),
             }),
             providesTags: [
                 'CategoryCreated',
@@ -22,6 +29,7 @@ const categoryApi = api.injectEndpoints({
             query: (id) => ({
                 url: `category/${id}`,
                 method: 'GET',
+                headers: getHeaders(),
             }),
             providesTags: ['UpdateCategoryStatus', 'UpdateCategory'],
         }),
@@ -30,6 +38,7 @@ const categoryApi = api.injectEndpoints({
                 url: `category/${id}`,
                 method: 'PATCH',
                 data: data,
+                headers: getHeaders(),
             }),
             invalidatesTags: ['UpdateCategory'],
         }),
@@ -37,6 +46,7 @@ const categoryApi = api.injectEndpoints({
             query: (url) => ({
                 url: url,
                 method: 'PATCH',
+                headers: getHeaders(),
             }),
             invalidatesTags: ['UpdateCategoryStatus'],
         }),
@@ -45,6 +55,7 @@ const categoryApi = api.injectEndpoints({
                 url: `category/sub_category/${id}`,
                 method: 'POST',
                 data: body,
+                headers: getHeaders(),
             }),
             invalidatesTags: ['SubCategoryCreated'],
         }),
