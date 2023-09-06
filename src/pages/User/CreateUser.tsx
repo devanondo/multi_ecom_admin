@@ -55,7 +55,6 @@ const CreateUser = () => {
     const onFinish = (data: any) => {
         const myForm = pickFormData(data);
         myForm.set('file', images[0]);
-        myForm.set('role', 'vendor');
 
         getSignUp(myForm);
     };
@@ -64,8 +63,7 @@ const CreateUser = () => {
     const prefixSelector = (
         <Form.Item name="prefix" noStyle>
             <Select style={{ width: 90 }}>
-                <Option value="86">+86</Option>
-                <Option value="87">+87</Option>
+                <Option value="86">+88</Option>
             </Select>
         </Form.Item>
     );
@@ -114,7 +112,7 @@ const CreateUser = () => {
 
     return (
         <div className="create__user__page">
-            <Header title="Create Admin">
+            <Header title="Create User">
                 <Breadcrumb
                     items={[
                         {
@@ -131,7 +129,7 @@ const CreateUser = () => {
                             ),
                         },
                         {
-                            title: 'Create Admin',
+                            title: 'Create User',
                         },
                     ]}
                 />
@@ -269,6 +267,27 @@ const CreateUser = () => {
                                             />
                                         </Form.Item>
                                     </Flex>
+
+                                    <Form.Item
+                                        style={{ marginBottom: '10px' }}
+                                        name="role"
+                                        label="Select Role"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Please select role!',
+                                            },
+                                        ]}
+                                    >
+                                        <Select placeholder="select your role">
+                                            <Option value="admin">Admin</Option>
+                                            <Option value="customer">Customer</Option>
+                                            <Option value="other">Vendor</Option>
+                                        </Select>
+                                    </Form.Item>
+                                </Card>
+
+                                <Card style={{ marginTop: 20 }}>
                                     <Form.Item
                                         style={{ marginBottom: '10px' }}
                                         name="email"
@@ -307,15 +326,6 @@ const CreateUser = () => {
                                             style={{ width: '100%' }}
                                         />
                                     </Form.Item>
-
-                                    {/* <input
-                                        type="file"
-                                        name="filesas"
-                                        id=""
-                                        onChange={(e) => {
-                                            console.log(e.target.files);
-                                        }}
-                                    /> */}
 
                                     <Form.Item
                                         style={{ marginBottom: '10px' }}
@@ -387,7 +397,12 @@ const CreateUser = () => {
                                     </Form.Item>
 
                                     <Form.Item>
-                                        <Button block type="primary" htmlType="submit">
+                                        <Button
+                                            loading={options?.isLoading}
+                                            block
+                                            type="primary"
+                                            htmlType="submit"
+                                        >
                                             Submit
                                         </Button>
                                     </Form.Item>

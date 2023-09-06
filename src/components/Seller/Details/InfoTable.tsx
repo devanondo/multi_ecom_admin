@@ -1,7 +1,12 @@
 import { Typography } from 'antd';
 import React from 'react';
+import { IShop } from '../Interface/ShopInterface';
 
-const InfoTable: React.FC = () => {
+interface IInfoTable {
+    shopData: Partial<IShop | null>;
+}
+
+const InfoTable: React.FC<IInfoTable> = ({ shopData }) => {
     const { Text } = Typography;
     return (
         <table className="info__table">
@@ -12,17 +17,20 @@ const InfoTable: React.FC = () => {
                     </Text>
                 </td>
                 <td>
-                    <Text type="secondary"> John Smith</Text>
+                    <Text type="secondary">
+                        {shopData?.shop_owner?.userDetails?.name?.first_name}{' '}
+                        {shopData?.shop_owner?.userDetails?.name?.last_name}
+                    </Text>
                 </td>
             </tr>
             <tr>
                 <td>
                     <Text type="secondary" strong>
-                        Company Type
+                        Shop Type
                     </Text>
                 </td>
                 <td>
-                    <Text type="secondary"> John Smith</Text>
+                    <Text type="secondary"> {shopData?.shop_type}</Text>
                 </td>
             </tr>
             <tr>
@@ -32,7 +40,7 @@ const InfoTable: React.FC = () => {
                     </Text>
                 </td>
                 <td>
-                    <Text type="secondary"> John Smith</Text>
+                    <Text type="secondary"> {shopData?.shop_email}</Text>
                 </td>
             </tr>
             <tr>
@@ -42,7 +50,7 @@ const InfoTable: React.FC = () => {
                     </Text>
                 </td>
                 <td>
-                    <Text type="secondary"> www.example.com</Text>
+                    <Text type="secondary"> {shopData?.shop_website}</Text>
                 </td>
             </tr>
             <tr>
@@ -52,7 +60,7 @@ const InfoTable: React.FC = () => {
                     </Text>
                 </td>
                 <td>
-                    <Text type="secondary"> +88 01790 000000</Text>
+                    <Text type="secondary"> {shopData?.shop_phone}</Text>
                 </td>
             </tr>
             <tr>
@@ -62,7 +70,7 @@ const InfoTable: React.FC = () => {
                     </Text>
                 </td>
                 <td>
-                    <Text type="secondary"> Dhaka Bangladesh</Text>
+                    <Text type="secondary"> {shopData?.shop_address}</Text>
                 </td>
             </tr>
         </table>

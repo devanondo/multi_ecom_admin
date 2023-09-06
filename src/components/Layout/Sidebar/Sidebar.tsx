@@ -33,12 +33,10 @@ const Sidebar = () => {
         getItem('Product', 'product', <DesktopOutlined />, [
             getItem('Product List', '/product'),
             getItem('Create Product', '/product/create'),
-            getItem('Product Details', '/product/details'),
         ]),
         getItem('Category', 'category', <DesktopOutlined />, [
             getItem('Category List', '/category'),
             getItem('Create Category', '/category/create'),
-            getItem('Category Details', '/category/details'),
         ]),
         getItem('Seller', 'seller', <PieChartOutlined />),
 

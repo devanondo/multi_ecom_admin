@@ -1,11 +1,11 @@
 import { ArrowUpOutlined } from '@ant-design/icons';
 import { Card, Space, Statistic, Typography } from 'antd';
+import Parse from 'html-react-parser';
 import React from 'react';
-import RatingDetails from '../Products/Details/RatingDetails';
-import CategoryReviews from './CategoryReviews';
 import { useParams } from 'react-router-dom';
 import { useGetACategoryQuery } from '../../redux/category/categoryApi';
-import Parse from 'html-react-parser';
+import RatingDetails from '../Products/Details/RatingDetails';
+import Reviews from '../Shared/Reviews/Reviews';
 
 const CategoryInfoDetails: React.FC = () => {
     const { category_id } = useParams();
@@ -57,7 +57,7 @@ const CategoryInfoDetails: React.FC = () => {
             </Card>
 
             <Card style={{ marginTop: 20 }} title="Reviews">
-                <CategoryReviews reviews={categoryInfo?.reviews} />
+                <Reviews reviews={categoryInfo?.reviews} />
             </Card>
         </div>
     );

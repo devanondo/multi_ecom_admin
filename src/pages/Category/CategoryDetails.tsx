@@ -1,8 +1,8 @@
 import {
+    EditFilled,
     HomeOutlined,
     PlusOutlined,
     UnorderedListOutlined,
-    EditFilled,
 } from '@ant-design/icons';
 import {
     Breadcrumb,
@@ -24,8 +24,8 @@ import Header from '../../components/Shared/Header/Header';
 import { CheckCircleOutlined, ProjectFilled } from '@ant-design/icons';
 import CategoryBanner from '../../components/Category/Banner/CategoryBanner';
 import CategoryInfoDetails from '../../components/Category/CategoryInfoDetails';
-import CategoryProductTable from '../../components/Category/CategoryProductTable';
 import SubCategoryTable from '../../components/Category/SubCategoryTable/SubCategoryTable';
+import ProductTable from '../../components/Shared/ProductTable/ProductTable';
 import {
     useGetACategoryQuery,
     useUpdateStatusMutation,
@@ -64,9 +64,10 @@ const CategoryDetails: React.FC = () => {
             label: 'Public Product',
             key: '1',
             children: (
-                <CategoryProductTable
+                <ProductTable
                     title={'Active Product'}
-                    query={{
+                    url="product"
+                    additional_query={{
                         category: category_details?.data?.title,
                         visibility: 'public',
                     }}
@@ -78,9 +79,10 @@ const CategoryDetails: React.FC = () => {
             label: 'Private Product',
             key: '2',
             children: (
-                <CategoryProductTable
-                    title={'Pending Product'}
-                    query={{
+                <ProductTable
+                    title={'Active Product'}
+                    url="product"
+                    additional_query={{
                         category: category_details?.data?.title,
                         visibility: 'private',
                     }}
@@ -92,9 +94,10 @@ const CategoryDetails: React.FC = () => {
             label: 'Protected Product',
             key: '3',
             children: (
-                <CategoryProductTable
-                    title={'Restricted Product'}
-                    query={{
+                <ProductTable
+                    title={'Active Product'}
+                    url="product"
+                    additional_query={{
                         category: category_details?.data?.title,
                         visibility: 'protected',
                     }}
@@ -106,9 +109,10 @@ const CategoryDetails: React.FC = () => {
             label: 'Restricted Product',
             key: '4',
             children: (
-                <CategoryProductTable
-                    title={'Restricted Product'}
-                    query={{
+                <ProductTable
+                    title={'Active Product'}
+                    url="product"
+                    additional_query={{
                         category: category_details?.data?.title,
                         visibility: 'restricted',
                     }}

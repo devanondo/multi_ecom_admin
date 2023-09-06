@@ -131,7 +131,7 @@ const CheckBoxTable = () => {
             title={() => 'Header'}
             columns={columns}
             dataSource={datas}
-            scroll={{ x: 1000 }}
+            scroll={{ x: 1100 }}
             pagination={{
                 onChange: onchange,
                 total: datas.length,

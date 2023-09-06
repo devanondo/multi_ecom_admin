@@ -1,6 +1,5 @@
 import { BaseQueryFn, createApi } from '@reduxjs/toolkit/query/react';
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
-import Cookies from 'js-cookie';
 
 export interface ErrorRes {
     status: boolean;
@@ -16,9 +15,8 @@ export interface ErrorRes {
 
 const axiosBaseQuery =
     (
-        { baseUrl, headers }: { baseUrl: string; headers: Record<string, string> } = {
+        { baseUrl }: { baseUrl: string } = {
             baseUrl: '',
-            headers: {},
         },
     ): BaseQueryFn<
         {
@@ -26,11 +24,12 @@ const axiosBaseQuery =
             method: AxiosRequestConfig['method'];
             data?: AxiosRequestConfig['data'];
             params?: AxiosRequestConfig['params'];
+            headers?: Record<string, string | undefined>;
         },
         unknown,
         ErrorRes
     > =>
-    async ({ url, method, data, params }) => {
+    async ({ url, method, data, params, headers }) => {
         try {
             const result = await axios({
                 url: baseUrl + url,
@@ -50,16 +49,15 @@ export const api = createApi({
     reducerPath: 'api',
     baseQuery: axiosBaseQuery({
         baseUrl: import.meta.env.VITE_BASE_URL,
-        headers: {
-            authorization: Cookies.get('a4weopkd1287u65') || '',
-            'Content-Type': 'application/json',
-        },
     }),
     tagTypes: [
         'CreatedUser',
         'CategoryCreated',
         'SubCategoryCreated',
         'UpdateCategoryStatus',
+        'UpdateCategory',
+        'shopUpdated',
+        'shopCreated',
     ],
     endpoints: () => ({}),
 });

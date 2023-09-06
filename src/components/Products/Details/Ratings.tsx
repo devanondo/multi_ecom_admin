@@ -2,29 +2,20 @@
 import { Avatar, Card, Col, Image, List, Rate, Row, Typography } from 'antd';
 import Flex from '../../Shared/Flex/Flex';
 import './Details.scss';
+import React from 'react';
 
 import { StarFilled } from '@ant-design/icons';
 import moment from 'moment';
 import RatingDetails from './RatingDetails';
+import { IReviewDetails } from '../../../utils/interface';
 
-const Ratings = () => {
+interface IReviewsComponent {
+    reviews?: IReviewDetails[];
+    rating?: number | string;
+}
+
+const Ratings: React.FC<IReviewsComponent> = ({ reviews = [], rating }) => {
     const { Text } = Typography;
-
-    const data = [
-        {
-            title: 'Ant Design Title 1',
-        },
-        {
-            title: 'Ant Design Title 2',
-        },
-        {
-            title: 'Ant Design Title 3',
-        },
-        {
-            title: 'Ant Design Title 4',
-        },
-    ];
-
     return (
         <div style={{ marginTop: 50 }}>
             <Typography.Title level={5}>Ratings & Reviews</Typography.Title>
@@ -38,7 +29,7 @@ const Ratings = () => {
                         <Flex align="center" justify="space-between" gap={20}>
                             <Rate style={{ fontSize: 18 }} disabled defaultValue={4.5} />
 
-                            <Text strong>4.5 out of 5</Text>
+                            <Text strong>{rating} out of 5</Text>
                         </Flex>
                     </Card>
                     <Flex
@@ -48,7 +39,7 @@ const Ratings = () => {
                         style={{ paddingTop: 5 }}
                     >
                         <Text type="secondary" strong>
-                            Total 5.50k reviews
+                            Total {reviews[0]?.message ? reviews?.length : 0} reviews
                         </Text>
                     </Flex>
 
@@ -62,7 +53,7 @@ const Ratings = () => {
                     <List
                         style={{ maxHeight: 200, overflowY: 'scroll' }}
                         itemLayout="vertical"
-                        dataSource={data}
+                        dataSource={reviews[0]?.message ? reviews : []}
                         renderItem={(item, index) => (
                             <List.Item>
                                 <Flex gap={10} style={{ marginBottom: 10 }}>
@@ -73,22 +64,28 @@ const Ratings = () => {
                                     <Flex justify="space-between">
                                         <div>
                                             <Text type="secondary" strong>
-                                                John Smith
+                                                {item?.author?.userDetails?.name
+                                                    ?.first_name +
+                                                    ' ' +
+                                                    item?.author?.userDetails?.name
+                                                        ?.last_name}
                                             </Text>
 
                                             <div className="ratings_info">
-                                                <StarFilled /> <span>4.2</span>
+                                                <StarFilled /> <span>{item?.rating}</span>
                                             </div>
                                         </div>
 
-                                        <Text code>{moment().format('MMM Do YY')}</Text>
+                                        <Text code>
+                                            {moment(item?.createdAt).format('MMM Do YY')}
+                                        </Text>
                                     </Flex>
                                 </Flex>
 
                                 {/* message */}
 
                                 <Text type="secondary" style={{ marginLeft: 40 }}>
-                                    {item.title}
+                                    {item?.message}
                                 </Text>
 
                                 <div style={{ marginLeft: 40, marginTop: 10 }}>

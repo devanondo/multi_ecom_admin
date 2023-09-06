@@ -1,80 +1,41 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import {
-    Button,
-    Card,
-    Col,
-    Form,
-    Input,
-    Modal,
-    Row,
-    Select,
-    Upload,
-    UploadFile,
-    message,
-} from 'antd';
-import { RcFile, UploadProps } from 'antd/es/upload';
-import axios from 'axios';
+import { Button, Card, Col, Form, Input, Row, Select, message } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
-    useCreateCategoryMutation,
     useGetACategoryQuery,
+    useUpdateACategoryMutation,
 } from '../../../redux/category/categoryApi';
-import { pickFormData } from '../../../utils/FormData/FormData';
-import { IImage } from '../../../utils/interface';
+import { pickFData } from '../../../utils/FormData/DataPicker';
+import DropUpload, { IImgType } from '../../Shared/DropFile/DropUpload';
 import Flex from '../../Shared/Flex/Flex';
-
-const getBase64 = (file: RcFile): Promise<string> =>
-    new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result as string);
-        reader.onerror = (error) => reject(error);
-    });
 
 const EditCategoryForm: React.FC = () => {
     const { category_id } = useParams();
     const { data: category_details } = useGetACategoryQuery(category_id);
+    const [images, setImages] = useState<IImgType[] | null>();
+    const navigate = useNavigate();
 
     const [form] = Form.useForm();
-
-    // Dispatch
-    const [, options] = useCreateCategoryMutation();
+    const [updateACategory, options] = useUpdateACategoryMutation();
 
     useEffect(() => {
         if (options.isSuccess) {
             message.success(options?.data?.message);
             form.resetFields();
+            navigate(-1);
         }
         if (options.isError && options.error) {
             message.error(options.error?.message);
         }
     }, [options]);
 
-    const [previewOpen, setPreviewOpen] = useState(false);
-    const [previewImage, setPreviewImage] = useState('');
-    const [previewTitle, setPreviewTitle] = useState('');
-    const [fileList, setFileList] = useState<UploadFile[]>([
-        {
-            uid: '-1',
-            name: 'image.png',
-            status: 'done',
-            url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        },
-    ]);
     const [description, setDescription] = useState<string>('');
-    const [images, setImages] = useState<IImage[]>([
-        {
-            public_id: 'pub',
-            url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        },
-    ]);
 
     useEffect(() => {
         if (category_details?.data) {
@@ -83,44 +44,12 @@ const EditCategoryForm: React.FC = () => {
     }, [category_details]);
 
     const onFinish = (values: any) => {
-        const myForm = pickFormData(values);
-        myForm.set('description', description);
-        myForm.append('banner_image', JSON.stringify(images));
+        values.description = description;
+        values.banner_image = images;
 
-        console.log(images);
+        const formData = pickFData(values);
+        updateACategory({ id: category_id, data: formData });
     };
-
-    const handleCancel = () => setPreviewOpen(false);
-
-    const normFile = (e: any) => {
-        if (Array.isArray(e)) {
-            return e;
-        }
-        return e?.fileList;
-    };
-
-    const handlePreview = async (file: UploadFile) => {
-        if (!file.url && !file.preview) {
-            file.preview = await getBase64(file.originFileObj as RcFile);
-        }
-
-        setPreviewImage(file.url || (file.preview as string));
-        setPreviewOpen(true);
-        setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1));
-    };
-
-    const uploadButton = (
-        <div>
-            <PlusOutlined />
-            <div style={{ marginTop: 8 }}>Upload</div>
-        </div>
-    );
-
-    const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
-        setFileList(newFileList);
-    };
-
-    console.log(fileList);
 
     return (
         <div className="create__category__form">
@@ -207,70 +136,12 @@ const EditCategoryForm: React.FC = () => {
                     <Col xs={24} xxl={8}>
                         <Card title="Upload Image">
                             <Form.Item label="Upload Category Image">
-                                <Form.Item
-                                    name="photo"
-                                    valuePropName="fileList"
-                                    getValueFromEvent={normFile}
-                                >
-                                    <Upload
-                                        action={async (file): Promise<string> => {
-                                            const img = await getBase64(file as RcFile);
-                                            const result = await axios.post(
-                                                'http://localhost:8000/api/v1/upload/image',
-                                                { image: img, path: 'ecom/category' },
-                                            );
-
-                                            setImages((prev: IImage[]) => [
-                                                ...prev,
-                                                result.data,
-                                            ]);
-
-                                            return img;
-                                        }}
-                                        onRemove={(file) => {
-                                            console.log(file);
-                                        }}
-                                        listType="picture-card"
-                                        fileList={fileList}
-                                        onPreview={handlePreview}
-                                        // onDrop={onDrop}
-                                        onChange={handleChange}
-                                    >
-                                        {fileList.length >= 8 ? null : uploadButton}
-                                    </Upload>
-                                    {/* <Upload.Dragger
-                                        fileList={fileList}
-                                        onPreview={handlePreview}
-                                        onChange={handleChange}
-                                        onDrop={onDrop}
-                                        name="files"
-                                        listType="picture"
-                                        multiple
-                                    >
-                                        <p className="ant-upload-drag-icon">
-                                            <InboxOutlined />
-                                        </p>
-                                        <p className="ant-upload-text">
-                                            Click or drag file to this area to upload
-                                        </p>
-                                        <p className="ant-upload-hint">
-                                            Support for a single or bulk upload.
-                                        </p>
-                                    </Upload.Dragger> */}
-
-                                    <Modal
-                                        open={previewOpen}
-                                        title={previewTitle}
-                                        footer={null}
-                                        onCancel={handleCancel}
-                                    >
-                                        <img
-                                            alt="example"
-                                            style={{ width: '100%' }}
-                                            src={previewImage}
-                                        />
-                                    </Modal>
-                                </Form.Item>
+                                <DropUpload
+                                    files={category_details?.data?.banner_image}
+                                    onChange={(files) => {
+                                        setImages(files || null);
+                                    }}
+                                />
                             </Form.Item>
                         </Card>
 
@@ -355,7 +226,7 @@ const EditCategoryForm: React.FC = () => {
                                     htmlType="submit"
                                     loading={options?.isLoading}
                                 >
-                                    Submit
+                                    Update
                                 </Button>
                             </Form.Item>
                         </Card>
