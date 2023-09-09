@@ -58,6 +58,8 @@ export const api = createApi({
         'UpdateCategory',
         'shopUpdated',
         'shopCreated',
+        'productCreated',
+        'productUpdated',
     ],
     endpoints: () => ({}),
 });

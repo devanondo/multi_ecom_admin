@@ -1,11 +1,14 @@
 /* eslint-disable no-console */
 import { DeleteFilled, EditFilled } from '@ant-design/icons';
-import { Image, Rate, Tag, Typography } from 'antd';
+import { Image, Rate, Select, Spin, Tag, Typography } from 'antd';
 import Table, { ColumnsType } from 'antd/es/table';
 import moment from 'moment';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useGetProductsQuery } from '../../../redux/products/productApi';
+import {
+    useGetProductsQuery,
+    useUpdateProductMutation,
+} from '../../../redux/products/productApi';
 import { queryBuilder } from '../../../utils/QueryBuilder/queryBuilder';
 import { IProduct } from '../../Products/Interface/productInterface';
 import Flex from '../Flex/Flex';
@@ -35,6 +38,7 @@ const ProductTable: React.FC<IProductTable> = ({
     };
 
     const { data: products } = useGetProductsQuery(queryBuilder(url, query));
+    const [updateProduct, response] = useUpdateProductMutation();
 
     const columns: ColumnsType<IProduct> = [
         {
@@ -121,15 +125,26 @@ const ProductTable: React.FC<IProductTable> = ({
             dataIndex: 'visibility',
             width: 130,
             align: 'center',
-            render: (vs: string) => (
-                <Tag
-                    bordered={false}
-                    style={{ textTransform: 'uppercase' }}
-                    color="success"
-                >
-                    {vs}
-                </Tag>
-            ),
+            render: (value, pd: Partial<IProduct>) => {
+                return (
+                    <Select
+                        defaultValue={value}
+                        style={{ width: 110, textAlign: 'left' }}
+                        size="small"
+                        onChange={(value) => {
+                            const url = `product/admin/product_visibility/${pd?.product_id}`;
+
+                            updateProduct({ url, body: { visibility: value } });
+                        }}
+                        options={[
+                            { label: 'Public', value: 'public' },
+                            { label: 'Private', value: 'private' },
+                            { label: 'Protected', value: 'protected' },
+                            { label: 'Restricted', value: 'restricted' },
+                        ]}
+                    />
+                );
+            },
         },
         {
             title: 'Variations',
@@ -239,7 +254,7 @@ const ProductTable: React.FC<IProductTable> = ({
             render: (_, pd: IProduct) => {
                 return (
                     <Flex justify="center" gap={5}>
-                        <Link to={`/product/${pd.product_id}`}>
+                        <Link to={`/product/edit/${pd.product_id}`}>
                             <Tag
                                 style={{ cursor: 'pointer' }}
                                 bordered={false}
@@ -249,6 +264,7 @@ const ProductTable: React.FC<IProductTable> = ({
                                 EDIT
                             </Tag>
                         </Link>
+
                         <Tag
                             style={{ cursor: 'pointer' }}
                             bordered={false}
@@ -298,25 +314,28 @@ const ProductTable: React.FC<IProductTable> = ({
         setLimit(pageSize);
     };
     return (
-        <Table
-            bordered
-            size="small"
-            rowSelection={{
-                type: 'checkbox',
-                ...rowSelection,
-            }}
-            title={() => title}
-            columns={columns}
-            dataSource={rows}
-            scroll={{ x: 1600 }}
-            // onChange={onChange}
-            pagination={{
-                onChange: onchange,
-                total: products?.data?.length,
-                showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
-                showQuickJumper: true,
-            }}
-        />
+        <Spin spinning={response?.isLoading}>
+            <Table
+                bordered
+                size="small"
+                rowSelection={{
+                    type: 'checkbox',
+                    ...rowSelection,
+                }}
+                title={() => title}
+                columns={columns}
+                dataSource={rows}
+                scroll={{ x: 1600 }}
+                // onChange={onChange}
+                pagination={{
+                    onChange: onchange,
+                    total: products?.data?.length,
+                    showTotal: (total, range) =>
+                        `${range[0]}-${range[1]} of ${total} items`,
+                    showQuickJumper: true,
+                }}
+            />
+        </Spin>
     );
 };
 

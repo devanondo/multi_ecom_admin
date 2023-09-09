@@ -1,17 +1,47 @@
-/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Card, Col, Form, Input, Row, Select } from 'antd';
-import React from 'react';
+import { Button, Card, Col, Form, Input, Row, Select, Spin } from 'antd';
+import React, { useEffect } from 'react';
+import { IUserDetails } from '../../../pages/User/Interface/UserInterface';
+import { useParams } from 'react-router-dom';
+import { useUpdateUserMutation } from '../../../redux/users/userApi';
 
-const CustomerProfileInfo: React.FC = () => {
+interface IUserDetail extends IUserDetails {
+    first_name?: string;
+    last_name?: string;
+}
+
+interface ICustomerDashboard {
+    user: IUserDetail;
+}
+
+const CustomerProfileInfo: React.FC<ICustomerDashboard> = ({ user }) => {
     const [form] = Form.useForm();
+    const { customer_id } = useParams();
+
+    useEffect(() => {
+        const usr = { ...user };
+        usr.first_name = usr.userDetails?.name?.first_name;
+        usr.last_name = usr.userDetails?.name?.last_name;
+        usr.address = usr.userDetails?.address;
+        usr.email = usr.userDetails?.email;
+
+        form.setFieldsValue(usr);
+    }, [user, form]);
+
+    const [updateUser, response] = useUpdateUserMutation();
 
     const onFinish = (values: any) => {
-        console.log('Received values of form: ', values);
+        const name = {
+            first_name: values.first_name,
+            last_name: values.last_name,
+        };
+        values.name = name;
+
+        updateUser({ url: `user/${customer_id}`, body: values });
     };
 
     return (
-        <div>
+        <Spin spinning={false}>
             <Card
                 title="About"
                 extra={
@@ -100,7 +130,7 @@ const CustomerProfileInfo: React.FC = () => {
                                     },
                                 ]}
                             >
-                                <Input placeholder="Phone No" />
+                                <Input disabled placeholder="Phone No" />
                             </Form.Item>
                         </Col>
                         <Col xs={24} lg={12}>
@@ -122,9 +152,25 @@ const CustomerProfileInfo: React.FC = () => {
                         </Col>
                     </Row>
 
-                    <Row gutter={[20, 0]}>
-                        <Col xs={24} lg={8}>
-                            <Form.Item
+                    <Form.Item
+                        style={{ marginBottom: '10px', width: '100%' }}
+                        name="address"
+                        label="Address"
+                        tooltip="What do you want others to call your city?"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input address!',
+                                whitespace: true,
+                            },
+                        ]}
+                    >
+                        <Input placeholder="Zip, City, Country" />
+                    </Form.Item>
+
+                    {/* <Row gutter={[20, 0]}>
+                        <Col xs={24} lg={8}> */}
+                    {/* <Form.Item
                                 style={{ marginBottom: '10px', width: '100%' }}
                                 name="city"
                                 label="City"
@@ -138,8 +184,8 @@ const CustomerProfileInfo: React.FC = () => {
                                 ]}
                             >
                                 <Input placeholder="City" />
-                            </Form.Item>
-                        </Col>
+                            </Form.Item> */}
+                    {/* </Col>
                         <Col xs={24} lg={8}>
                             <Form.Item
                                 style={{ marginBottom: '10px', width: '100%' }}
@@ -174,12 +220,21 @@ const CustomerProfileInfo: React.FC = () => {
                                 <Input placeholder="Zip Code" />
                             </Form.Item>
                         </Col>
-                    </Row>
+                    </Row> */}
 
-                    <Button type="primary"> Update</Button>
+                    <Form.Item>
+                        <Button
+                            loading={response?.isLoading}
+                            block
+                            type="primary"
+                            htmlType="submit"
+                        >
+                            Update
+                        </Button>
+                    </Form.Item>
                 </Form>
             </Card>
-        </div>
+        </Spin>
     );
 };
 

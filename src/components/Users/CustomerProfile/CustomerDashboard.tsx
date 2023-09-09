@@ -1,11 +1,18 @@
 import { ArrowUpOutlined, DollarTwoTone } from '@ant-design/icons';
 import { Card, Col, Row, Space, Statistic, Typography } from 'antd';
+import React from 'react';
+import { IUserDetails } from '../../../pages/User/Interface/UserInterface';
 
-const CustomerDashboard = () => {
+interface ICustomerDashboard {
+    user: IUserDetails;
+}
+
+const CustomerDashboard: React.FC<ICustomerDashboard> = ({ user }) => {
     const { Text, Paragraph } = Typography;
+
     return (
         <>
-            <Card>
+            {/* <Card>
                 <Text type="secondary">Hello, </Text> <Text strong>John Smith</Text>
                 <Text type="secondary">
                     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Saepe
@@ -14,7 +21,7 @@ const CustomerDashboard = () => {
                     ipsum dolor sit amet consectetur adipisicing elit. Molestias ratione
                     a, laboriosam earum perferendis natus animi aut quis magnam illum?
                 </Text>
-            </Card>
+            </Card> */}
 
             <Row style={{ marginTop: 20 }} gutter={[20, 20]}>
                 <Col xs={24} lg={12} xxl={8}>
@@ -67,7 +74,7 @@ const CustomerDashboard = () => {
                         >
                             <Statistic
                                 prefix="৳"
-                                title="Total Spent (BDT)"
+                                title="Total Order"
                                 value={1254.21}
                                 precision={2}
                             />
@@ -101,7 +108,7 @@ const CustomerDashboard = () => {
                         >
                             <Statistic
                                 prefix="৳"
-                                title="Total Spent (BDT)"
+                                title="Cart Items"
                                 value={1254.21}
                                 precision={2}
                             />
@@ -125,10 +132,15 @@ const CustomerDashboard = () => {
                 <Col xs={24} lg={12}>
                     <Card title="Contact Information" style={{ marginTop: 20 }}>
                         <Paragraph>
-                            <Text strong> Name : </Text> <Text> John Smith</Text>
+                            <Text strong> Name : </Text>{' '}
+                            <Text>
+                                {user?.userDetails?.name?.first_name +
+                                    ' ' +
+                                    user?.userDetails?.name?.last_name}
+                            </Text>
                         </Paragraph>
                         <Paragraph>
-                            <Text strong> Phone : </Text> <Text> +880 1808 454344</Text>
+                            <Text strong> Phone : </Text> <Text> {user?.phone}</Text>
                         </Paragraph>
                         <Paragraph>
                             <Text strong> Email : </Text> <Text> abc@example.com</Text>

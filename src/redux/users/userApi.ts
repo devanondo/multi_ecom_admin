@@ -20,7 +20,27 @@ const authApi = api.injectEndpoints({
             }),
             providesTags: ['CreatedUser'],
         }),
+        getUser: builder.query({
+            query: (url) => ({
+                url: url,
+                method: 'GET',
+                headers: getHeaders(),
+            }),
+        }),
+        updateUser: builder.mutation({
+            query: ({ url, body }) => ({
+                url: url,
+                method: 'PATCH',
+                data: body,
+                headers: getHeaders(),
+            }),
+        }),
     }),
 });
 
-export const { useGetSignUpMutation, useGetAllUserQuery } = authApi;
+export const {
+    useGetSignUpMutation,
+    useGetAllUserQuery,
+    useGetUserQuery,
+    useUpdateUserMutation,
+} = authApi;

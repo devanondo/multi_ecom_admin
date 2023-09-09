@@ -13,15 +13,22 @@ import CustomerDashboard from '../../../components/Users/CustomerProfile/Custome
 import CustomerOrders from '../../../components/Users/CustomerProfile/CustomerOrders';
 import CustomerProfileInfo from '../../../components/Users/CustomerProfile/CustomerProfileInfo';
 import CustomerWishlist from '../../../components/Users/CustomerProfile/CustomerWishlist';
+import { useParams } from 'react-router-dom';
+import { useGetUserQuery } from '../../../redux/users/userApi';
+
+const contentStyle: React.CSSProperties = {
+    height: '200px',
+    color: '#fff',
+    lineHeight: '200px',
+    textAlign: 'center',
+    background: '#364d79',
+};
 
 const CustomerProfile: React.FC = () => {
-    const contentStyle: React.CSSProperties = {
-        height: '200px',
-        color: '#fff',
-        lineHeight: '200px',
-        textAlign: 'center',
-        background: '#364d79',
-    };
+    const { customer_id } = useParams();
+
+    const { data: userData } = useGetUserQuery(`user/${customer_id}`);
+    const user = userData?.data;
 
     const { Paragraph } = Typography;
 
@@ -30,7 +37,7 @@ const CustomerProfile: React.FC = () => {
             icon: ProjectFilled,
             label: 'Dashboard',
             key: '1',
-            children: <CustomerDashboard />,
+            children: <CustomerDashboard user={user} />,
         },
         {
             icon: CheckCircleOutlined,
@@ -42,7 +49,7 @@ const CustomerProfile: React.FC = () => {
             icon: CheckCircleOutlined,
             label: 'Profile',
             key: '3',
-            children: <CustomerProfileInfo />,
+            children: <CustomerProfileInfo user={user} />,
         },
         {
             icon: CheckCircleOutlined,
@@ -119,11 +126,12 @@ const CustomerProfile: React.FC = () => {
                             >
                                 <Image
                                     width={140}
+                                    height={140}
                                     style={{
                                         borderRadius: '50%',
                                         border: '5px solid lightgray',
                                     }}
-                                    src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                                    src={user?.userDetails?.profile_picture?.url}
                                 />
                             </div>
 
@@ -131,14 +139,16 @@ const CustomerProfile: React.FC = () => {
                                 style={{ textAlign: 'center', marginTop: 10 }}
                                 level={4}
                             >
-                                John Smith
+                                {user?.userDetails?.name?.first_name +
+                                    ' ' +
+                                    user?.userDetails?.name?.last_name}
                             </Typography.Title>
 
                             <Paragraph
                                 style={{ textAlign: 'center', margin: 0 }}
                                 type="secondary"
                             >
-                                +880 1711 000000
+                                {user?.phone}
                             </Paragraph>
                             <Paragraph
                                 style={{ textAlign: 'center', margin: 0 }}

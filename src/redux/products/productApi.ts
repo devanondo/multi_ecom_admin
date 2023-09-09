@@ -5,6 +5,7 @@ const productApi = api.injectEndpoints({
     endpoints: (builder) => ({
         getProducts: builder.query({
             query: (url) => ({ url: url, method: 'GET', headers: getHeaders() }),
+            providesTags: ['productCreated', 'productUpdated'],
         }),
         createProduct: builder.mutation({
             query: ({ url, data }) => ({
@@ -13,8 +14,19 @@ const productApi = api.injectEndpoints({
                 data: data,
                 headers: getHeaders(),
             }),
+            invalidatesTags: ['productCreated'],
+        }),
+        updateProduct: builder.mutation({
+            query: ({ url, body }) => ({
+                url: url,
+                method: 'PATCH',
+                data: body,
+                headers: getHeaders(),
+            }),
+            invalidatesTags: ['productUpdated'],
         }),
     }),
 });
 
-export const { useGetProductsQuery, useCreateProductMutation } = productApi;
+export const { useUpdateProductMutation, useGetProductsQuery, useCreateProductMutation } =
+    productApi;
