@@ -35,6 +35,14 @@ const authApi = api.injectEndpoints({
                 headers: getHeaders(),
             }),
         }),
+        addressAPI: builder.mutation({
+            query: ({ url, method, body }) => ({
+                url: url,
+                method: method,
+                data: body,
+                headers: getHeaders(),
+            }),
+        }),
     }),
 });
 
@@ -43,4 +51,5 @@ export const {
     useGetAllUserQuery,
     useGetUserQuery,
     useUpdateUserMutation,
+    useAddressAPIMutation,
 } = authApi;
